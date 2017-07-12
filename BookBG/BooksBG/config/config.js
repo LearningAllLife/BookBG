@@ -22,4 +22,4 @@ var config = {
     },
 };
 
-module.exports = config[env];
+module.exports = config.development;

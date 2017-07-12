@@ -1,19 +1,38 @@
-var express = require('express'),
-    config = require('./config/config'),
-    glob = require('glob'),
-    mongodb = require('mongodb');
+/* globals __dirname */
+const bodyParser = require('body-parser');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
 
-mongodb.connect(config.db);
+const express = require('express');
 
-var models = glob.sync(config.root + '/app/models/*.js');
-models.forEach(function(model) {
-    require(model);
-});
-var app = express();
-app.use('/libs', express.static('node_modules'));
+const init = (data) => {
+    const app = express();
 
-module.exports = require('./config/express')(app, config);
+    // confing start 
+    app.set('view engine', 'pug');
 
-app.listen(config.port, function() {
-    console.log('Express server listening on port ' + config.port);
-});
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({ extended: true }));
+    app.use(express.static(__dirname + '/public'));
+    app.use('/libs', express.static(path.join(__dirname, './node_modules')));
+
+    app.use(cookieParser('keyboard cat'));
+    app.use(session({ cookie: { maxAge: 60000 } }));
+
+    app.use(require('connect-flash')());
+    app.use((req, res, next) => {
+        res.locals.messages = require('express-messages')(req, res);
+        next();
+    });
+    // confing end
+
+    require('./app/routers/router')
+        .attachTo(app, data);
+
+    return Promise.resolve(app);
+};
+
+module.exports = {
+    init,
+};

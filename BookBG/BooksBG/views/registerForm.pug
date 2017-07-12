@@ -1,0 +1,28 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width, initial-scale=1.0')
+    meta(http-equiv='X-UA-Compatible', content='ie=edge')
+    link(rel="stylesheet", href="/libs/bootstrap/dist/css/bootstrap.min.css")
+
+    title Document
+  body
+    != messages()
+    form(action="/users/register" method="POST")
+      .form-group
+        label(for='firstName') Firstname:
+        input#firstName.form-control(name="firstname" type='text' required)
+      .form-group
+        label(for='lastName') LastName
+        input#lastName.form-control(name="lastname" type='text' required)
+      .form-group
+        label(for='email') Email address:
+        input#email.form-control(name="email" type='text' required)
+      .form-group
+        label(for='username') Username:
+        input#username.form-control(name="username" type='text' required)
+      .form-group
+        label(for='pwd') Password:
+        input#pwd.form-control(name="password" type='password' required)
+      button.btn.btn-default(type='submit') Submit
