@@ -1,8 +1,3 @@
-import $ from 'jquery';
-import CryptoJS from 'cryptojs';
-import { CONSTANTS } from 'constants';
-import { templates } from 'templates';
-
 function encryptToBase64(string) {
     var toUtf8 = CryptoJS.enc.Utf8.parse(string);
     var base64 = CryptoJS.enc.Base64.stringify(toUtf8);
@@ -32,23 +27,23 @@ function createPageIndeces(array, booksOnPageCount) {
     return array;
 }
 
-function addBooksToCart(books) {
-    let templateToParse,
-        totalPrice = 0;
+// function addBooksToCart(books) {
+//     let templateToParse,
+//         totalPrice = 0;
 
-    books.forEach(function (book) {
-        totalPrice += book.price;
-    });
-    totalPrice = parseFloat(totalPrice.toString()).toFixed(2);
-    templateToParse = {
-        books,
-        totalPrice
-    };
+//     books.forEach(function(book) {
+//         totalPrice += book.price;
+//     });
+//     totalPrice = parseFloat(totalPrice.toString()).toFixed(2);
+//     templateToParse = {
+//         books,
+//         totalPrice
+//     };
 
-    templates.getTemplate('shopping-cart-menu').then((template) => {
-        $('#shopping-cart-menu').html(template(templateToParse));
-    });
-}
+//     templates.getTemplate('shopping-cart-menu').then((template) => {
+//         $('#shopping-cart-menu').html(template(templateToParse));
+//     });
+// }
 
 function setupOrderByLinks() {
     let orderByLinks = $('#orderby > ul.dropdown-menu > li > a');
@@ -62,7 +57,7 @@ function setupOrderByLinks() {
 }
 
 function fixPaginationForOrderBy(orderByCode) {
-    $('.btn.btn-primary.btn-page').each(function (i, btn) {
+    $('.btn.btn-primary.btn-page').each(function(i, btn) {
         btn.href += `&${orderByCode}`;
     });
 }
@@ -73,20 +68,19 @@ function resetOrderByTypeOnChange() {
 
 function getShortUrl(longUrl, func) {
     $.getJSON(
-        "https://api-ssl.bitly.com/v3/shorten?callback=?",
-        {
+        "https://api-ssl.bitly.com/v3/shorten?callback=?", {
             "format": "json",
             "apiKey": CONSTANTS.BITLY_AUTHORIZATION.API_KEY,
             "login": CONSTANTS.BITLY_AUTHORIZATION.LOGIN,
             "longUrl": longUrl
         },
-        function (response) {
+        function(response) {
             func(response.data.url);
         }
     );
 }
 
-function isUserLoggedIn(){
+function isUserLoggedIn() {
     var username = localStorage.getItem(CONSTANTS.USER_NAME);
 
     if (!username) {
@@ -96,20 +90,20 @@ function isUserLoggedIn(){
     }
 }
 
-function showFilters(){
+function showFilters() {
     $('#filters').removeClass('hidden');
 }
 
-function hideFilters(){
+function hideFilters() {
     $('#filters').addClass('hidden');
 }
 
-var utils = {
+var UTILS = {
     encryptToBase64,
     encryptToSha1,
     createBooksOnPage,
     createPageIndeces,
-    addBooksToCart,
+    // addBooksToCart,
     setupOrderByLinks,
     resetOrderByTypeOnChange,
     getShortUrl,
@@ -118,5 +112,3 @@ var utils = {
     showFilters,
     hideFilters
 };
-
-export { utils as UTILS };

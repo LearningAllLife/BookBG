@@ -1,36 +1,30 @@
+/* globals __dirname */
+
+const fs = require('fs');
+const path = require('path');
+
 const attachTo = (app, data) => {
-    const controller = require('../controllers/userController').init(data);
-
     app.get('/', (req, res) => {
-        res.render('../../public');
-    })
-
-    app.get('/users/register', (req, res) => {
-        return controller.getAllUsers(req, res);
+        var a = req.query;
+        if (a.p === 'undefined' && a.i === 'undefined') {
+            res.redirect('/?p=1&i=30');
+        } else {
+            return res.render('home');
+        }
     });
 
-    app.post('/users/register', (req, res) => {
-        return controller.createUser(req, res)
-            .then(result => {
-                return res.redirect('/users/register');
-            })
-            .catch((err) => {
-                // connect-flash
-                req.flash('error', err.message);
-                return res.redirect('/');
-            });
-    });
+    // app.get('/?:pageNumber&:orderByCode', function(context) {
+    //     var pageNumber = this.params['pageNumber'];
+    //     var orderByCode = this.params['orderByCode'] | 0;
 
-    app.get('/user/user@login', (req, res) => {
-        controller.loadLogin(req, res);
-    })
+    //     booksController.home($content, pageNumber, orderByCode);
 
-
-    app.get('/users/login', (req, res) => {
-        let userName = req.body;
-
-        return controller.searchUser(userName, req, res);
-    })
+    fs.readdirSync(__dirname)
+        .filter((file) => file.includes('.router'))
+        .forEach((file) => {
+            const modulePath = path.join(__dirname, file);
+            require(modulePath).attachTo(app, data);
+        });
 };
 
 module.exports = { attachTo };

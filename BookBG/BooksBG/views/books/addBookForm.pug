@@ -1,0 +1,31 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width, initial-scale=1.0')
+    meta(http-equiv='X-UA-Compatible', content='ie=edge')
+    link(rel="stylesheet", href="/libs/bootstrap/dist/css/bootstrap.min.css")
+    script(src='/libs/jquery/dist/jquery.js')
+    title Add Book
+  body
+    != messages()
+    form(action="/books/add" method="POST")
+      .form-group
+        label(for='title') Title:
+        input#firstName.form-control(name="title" type='text' required)
+      .form-group
+        label(for='author') Author
+        input#lastName.form-control(name="author" type='text' required)
+      .form-group
+        label(for='genre') Genre
+        input#email.form-control(name="genre" type='text' required)
+      .form-group
+        label(for='rating') Rating:
+        input#username.form-control(name="rating" type='text' required)
+      .form-group
+        label(for='price') Price:
+        input#pwd.form-control(name="price" type='text' required)
+      .form-group
+        label(for='picture') PictureURL:
+        input#pwd.form-control(name="picture" type='text' required)
+      button.btn.btn-default(type='submit') Submit

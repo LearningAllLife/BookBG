@@ -23,6 +23,7 @@
         "express-session": "^1.15.3",
         "glob": "^6.0.4",
         "jade": "^1.11.0",
+        "jquery": "^3.2.1",
         "method-override": "^2.3.0",
         "mongoose": "^4.1.2",
         "morgan": "^1.6.1",
@@ -30,7 +31,8 @@
         "serve-favicon": "^2.3.0",
         "sinon": "^1.17.6",
         "systemjs": "^0.19.38",
-        "systemjs-plugin-babel": "0.0.15"
+        "systemjs-plugin-babel": "0.0.15",
+        "toastr": "^2.1.2"
     },
     "devDependencies": {
         "chai": "^3.5.0",

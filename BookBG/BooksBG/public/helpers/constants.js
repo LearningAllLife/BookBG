@@ -23,9 +23,9 @@ const ORDERBY = {
     PRICE_DESC: 6
 };
 
-let constants = {
+let CONSTANTS = {
     AUTH_TOKEN,
-    USER_NAME, 
+    USER_NAME,
     USER_ID,
     BOOKS_IN_CART,
     PAGE_SIZE_BIG,
@@ -37,5 +37,3 @@ let constants = {
     PASSWORD_MIN_LENGTH,
     PASSWORD_MAX_LENGTH
 };
-
-export { constants as CONSTANTS };

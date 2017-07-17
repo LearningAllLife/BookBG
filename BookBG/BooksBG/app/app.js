@@ -3,7 +3,6 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
-
 const express = require('express');
 
 const init = (data) => {
@@ -11,11 +10,10 @@ const init = (data) => {
 
     // confing start 
     app.set('view engine', 'pug');
-
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
-    app.use(express.static(__dirname + '/public'));
-    app.use('/libs', express.static(path.join(__dirname, './node_modules')));
+    app.use('/public', express.static(path.join(__dirname, '../public')));
+    app.use('/libs', express.static(path.join(__dirname, '../node_modules')));
 
     app.use(cookieParser('keyboard cat'));
     app.use(session({ cookie: { maxAge: 60000 } }));
@@ -27,7 +25,7 @@ const init = (data) => {
     });
     // confing end
 
-    require('./app/routers/router')
+    require('./routers')
         .attachTo(app, data);
 
     return Promise.resolve(app);

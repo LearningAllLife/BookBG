@@ -1,7 +1,7 @@
 const init = (data) => {
     const controller = {
         getAllUsers(req, res) {
-            return data.getAll()
+            return data.users.getAll()
                 .then((users) => {
                     for (let user of users) {
                         console.log(user);
@@ -14,7 +14,7 @@ const init = (data) => {
             res.render('../views/loginForm');
         },
         searchUser(userName, req, res) {
-            return data.getAll(userName)
+            return data.users.getAll(userName)
                 .then((user) => {
                     console.log(user);
                 });
@@ -27,7 +27,7 @@ const init = (data) => {
                 throw new Error("invalid user");
             }
 
-            return data.create(user);
+            return data.users.create(user);
         }
     };
 
