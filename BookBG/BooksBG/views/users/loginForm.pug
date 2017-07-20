@@ -8,12 +8,15 @@ html(lang='en')
 
     title Document
   body
-  != messages()
-    form(action="/users/login" method="GET") 
+    //- != messages()
+    form(action="/users/login" method="Post") 
       .form-group
-        label(for='username') Username:
+        label(for='username') 
+          |Username:
         input#username.form-control(name="username" type='text' required)
       .form-group
-        label(for='pwd') Password:
+        label(for='password')
+          |Password:
         input#pwd.form-control(name="password" type='password' required)
-      button.btn.btn-default(type='submit') Login
+      button.btn.btn-default(type='submit')
+        | Login

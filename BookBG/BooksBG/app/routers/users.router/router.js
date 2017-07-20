@@ -1,4 +1,5 @@
 const { Router } = require('express');
+const passport = require('passport');
 
 const attachTo = (app, data) => {
     const router = new Router();
@@ -11,16 +12,25 @@ const attachTo = (app, data) => {
         .post('/register', (req, res) => {
             return controller.createUser(req, res)
                 .then(result => {
-                    return res.redirect('/users/register');
+                    return res.redirect('/');
                 })
                 .catch((err) => {
                     // connect-flash
                     req.flash('error', err.message);
-                    return res.redirect('/');
+                    // return res.redirect('/');
                 });
         })
         .get('/login', (req, res) => {
             controller.loadLogin(req, res);
+        })
+        .post('/login', passport.authenticate('local', {
+            successRedirect: '/',
+            failureRedirect: '/users/login',
+            failureFlash: true,
+        }))
+        .get('/sign-out', (req, res) => {
+            req.logout();
+            res.redirect('/');
         })
         .get('/search', (req, res) => {
             let userName = req.body;

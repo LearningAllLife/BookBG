@@ -4,9 +4,9 @@ const VALIDATOR = {
             throw Error('invalid string');
         }
     },
-    Check_If_It_Is_In_Range: function(x, min, max) {
+    Check_If_It_Is_In_Range: function(x, min, max, check) {
         if (x < min || x > max) {
-            throw Error('invalid name!');
+            throw Error(`invalid ${check}`);
         }
     },
     Check_If_IT_Matches_Pattern: function(x) {
@@ -50,7 +50,7 @@ class User {
     set firstname(x) {
 
         VALIDATOR.IT_IS_VALID_STRING(x);
-        VALIDATOR.Check_If_It_Is_In_Range(x.length, 2, 16);
+        VALIDATOR.Check_If_It_Is_In_Range(x.length, 2, 16, 'firstname');
         VALIDATOR.Check_If_IT_Matches_Pattern(x);
 
         this._firstname = x;
@@ -62,7 +62,7 @@ class User {
 
     set lastname(x) {
         VALIDATOR.IT_IS_VALID_STRING(x);
-        VALIDATOR.Check_If_It_Is_In_Range(x.length, 3, 20);
+        VALIDATOR.Check_If_It_Is_In_Range(x.length, 3, 20, 'lastname');
         VALIDATOR.Check_If_IT_Matches_Pattern(x);
 
         this._lastname = x;
@@ -74,7 +74,7 @@ class User {
 
     set username(x) {
         VALIDATOR.IT_IS_VALID_STRING(x);
-        VALIDATOR.Check_If_It_Is_In_Range(x.length, 6, 14);
+        VALIDATOR.Check_If_It_Is_In_Range(x.length, 1, 14, 'username');
         VALIDATOR.Check_If_Username_Matches_Pattern(x);
 
         this._username = x;
@@ -86,7 +86,7 @@ class User {
 
     set password(x) {
         VALIDATOR.IT_IS_VALID_STRING(x);
-        VALIDATOR.Check_If_It_Is_In_Range(x.length, 7, 20);
+        VALIDATOR.Check_If_It_Is_In_Range(x.length, 3, 20, 'password');
         VALIDATOR.Check_If_Pasword_Matches_Pattern(x);
 
         this._password = x;

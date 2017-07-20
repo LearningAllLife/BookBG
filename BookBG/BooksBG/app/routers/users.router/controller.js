@@ -7,11 +7,11 @@ const init = (data) => {
                         console.log(user);
                     }
 
-                    res.render('../views/registerForm');
+                    res.render('./users/registerForm');
                 });
         },
         loadLogin(req, res) {
-            res.render('../views/loginForm');
+            res.render('./users//loginForm');
         },
         searchUser(userName, req, res) {
             return data.users.getAll(userName)
@@ -24,7 +24,7 @@ const init = (data) => {
             const user = req.body;
 
             if (user === undefined) {
-                throw new Error("invalid user");
+                throw new Error("Invalid user");
             }
 
             return data.users.create(user);

@@ -1,9 +1,23 @@
+const { ObjectID } = require('mongodb')
+
 class BaseData {
     constructor(db, ModelClass) {
         this.db = db;
         this.ModelClass = ModelClass;
         this.collectionName = this._getCollectionName();
         this.collection = this.db.collection(this.collectionName);
+    }
+
+    getById(id) {
+        return this.collection.findOne({ _id: new ObjectID(id) })
+            .then((model) => {
+                if (!model) {
+                    return null;
+                }
+
+                model.id = model._id;
+                return model;
+            });
     }
 
     getAll(filter) {
