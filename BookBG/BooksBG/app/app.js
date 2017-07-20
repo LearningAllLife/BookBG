@@ -12,12 +12,14 @@ const { initAuth } = require('./auth');
 const init = (data, db) => {
 
     const app = express();
+    //atach authentication
+    initAuth(app, data, db, 'Top app');
 
     // confing start 
     app.set('view engine', 'pug');
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
-    app.use(session({ cookie: { maxAge: 3600000 }, secret: 'Unicorns' }));
+    // app.use(session({ cookie: { maxAge: 3600000 }, secret: 'Unicorns' }));
     app.use(flash());
     app.use('/public', express.static(path.join(__dirname, '../public')));
     app.use('/libs', express.static(path.join(__dirname, '../node_modules')));
@@ -28,8 +30,6 @@ const init = (data, db) => {
     });
     // confing end
 
-    //atach authentication
-    initAuth(app, data, db, 'Top app');
 
     //log user 
     app.use((req, res, next) => {

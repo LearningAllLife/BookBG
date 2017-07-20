@@ -27,6 +27,7 @@ function initAuth(app, { users }, db, secret) {
     }));
 
     app.use(session({
+        cookie: { maxAge: 3600000 },
         store: new MongoStore({ db }),
         secret,
         resave: true,
