@@ -9,7 +9,7 @@ const session = require('express-session');
 const { initAuth } = require('./auth');
 
 
-const init = (data) => {
+const init = (data, db) => {
 
     const app = express();
 
@@ -17,7 +17,7 @@ const init = (data) => {
     app.set('view engine', 'pug');
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
-    app.use(session({ cookie: { maxAge: 60000 }, secret: 'Unicorns' }));
+    app.use(session({ cookie: { maxAge: 3600000 }, secret: 'Unicorns' }));
     app.use(flash());
     app.use('/public', express.static(path.join(__dirname, '../public')));
     app.use('/libs', express.static(path.join(__dirname, '../node_modules')));
@@ -28,6 +28,9 @@ const init = (data) => {
     });
     // confing end
 
+    //atach authentication
+    initAuth(app, data, db, 'Top app');
+
     //log user 
     app.use((req, res, next) => {
         console.log('----user-----');
@@ -35,8 +38,6 @@ const init = (data) => {
         next();
     });
 
-    //atach authentication
-    initAuth(app, data, 'Top app');
 
     //atach routers
     require('./routers')

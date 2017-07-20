@@ -2,10 +2,10 @@ const session = require('express-session');
 const passport = require('passport');
 const { Strategy } = require('passport-local');
 const MongoStore = require('connect-mongo')(session);
-const config = require('../../config/config');
+// const config = require('../../config/config');
 
 
-function initAuth(app, { users }, secret) {
+function initAuth(app, { users }, db, secret) {
 
     passport.use(new Strategy((username, password, done) => {
         users.getAll({ _username: username })
@@ -26,17 +26,12 @@ function initAuth(app, { users }, secret) {
             });
     }));
 
-    require('../../app/db/db').init(config.db)
-        .then((db) => {
-            app.use(session({
-                store: new MongoStore({ db }),
-                secret,
-                resave: true,
-                saveUninitialized: true,
-            }));
-
-        });
-
+    app.use(session({
+        store: new MongoStore({ db }),
+        secret,
+        resave: true,
+        saveUninitialized: true,
+    }));
     app.use(passport.initialize());
     app.use(passport.session());
 
