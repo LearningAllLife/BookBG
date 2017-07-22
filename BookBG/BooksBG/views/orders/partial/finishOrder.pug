@@ -1,0 +1,27 @@
+.col-md-offset-2.col-md-8
+  ul.no-padding.overflow-scroll
+    each book in books
+      li
+        div.flex-content.position-relative
+          a.btn-remove(title='remove') X
+          img.extra-small(salt='empty', src=''+book._picture)
+          .book-characteristics
+            h4
+              span.bold Title:
+              a.book-title(href='/books/'+book._id) 
+                =book._title
+            h4
+              span.bold Author:
+              a.book-author(href='/authors/'+book._author)
+                =book._author
+            h4
+              span.bold Price:
+              span.book-price 
+                =book._price
+  .price-container
+    .cd-cart-total
+      h3
+        span.bold Total:
+        span.book-price-green 
+          =totalValue 
+    a.btn.btn-info(href='/orders/checkout') Checkout

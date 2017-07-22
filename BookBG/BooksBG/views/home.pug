@@ -1,4 +1,6 @@
 extends _shared/layout
+block head
+    script(src='/public/scripts/home.js')
 block body
       .row
         aside.col-md-2.position-fixed
@@ -29,5 +31,4 @@ block body
                 li
                   a(href='#') Price descending
         main#content.col-md-offset-2.col-md-8
-        #shopping-cart-menu.col-md-offset-9.col-md-3.hidden.position-fixed
 

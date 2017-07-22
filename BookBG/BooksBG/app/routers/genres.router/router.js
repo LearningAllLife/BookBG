@@ -9,20 +9,12 @@ const attachTo = (app, data) => {
             return res.render('genres/addGenreForm');
         })
         .post('/add', (req, res) => {
-            return controller.create(req, res)
-                .then(result => {
-                    return res.redirect('/');
-                })
-                .catch((err) => {
-                    // connect-flash
-                    req.flash('error', err.message);
-                    return res.redirect('/');
-                });
+            return controller.create(req, res);
         })
         .get('/allForDropDown', (req, res) => {
             return controller.getAllByFilter(req, res)
                 .then(genres => {
-                    res.render('genres/partialViews/forDropDown.pug', { data: genres })
+                    res.render('genres/partialViews/forDropDown.pug', { data: genres });
                 });
         })
 

@@ -325,6 +325,15 @@ aside .dropdown-menu {
     display: inline-block
 }
 
+.typeahead.dropdown-menu {
+    width: 94%;
+}
+
+#messages {
+    text-align: center;
+    font-weight: 600;
+}
+
 
 /* classes to reuse */
 

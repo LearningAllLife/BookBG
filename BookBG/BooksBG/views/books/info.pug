@@ -1,4 +1,6 @@
 extends ../_shared/layout
+block head
+    script(src='/public/scripts/booksInfo.js')
 block body
     .col-md-offset-4.col-md-4.bordered.rounded
       img.large(src=""+book._picture, alt='empty')
@@ -25,10 +27,11 @@ block body
       h4
         span.bold
             | Price:
-        span.book-price
+        span#bookPrice.book-price
             =book._price
-      button#btn-like.btn.btn-success Like
-      button#btn-dislike.btn.btn-danger Dislike
-      button#btn-add-to-cart.btn.btn-info Add to cart  
-      span.hidden
-        =book._id   
+      if user
+        button#btn-like.btn.btn-success Like
+         button#btn-dislike.btn.btn-danger Dislike
+         button#btn-add-to-cart.btn.btn-info Add to cart  
+         span#book-id.hidden
+            =book._id   

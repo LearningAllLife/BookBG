@@ -26,7 +26,7 @@ class BooksConroller {
                 if (!book) {
                     throw Error('No such book');
                 }
-                res.render('books/info.pug', { book: book });
+                res.render('books/info.pug', { book: book, user: req.user });
             });
     }
 

@@ -21,8 +21,8 @@ html(lang='en')
     script(src='/libs/bootstrap/dist/js/bootstrap.min.js')
     script(src='/public/helpers/utils.js')
     script(src='/public/helpers/constants.js')
-    script(src="https://rawgit.com/bassjobsen/Bootstrap-3-Typeahead/master/bootstrap3-typeahead.js")
-    script(src='/public/scripts/home.js')
+    script(src='/public/scripts/common.js')
+    block head
   body
     header.position-fixed
       nav.navbar.navbar-default
@@ -30,7 +30,7 @@ html(lang='en')
         +search()
         #login-control
         if user
-          a.btn.btn-info(href='#')
+          a#shoping-card.btn.btn-info(href='#' data-toggle="tooltip" title="No items in the card")
             span.glyphicon.glyphicon-shopping-cart
               | Shopping Cart  
           if user._isAdmin

@@ -1,23 +1,13 @@
 extends ../_shared/layout
+block head
+   script(src='/public/scripts/addGenre.js')
+   script(src="https://rawgit.com/bassjobsen/Bootstrap-3-Typeahead/master/bootstrap3-typeahead.js")
 block body
   .col-md-offset-4.col-md-4.bordered.rounded
-    form(action="/books/add" method="POST")
+    form(action="/genres/add" method="POST" autocomplete="off")
       .form-group
-        label(for='title') Title:
-        input#firstName.form-control(name="title" type='text' required)
-      .form-group
-        label(for='author') Author
-        input#lastName.form-control(name="author" type='text' required)
-      .form-group
-        label(for='genre') Genre
-        input#email.form-control(name="genre" type='text' required)
-      .form-group
-        label(for='rating') Rating:
-        input#username.form-control(name="rating" type='text' required)
-      .form-group
-        label(for='price') Price:
-        input#pwd.form-control(name="price" type='text' required)
-      .form-group
-        label(for='picture') PictureURL:
-        input#pwd.form-control(name="picture" type='text' required)
-      button.btn.btn-default(type='submit') Submit
+        label(for='title') Name:
+        input.form-control#autocomplete(name="genre" placeholder="Enter Genre")
+      button.btn.btn-success(type='submit') 
+        |Save
+

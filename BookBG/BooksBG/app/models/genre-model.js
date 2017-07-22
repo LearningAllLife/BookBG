@@ -1,7 +1,11 @@
 class Genre {
     constructor({ name, books }) {
         this.name = name;
-        this.books = books;
+        if (typeof books === 'undefined') {
+            this.books = [];
+        } else {
+            this.books = books;
+        }
     }
 
     get name() {
