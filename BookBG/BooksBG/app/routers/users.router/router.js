@@ -6,8 +6,11 @@ const attachTo = (app, data) => {
     const controller = require('./controller').init(data);
 
     router
-        .get('/register', (req, res) => {
+        .get('/', (req, res) => {
             return controller.getAllUsers(req, res);
+        })
+        .get('/register', (req, res) => {
+            return controller.register(req, res);
         })
         .post('/register', (req, res) => {
             return controller.createUser(req, res)
@@ -25,6 +28,7 @@ const attachTo = (app, data) => {
         })
         .post('/login', passport.authenticate('local', {
             successRedirect: '/',
+            successFlash: true,
             failureRedirect: '/users/login',
             failureFlash: true,
         }))
@@ -34,7 +38,6 @@ const attachTo = (app, data) => {
         })
         .get('/search', (req, res) => {
             let userName = req.body;
-
             return controller.searchUser(userName, req, res);
         });
 

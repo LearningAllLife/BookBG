@@ -1,13 +1,45 @@
+include ..\mixins\adminMenu
+include ..\mixins\search
+
 doctype html
 html(lang='en')
   head
     meta(charset='UTF-8')
-    meta(name='viewport', content='width=device-width')
-    title= title
-    block css
-      link(rel='stylesheet', href='/css/style.css')
-    block js
-      if ENV_DEVELOPMENT
-        script(src='http://localhost:35729/livereload.js')
+    // Meta tags for facebook
+    meta(property='og:description', content='The best bookstore around')
+    meta(property='og:image', content='https://s-media-cache-ak0.pinimg.com/originals/70/bd/63/70bd630505578fffc4c873001f89a9e1.jpg')
+    meta(property='og:image:width', content='400')
+    meta(property='og:image:height', content='400')
+    // End meta tags for facebook
+    title Bookstore
+    link(rel='shortcut icon', href='../app/fav-icon/faviconBook.png', type='image/x-icon')
+    link(rel='stylesheet', type='text/css', href='/libs/bootstrap/dist/css/bootstrap-theme.min.css')
+    link(rel='stylesheet', href='/libs/toastr/build/toastr.min.css')
+    link(rel='stylesheet', href='/public/styles/silver-theme.css')
+    link(rel='stylesheet', href='/public/styles/custom-theme.css')
+    script(src='/libs/jquery/dist/jquery.min.js')
+    script(src='/libs/bootstrap/dist/js/bootstrap.min.js')
+    script(src='/public/helpers/utils.js')
+    script(src='/public/helpers/constants.js')
+    script(src="https://rawgit.com/bassjobsen/Bootstrap-3-Typeahead/master/bootstrap3-typeahead.js")
+    script(src='/public/scripts/home.js')
   body
-    block content
+    header.position-fixed
+      nav.navbar.navbar-default
+        a#navbar-brand-id.navbar-brand(href='/?1') Books.bg
+        +search()
+        #login-control
+        if user
+          a.btn.btn-info(href='#')
+            span.glyphicon.glyphicon-shopping-cart
+              | Shopping Cart  
+          if user._isAdmin
+            +adminMenuMixin()
+          a#nav-btn-logout.btn.btn-info(href='/users/sign-out') Logout
+        else
+          a#nav-btn-login.btn.btn-info(href='/users/login') Login
+          a#nav-btn-register.btn.btn-info(href='/users/register') Register 
+        
+    #container
+      != messages()
+      block body

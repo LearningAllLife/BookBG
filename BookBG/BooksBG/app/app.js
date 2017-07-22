@@ -16,29 +16,18 @@ const init = (data, db) => {
     initAuth(app, data, db, 'Top app');
 
     // confing start 
+    app.use('/public', express.static(path.join(__dirname, '../public')));
+    app.use('/libs', express.static(path.join(__dirname, '../node_modules')));
     app.set('view engine', 'pug');
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
-    // app.use(session({ cookie: { maxAge: 3600000 }, secret: 'Unicorns' }));
     app.use(flash());
-    app.use('/public', express.static(path.join(__dirname, '../public')));
-    app.use('/libs', express.static(path.join(__dirname, '../node_modules')));
     app.use(cookieParser('keyboard cat'));
     app.use((req, res, next) => {
         res.locals.messages = exprMesssages(req, res);
         next();
     });
     // confing end
-
-
-    //log user 
-    app.use((req, res, next) => {
-        console.log('----user-----');
-        console.log(req.user);
-        next();
-    });
-
-
     //atach routers
     require('./routers')
         .attachTo(app, data);

@@ -3,15 +3,14 @@ const init = (data) => {
         getAllUsers(req, res) {
             return data.users.getAll()
                 .then((users) => {
-                    for (let user of users) {
-                        console.log(user);
-                    }
-
-                    res.render('./users/registerForm');
-                });
+                    res.render('./users/getAll', users);
+                })
+        },
+        register(req, res) {
+            return res.render('./users/registerForm');
         },
         loadLogin(req, res) {
-            res.render('./users//loginForm');
+            res.render('./users/loginForm');
         },
         searchUser(userName, req, res) {
             return data.users.getAll(userName)
@@ -21,13 +20,22 @@ const init = (data) => {
         },
         createUser(req, res) {
 
-            const user = req.body;
+            const bodyUser = req.body;
 
-            if (user === undefined) {
-                throw new Error("Invalid user");
-            }
-
-            return data.users.create(user);
+            this.data.users.findByUsername(bodyUser.username)
+                .then((dbUser) => {
+                    if (dbUser) {
+                        throw new Error('User already exists');
+                    }
+                    bodyUser.role = 'user';
+                    return this.data.users.create(bodyUser);
+                })
+                .then((dbUser) => {
+                    return res.redirect('/auth/login');
+                })
+                .catch((err) => {
+                    req.flash('error', err);
+                });
         }
     };
 

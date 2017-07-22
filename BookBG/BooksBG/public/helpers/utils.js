@@ -82,7 +82,6 @@ function getShortUrl(longUrl, func) {
 
 function isUserLoggedIn() {
     var username = localStorage.getItem(CONSTANTS.USER_NAME);
-
     if (!username) {
         return false;
     } else {

@@ -4,21 +4,27 @@ const fs = require('fs');
 const path = require('path');
 
 const attachTo = (app, data) => {
+    app.get('*', (req, res, next) => {
+        if (req.user) {
+            if (req.user._role === 'admin') {
+                req.user._isAdmin = true;
+            } else {
+                req.user._isAdmin = false;
+            }
+        }
+        console.log('----user-----');
+        console.log(req.user);
+        next();
+    });
     app.get('/', (req, res) => {
-        var a = req.query;
-        if (a.p === 'undefined' && a.i === 'undefined') {
-            res.redirect('/?p=1&i=30');
+        const a = req.query;
+        //todo change logic for paging
+        if (a.p === 'undefined') {
+            res.redirect('/?p=1');
         } else {
-            return res.render('home');
+            return res.render('home', req.user);
         }
     });
-
-    // app.get('/?:pageNumber&:orderByCode', function(context) {
-    //     var pageNumber = this.params['pageNumber'];
-    //     var orderByCode = this.params['orderByCode'] | 0;
-
-    //     booksController.home($content, pageNumber, orderByCode);
-
     fs.readdirSync(__dirname)
         .filter((file) => file.includes('.router'))
         .forEach((file) => {

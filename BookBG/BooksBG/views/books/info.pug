@@ -1,0 +1,34 @@
+extends ../_shared/layout
+block body
+    .col-md-offset-4.col-md-4.bordered.rounded
+      img.large(src=""+book._picture, alt='empty')
+      h4
+        span.bold 
+            | Title:
+        span 
+            =book._title
+      h4
+        span.bold 
+            | Author:
+        span 
+          =book._title
+      h4
+        span.bold 
+            | Genre:
+        span 
+            =book._genre
+      h4
+        span.bold 
+            | Rating:
+        span#rating 
+            =book._rating
+      h4
+        span.bold
+            | Price:
+        span.book-price
+            =book._price
+      button#btn-like.btn.btn-success Like
+      button#btn-dislike.btn.btn-danger Dislike
+      button#btn-add-to-cart.btn.btn-info Add to cart  
+      span.hidden
+        =book._id   

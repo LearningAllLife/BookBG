@@ -6,17 +6,23 @@ class GenresConroller {
         this.data = data;
     }
 
-    // create(req, res) {
+    create(req, res) {
 
-    //     const book = req.body;
+        const genre = req.body;
 
-    //     if (book === undefined) {
-    //         throw new Error("invalid book");
-    //     }
+        if (genre === undefined) {
+            throw new Error("invalid genre");
+        }
 
-    //     return this.data.books.create(book);
-
-    // }
+        this.data.genres.getAll({ _name: genre.name })
+            .then((genres) => {
+                if (genres.length === 0) {
+                    return this.data.genres.create(genre);
+                } else {
+                    throw new Error("Already Exists");
+                }
+            })
+    }
 
     getAllByFilter(req, res, filter) {
         var result = this.data.genres.getAll(filter);

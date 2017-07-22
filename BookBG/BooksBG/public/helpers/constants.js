@@ -1,3 +1,7 @@
+const ADMIN = 'admin';
+const USER = 'user';
+
+
 const AUTH_TOKEN = 'auth-token';
 const USER_NAME = 'username';
 const USER_ID = 'user_id';
@@ -23,17 +27,21 @@ const ORDERBY = {
     PRICE_DESC: 6
 };
 
-let CONSTANTS = {
-    AUTH_TOKEN,
-    USER_NAME,
-    USER_ID,
-    BOOKS_IN_CART,
-    PAGE_SIZE_BIG,
-    PAGE_SIZE_SMALL,
-    ORDERBY,
-    BITLY_AUTHORIZATION,
-    USERNAME_MIN_LENGTH,
-    USERNAME_MAX_LENGTH,
-    PASSWORD_MIN_LENGTH,
-    PASSWORD_MAX_LENGTH
-};
+module.exports = {
+    CONSTANTS: {
+        ADMIN,
+        AUTH_TOKEN,
+        USER,
+        USER_NAME,
+        USER_ID,
+        BOOKS_IN_CART,
+        PAGE_SIZE_BIG,
+        PAGE_SIZE_SMALL,
+        ORDERBY,
+        BITLY_AUTHORIZATION,
+        USERNAME_MIN_LENGTH,
+        USERNAME_MAX_LENGTH,
+        PASSWORD_MIN_LENGTH,
+        PASSWORD_MAX_LENGTH
+    },
+}

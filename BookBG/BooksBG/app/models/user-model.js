@@ -1,4 +1,11 @@
+const { CONSTANTS } = require('../../public/helpers/constants');
+
 const VALIDATOR = {
+    IS_ROLE_VALID: function(x) {
+        if (x.toLowerCase() !== CONSTANTS.USER && x.toLowerCase() !== CONSTANTS.ADMIN) {
+            throw Error('Invalid Role');
+        }
+    },
     IT_IS_VALID_STRING: function(x) {
         if (x == undefined || x == NaN || typeof x != 'string') {
             throw Error('invalid string');
@@ -35,12 +42,13 @@ const VALIDATOR = {
 }
 
 class User {
-    constructor({ firstname, lastname, username, password, email }) {
+    constructor({ firstname, lastname, username, password, email, role }) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.username = username;
         this.password = password;
         this.email = email;
+        this.role = role;
     }
 
     get firstname() {
@@ -98,8 +106,16 @@ class User {
 
     set email(x) {
         VALIDATOR.Check_If_Email_Matches_Pattern(x);
-
         this._email = x;
+    }
+
+    get role() {
+        return this._role;
+    }
+
+    set role(x) {
+        VALIDATOR.IS_ROLE_VALID(x);
+        this._role = x.toLowerCase();
     }
 }
 

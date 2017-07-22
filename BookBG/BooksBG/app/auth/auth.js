@@ -3,26 +3,18 @@ const passport = require('passport');
 const { Strategy } = require('passport-local');
 const MongoStore = require('connect-mongo')(session);
 // const config = require('../../config/config');
-
-
 function initAuth(app, { users }, db, secret) {
 
     passport.use(new Strategy((username, password, done) => {
-        users.getAll({ _username: username })
-            .then((users) => {
-                const user = users[0];
-
-                if (!user) {
-                    return done(null,
-                        false, { message: 'Incorrect username.' });
-                }
-
-                if (user._password !== password) {
-                    return done(null,
-                        false, { message: 'Incorrect password.' });
-                }
-
-                return done(null, user);
+        users.checkPassword(username, password)
+            .then(() => {
+                return users.findByUsername(username);
+            })
+            .then((user) => {
+                done(null, user);
+            })
+            .catch((err) => {
+                done(err);
             });
     }));
 
@@ -52,6 +44,6 @@ function initAuth(app, { users }, db, secret) {
         };
         next();
     });
-};
+}
 
 module.exports = { initAuth };

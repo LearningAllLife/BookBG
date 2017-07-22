@@ -8,6 +8,21 @@ class BaseData {
         this.collection = this.db.collection(this.collectionName);
     }
 
+    findOrCreateBy(props) {
+        return this.getAll(props)
+            .then(([model]) => {
+                if (!model) {
+                    model = {};
+                    return this.collection.insert(model)
+                        .then(() => {
+                            return model;
+                        });
+                }
+
+                return model;
+            });
+    }
+
     getById(id) {
         return this.collection.findOne({ _id: new ObjectID(id) })
             .then((model) => {
@@ -41,11 +56,12 @@ class BaseData {
 
 
     create(model) {
-        return Promise.resolve().then(() => {
-            let instance = this.createInstanceOfClass(model);
+        return Promise.resolve()
+            .then(() => {
+                let instance = this.createInstanceOfClass(model);
 
-            return this.collection.insert(instance);
-        })
+                return this.collection.insert(instance);
+            })
     }
 
     _getCollectionName() {

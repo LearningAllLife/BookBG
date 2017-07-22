@@ -23,14 +23,20 @@ const attachTo = (app, data) => {
             //todo implement logic for paging
             return controller.getAllByFilter(req, res)
                 .then(books => {
-                    res.render('books/partialViews/booksContent.pug', { context: books, indeces: [1, 2, 3, 4, 5] })
+                    res.render('books/partialViews/booksContent.pug', { context: books, indeces: [1, 2, 3, 4, 5] });
                 });
         })
         .get('/allPartialByGenre', (req, res) => {
             let query = req.query;
             return controller.getAllByFilter(req, res, query)
                 .then(books => {
-                    res.render('books/partialViews/booksContent.pug', { context: books, indeces: [1, 2, 3, 4, 5] })
+                    res.render('books/partialViews/booksContent.pug', { context: books, indeces: [1, 2, 3, 4, 5] });
+                });
+        })
+        .get('/:id', (req, res) => {
+            return controller.getById(req, res)
+                .catch((err) => {
+                    req.flash('error', err.message);
                 });
         })
 
