@@ -3,7 +3,7 @@
     each book in books
       li
         div.flex-content.position-relative
-          a.btn-remove(title='remove') X
+          a.btn-remove(title='remove' data-id=''+book._id) X
           img.extra-small(salt='empty', src=''+book._picture)
           .book-characteristics
             h4
@@ -22,6 +22,6 @@
     .cd-cart-total
       h3
         span.bold Total:
-        span.book-price-green 
+        span#total-value.book-price-green 
           =totalValue 
-    a.btn.btn-info(href='/orders/checkout') Checkout
+    a.btn.btn-info#checkout(href='#') Checkout

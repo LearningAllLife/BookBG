@@ -1,12 +1,13 @@
 const { Router } = require('express');
 const passport = require('passport');
+const { isAdmin } = require('../../auth/checkAuth');
 
 const attachTo = (app, data) => {
     const router = new Router();
     const controller = require('./controller').init(data);
 
     router
-        .get('/', (req, res) => {
+        .get('/', isAdmin, (req, res) => {
             return controller.getAllUsers(req, res);
         })
         .get('/register', (req, res) => {
@@ -18,9 +19,8 @@ const attachTo = (app, data) => {
                     return res.redirect('/');
                 })
                 .catch((err) => {
-                    // connect-flash
                     req.flash('error', err.message);
-                    // return res.redirect('/');
+                    res.redirect(req.get('referer'));
                 });
         })
         .get('/login', (req, res) => {
@@ -36,9 +36,8 @@ const attachTo = (app, data) => {
             req.logout();
             res.redirect('/');
         })
-        .get('/search', (req, res) => {
-            let userName = req.body;
-            return controller.searchUser(userName, req, res);
+        .put('/remove', isAdmin, (req, res) => {
+            return controller.deleteUser(req, res);
         });
 
     app.use('/users', router);

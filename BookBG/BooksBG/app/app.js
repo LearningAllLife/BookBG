@@ -8,7 +8,6 @@ const exprMesssages = require('express-messages');
 const session = require('express-session');
 const { initAuth } = require('./auth');
 
-
 const init = (data, db) => {
 
     const app = express();

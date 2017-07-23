@@ -1,0 +1,24 @@
+extends ../_shared/layout
+block head
+    script(src='/public/scripts/authorInfo.js')
+block body
+    .col-md-offset-2.col-md-8.bordered.rounded
+        h2
+            =author._name
+        each item in author._books
+            div.book-container.book-presentation-container
+                img.small(src=""+item._picture alt="empty")
+                div.book-characteristics
+                    h4.book-presentation-title 
+                        | Title:
+                        a.book-title(href="/books/"+item._id)
+                            =item._title
+                    h4.book-presentation-author
+                        | Author: 
+                        a.book-author(href="/authors/"+item._author)
+                            =item._author
+                    h4.book-presentation-price  
+                        | Price: 
+                        span.book-price
+                            =item._price
+

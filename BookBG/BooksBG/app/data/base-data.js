@@ -1,4 +1,4 @@
-const { ObjectID } = require('mongodb')
+const { ObjectID } = require('mongodb');
 
 class BaseData {
     constructor(db, ModelClass) {
@@ -36,34 +36,36 @@ class BaseData {
     }
 
     getAll(filter) {
-
-        if (filter == undefined) {
+        if (typeof filter === 'undefined') {
             filter = {};
         }
-
         const options = {};
-        let result = this.collection
+        const result = this.collection
             .find(filter, options)
-            .toArray()
+            .toArray();
 
         return result;
     }
 
     createInstanceOfClass(model) {
-        let instance = require(`../models/${this.ModelClass.name.toLowerCase()}-model`);
-        return new instance(model);
+        const Instance = require(`../models/${this.ModelClass.name.toLowerCase()}-model`);
+        return new Instance(model);
     }
-
-
     create(model) {
         return Promise.resolve()
             .then(() => {
-                let instance = this.createInstanceOfClass(model);
+                const instance = this.createInstanceOfClass(model);
 
                 return this.collection.insert(instance);
-            })
+            });
     }
-
+    update(model, updateModel) {
+        return this.collection
+            .updateOne(model, updateModel)
+            .then((res) => {
+                return res;
+            });
+    }
     _getCollectionName() {
         return this.ModelClass.name.toLowerCase() + 's';
     }

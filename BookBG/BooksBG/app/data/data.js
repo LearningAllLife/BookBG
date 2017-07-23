@@ -2,6 +2,7 @@ const UsersData = require('./user-data');
 const BooksData = require('./book-data');
 const GenresData = require('./genre-data');
 const OrdersData = require('./order-data');
+const AuthorsData = require('./author-data');
 
 const init = (db) => {
     return Promise.resolve({
@@ -9,6 +10,7 @@ const init = (db) => {
         books: new BooksData(db),
         genres: new GenresData(db),
         orders: new OrdersData(db),
+        authors: new AuthorsData(db),
     });
 };
 

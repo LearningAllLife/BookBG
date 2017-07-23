@@ -6,6 +6,7 @@ class Book {
         this.rating = rating;
         this.price = price;
         this.picture = picture;
+        this.isDeleted = false;
     }
 
     get title() {
@@ -37,6 +38,9 @@ class Book {
     }
 
     set rating(x) {
+        if (x < 1 || x > 10) {
+            throw Error('Rating must be between 1 and 10');
+        }
         this._rating = x;
     }
 
@@ -55,6 +59,15 @@ class Book {
     set picture(x) {
         this._picture = x;
     }
+
+    get isDeleted() {
+        return this._isDeleted;
+    }
+
+    set isDeleted(x) {
+        this._isDeleted = x;
+    }
+
 }
 
 module.exports = Book;

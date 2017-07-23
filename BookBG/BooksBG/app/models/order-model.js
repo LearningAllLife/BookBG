@@ -1,9 +1,12 @@
 class Order {
-    constructor({ books, adress, user, totalPrice }) {
+    constructor({ books, adress, user, phoneNumber }) {
         this.books = books;
         this.adress = adress;
         this.user = user;
-        this.totalPrice = totalPrice;
+        this.phoneNumber = phoneNumber;
+        const booksPrice = books
+            .map((x) => parseInt(x._price, 10));
+        this._totalPrice = booksPrice.reduce((a, b) => a + b, 0);
     }
 
     get books() {
@@ -33,9 +36,16 @@ class Order {
     get totalPrice() {
         return this._totalPrice;
     }
+    get phoneNumber() {
+        return this._phoneNumber;
+    }
 
-    set totalPrice(x) {
-        this._totalPrice = x;
+    set phoneNumber(x) {
+        const pN = parseInt(x, 10);
+        if (typeof pN === 'undefined') {
+            throw Error('Invalid phone Number');
+        }
+        this._phoneNumber = x;
     }
 }
 

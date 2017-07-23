@@ -49,6 +49,7 @@ class User {
         this.password = password;
         this.email = email;
         this.role = role;
+        this.isDeleted = false;
     }
 
     get firstname() {
@@ -116,6 +117,12 @@ class User {
     set role(x) {
         VALIDATOR.IS_ROLE_VALID(x);
         this._role = x.toLowerCase();
+    }
+    get isDeleted() {
+        return this._isDeleted;
+    }
+    set isDeleted(x) {
+        this._isDeleted = x;
     }
 }
 

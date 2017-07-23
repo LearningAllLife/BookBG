@@ -1,10 +1,10 @@
 const init = (data) => {
     const controller = {
         getAllUsers(req, res) {
-            return data.users.getAll()
+            return data.users.getAll({ _isDeleted: false })
                 .then((users) => {
-                    res.render('./users/getAll', users);
-                })
+                    res.render('users/getAll', { users: users });
+                });
         },
         register(req, res) {
             return res.render('./users/registerForm');
@@ -19,10 +19,8 @@ const init = (data) => {
                 });
         },
         createUser(req, res) {
-
             const bodyUser = req.body;
-
-            this.data.users.findByUsername(bodyUser.username)
+            data.users.findByUsername(bodyUser.username)
                 .then((dbUser) => {
                     if (dbUser) {
                         throw new Error('User already exists');
@@ -35,6 +33,19 @@ const init = (data) => {
                 })
                 .catch((err) => {
                     req.flash('error', err);
+                });
+        },
+        deleteUser(req, res) {
+            const id = req.body.id;
+            return data.users.getById(id)
+                .then((user) => {
+                    const updateModel = user;
+                    updateModel._isDeleted = true;
+                    return data.users.update({ _id: user._id }, updateModel);
+                })
+                .then(() => {
+                    res.status(200);
+                    res.end();
                 });
         }
     };

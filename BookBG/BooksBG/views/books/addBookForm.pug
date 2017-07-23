@@ -1,23 +1,26 @@
 extends ../_shared/layout
+block head
+   script(src='/public/scripts/addBoook.js')
+   script(src="https://rawgit.com/bassjobsen/Bootstrap-3-Typeahead/master/bootstrap3-typeahead.js")
 block body
   .col-md-offset-4.col-md-4.bordered.rounded
-    form(action="/books/add" method="POST")
+    form(action="/books/add" method="POST" autocomplete="off")
       .form-group
         label(for='title') Title:
-        input#firstName.form-control(name="title" type='text' required)
+        input#title.form-control(name="title" type='text' placeholder="Enter Title" required )
       .form-group
         label(for='author') Author
-        input#lastName.form-control(name="author" type='text' required)
+        input#author.form-control(name="author" type='text' placeholder="Enter Author" required)
       .form-group
         label(for='genre') Genre
-        input#email.form-control(name="genre" type='text' required)
+        input#genre.form-control(name="genre" type='text' placeholder="Enter Genre" required)
       .form-group
         label(for='rating') Rating:
-        input#username.form-control(name="rating" type='text' required)
+        input#rating.form-control(name="rating" type='text' placeholder="Enter Rating between 1-10" required)
       .form-group
         label(for='price') Price:
-        input#pwd.form-control(name="price" type='text' required)
+        input#price.form-control(name="price" type='text' placeholder="Enter Price" required)
       .form-group
         label(for='picture') PictureURL:
-        input#pwd.form-control(name="picture" type='text' required)
+        input#pic.form-control(name="picture" type='text' placeholder="Enter Picture Url" required)
       button.btn.btn-default(type='submit') Submit

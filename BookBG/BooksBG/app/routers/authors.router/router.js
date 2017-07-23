@@ -7,19 +7,15 @@ const attachTo = (app, data) => {
 
     router
         .get('/add', isAdmin, (req, res) => {
-            return res.render('genres/addGenreForm');
+            return controller.renderCreateForm(req, res);
         })
         .post('/add', isAdmin, (req, res) => {
             return controller.create(req, res);
         })
-        .get('/allForDropDown', (req, res) => {
-            return controller.getAllByFilter(req, res)
-                .then((genres) => {
-                    res.render('genres/partialViews/forDropDown.pug', { data: genres });
-                });
+        .get('/:name', (req, res) => {
+            return controller.getByName(req, res);
         });
-
-    app.use('/genres', router);
+    app.use('/authors', router);
 };
 
 module.exports = { attachTo };

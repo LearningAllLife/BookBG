@@ -1,0 +1,13 @@
+extends ../_shared/layout
+block head
+   script(src='/public/scripts/addAuthor.js')
+   script(src="https://rawgit.com/bassjobsen/Bootstrap-3-Typeahead/master/bootstrap3-typeahead.js")
+block body
+  .col-md-offset-4.col-md-4.bordered.rounded
+    form(action="/authors/add" method="POST" autocomplete="off")
+      .form-group
+        label(for='title') Name:
+        input.form-control#autocomplete(name="name" placeholder="Enter Author")
+      button.btn.btn-success(type='submit') 
+        |Save
+
