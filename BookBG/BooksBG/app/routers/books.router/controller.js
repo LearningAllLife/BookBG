@@ -50,10 +50,11 @@ class BooksConroller {
         let index = input.indexOf('=');
         let searchWord = input.substring(index + 1);
 
-        this.data.books.getAll({ _name: new RegExp(searchWord, 'i') })
-            .then(result => {
-                let books = result;
-            })
+        console.log(searchWord);
+        // this.data.books.getAll({ _name: new RegExp(searchWord, 'i') })
+        //     .then(result => {
+        //         let books = result;
+        //     })
     }
 
     getAllByFilter(req, res, filter) {
