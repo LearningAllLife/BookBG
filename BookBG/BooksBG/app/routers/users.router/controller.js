@@ -26,10 +26,11 @@ const init = (data) => {
                         throw new Error('User already exists');
                     }
                     bodyUser.role = 'user';
-                    return this.data.users.create(bodyUser);
+                    data.users.create(bodyUser);
+                    return bodyUser;
                 })
                 .then((dbUser) => {
-                    return res.redirect('/auth/login');
+                    return res.redirect('/');
                 })
                 .catch((err) => {
                     req.flash('error', err);

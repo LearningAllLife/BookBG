@@ -8,7 +8,7 @@ function isAuthenticated(req, res, next) {
 
 function isAdmin(req, res, next) {
     if (req.user) {
-        if (req.user._isAdmin) {
+        if (req.user._role === 'admin') {
             return next();
         }
         req.flash('error', 'You must login as admin!');

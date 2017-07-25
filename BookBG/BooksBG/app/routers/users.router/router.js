@@ -14,14 +14,7 @@ const attachTo = (app, data) => {
             return controller.register(req, res);
         })
         .post('/register', (req, res) => {
-            return controller.createUser(req, res)
-                .then(result => {
-                    return res.redirect('/');
-                })
-                .catch((err) => {
-                    req.flash('error', err.message);
-                    res.redirect(req.get('referer'));
-                });
+            controller.createUser(req, res);
         })
         .get('/login', (req, res) => {
             controller.loadLogin(req, res);

@@ -13,6 +13,12 @@ class BooksConroller {
             throw new Error('invalid book');
         }
 
+        var bookInstance = this.data.books.createInstanceOfClass(book);
+
+        var foundGenre = this.data.genres.findOrCreateBy({ name: book.genre, content: bookInstance });
+
+        var foundAuthor = this.data.authors.findOrCreateBy({ name: book.author, content: bookInstance });
+
         return this.data.books.create(book);
     }
 

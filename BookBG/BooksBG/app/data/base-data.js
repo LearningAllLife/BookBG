@@ -9,15 +9,20 @@ class BaseData {
     }
 
     findOrCreateBy(props) {
-        return this.getAll(props)
+        return this.getAll({ _name: props.name })
             .then(([model]) => {
                 if (!model) {
-                    model = {};
-                    return this.collection.insert(model)
-                        .then(() => {
-                            return model;
-                        });
+                    let name = props.name;
+                    let content = props.content;
+                    let books = [];
+                    books.push(content);
+
+                    return this.create({ name, books });
                 }
+
+                let oldModel = model;
+
+                this.update({ _name: oldModel._name }, { $push: { _books: props.content } });
 
                 return model;
             });
