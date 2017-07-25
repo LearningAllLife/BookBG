@@ -13,13 +13,22 @@ class BooksConroller {
             throw new Error('invalid book');
         }
 
-        var bookInstance = this.data.books.createInstanceOfClass(book);
-
-        var foundGenre = this.data.genres.findOrCreateBy({ name: book.genre, content: bookInstance });
-
-        var foundAuthor = this.data.authors.findOrCreateBy({ name: book.author, content: bookInstance });
-
-        return this.data.books.create(book);
+        this.data.books.create(book)
+            .then(object => {
+                let resultObject = object.ops[0];
+                return resultObject;
+            })
+            .then(book => {
+                this.data.genres.findOrCreateBy({ name: book.genre, content: book });
+                this.data.authors.findOrCreateBy({ name: book.author, content: book });
+            }).then(() => {
+                return res.redirect('/');
+            })
+            .catch((err) => {
+                // connect-flash
+                req.flash('error', err.message);
+                res.redirect(req.get('referer'));
+            });
     }
 
     getById(req, res) {

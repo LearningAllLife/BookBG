@@ -10,15 +10,7 @@ const attachTo = (app, data) => {
             return res.render('books/addBookForm');
         })
         .post('/add', isAdmin, (req, res) => {
-            return controller.create(req, res)
-                .then((result) => {
-                    return res.redirect('/');
-                })
-                .catch((err) => {
-                    // connect-flash
-                    req.flash('error', err.message);
-                    res.redirect(req.get('referer'));
-                });
+            return controller.create(req, res);
         })
         .get('/allPartial', (req, res) => {
             //todo implement logic for paging
