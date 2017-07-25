@@ -26,6 +26,12 @@ const attachTo = (app, data) => {
                     res.render('books/partialViews/booksContent.pug', { context: books, indeces: [1, 2, 3, 4, 5] });
                 });
         })
+        .get('/search', (req, res) => {
+            return controller.search(req, res);
+            // .then((books) => {
+            //     res.render('books/partialViews/booksContent.pug', { context: books, indeces: [1, 2, 3, 4, 5] });
+            // });
+        })
         .get('/:id', (req, res) => {
             return controller.getById(req, res)
                 .catch((err) => {

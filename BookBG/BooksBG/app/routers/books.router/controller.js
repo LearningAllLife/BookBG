@@ -45,6 +45,17 @@ class BooksConroller {
             });
     }
 
+    search(req, res) {
+        let input = req.originalUrl;
+        let index = input.indexOf('=');
+        let searchWord = input.substring(index + 1);
+
+        this.data.books.getAll({ _name: new RegExp(searchWord, 'i') })
+            .then(result => {
+                let books = result;
+            })
+    }
+
     getAllByFilter(req, res, filter) {
         return this.data.books.getAll(filter);
     }

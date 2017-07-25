@@ -1,6 +1,8 @@
 mixin search()
-    form#search-control.navbar-form.navbar-right(role='search')
-      input#search-input.form-control(type='text', placeholder='Search by title or author')
-      a#search-btn.btn.btn-info Search
+    form(action="/books/search" method="GET")#search-control.navbar-form.navbar-right(role='search')
+      .form-group
+      label(for='input') 
+      input#search-input.form-control(name="input" type='text', placeholder='Search by title or author' required)
+      button(type='submit')#search-btn.btn.btn-info Search
       a#shopping-cart-button.btn.btn-circle.hidden
         span.glyphicon.glyphicon-shopping-cart.cart
