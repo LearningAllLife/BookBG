@@ -2,7 +2,7 @@
 Telerik Node.js Project.
 
 TASKS: <br />
-1.SEARCH on home page <br />
+1.~~SEARCH on home page~~ <br />
 2.Order by  <br />
 3. ~~Genres and authors to be added on book creation (fixed!)~~ <br />
 4.Remake all router logic to not render views -> render only in controllers <br />
