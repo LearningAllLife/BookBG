@@ -2,8 +2,8 @@
 Telerik Node.js Project.
 
 TASKS: <br />
-1.SEARCH on home page <br />
-2.Order by  <br />
+1.~~SEARCH on home page~~ <br />
+2.~~Order by~~  <br />
 3. ~~Genres and authors to be added on book creation (fixed!)~~ <br />
 4.Remake all router logic to not render views -> render only in controllers <br />
 5.Paging on home page and authors page  <br />
@@ -16,3 +16,5 @@ TASKS: <br />
 11.Test all error messages. <br />
 12. 1 api route with authentication( see already implemented authentication) . <br />
 13.Remake allorders css.  <br />
+14.~~Fix adding book must not add same books.~~  <br />
+15.~~Fix Search by genre~~
