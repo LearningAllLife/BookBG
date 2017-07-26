@@ -13,17 +13,39 @@ class BooksConroller {
             throw new Error('invalid book');
         }
 
-        this.data.books.create(book)
-            .then((object) => {
-                const resultObject = object.ops[0];
-                return resultObject;
+        let len = book.title.length;
+        let sub = book.title.substring(0, len);
+
+        this.data.books.getAll({ _title: new RegExp(sub, 'i') })
+            .then((books) => {
+                let isFound = false;
+
+                books.forEach((b) => {
+                    if (b._title === book.title &&
+                        b._author === book.author) {
+                        isFound = true;
+                    }
+                })
+
+                return isFound;
             })
-            .then((resultBook) => {
-                this.data.genres.findOrCreateBy({ name: resultBook.genre, content: resultBook });
-                this.data.authors.findOrCreateBy({ name: resultBook.author, content: resultBook });
-            })
-            .then(() => {
-                return res.redirect('/');
+            .then((isFound) => {
+                if (!isFound) {
+                    this.data.books.create(book)
+                        .then((object) => {
+                            const resultObject = object.ops[0];
+                            return resultObject;
+                        })
+                        .then((resultBook) => {
+                            this.data.genres.findOrCreateBy({ name: resultBook.genre, content: resultBook });
+                            this.data.authors.findOrCreateBy({ name: resultBook.author, content: resultBook });
+                        })
+                        .then(() => {
+                            return res.redirect('/');
+                        })
+                } else {
+                    throw Error('Book already exist!');
+                }
             })
             .catch((err) => {
                 // connect-flash
