@@ -47,15 +47,59 @@ class BooksConroller {
     }
 
     search(req, res) {
-        const input = req.originalUrl;
-        const index = input.indexOf('=');
-        const searchWord = input.substring(index + 1);
+        const input = req.body;
 
-        console.log(searchWord);
-        // this.data.books.getAll({ _name: new RegExp(searchWord, 'i') })
-        //     .then(result => {
-        //         let books = result;
-        //     })
+        this.data.books.getAll({ _title: new RegExp(input.input, 'i') })
+            .then(result => {
+                let books = result;
+                let set = {};
+
+                this.collectBooks(books, set);
+
+                return set;
+            })
+            .then(set => {
+                this.data.authors.getAll({ _name: new RegExp(input.input, 'i') })
+                    .then(result => {
+                        let authors = result;
+                        authors.forEach((author) => {
+                            this.collectBooks(author._books, set);
+                        })
+
+                        return set;
+                    })
+                    .then((set) => {
+                        let result = [];
+
+                        Object.keys(set).forEach((key) => {
+                            result.push(set[key]);
+                        })
+
+                        return result;
+                    })
+                    .then((books) => {
+                        res.render('books/partialViews/booksContent.pug', { context: books, indeces: [1, 2, 3, 4, 5] });
+                    })
+            })
+    }
+
+    collectBooks(books, set) {
+        books.forEach((book) => {
+            let title = book._title;
+
+            if (set[title] === undefined) {
+                set[title] = book;
+            } else {
+                let author = book._author;
+                let bookToCheck = set[title];
+
+                if (set[author] === undefined) {
+                    if (bookToCheck._author !== author) {
+                        set[author] = book;
+                    }
+                }
+            }
+        })
     }
 
     getAllByFilter(req, res, filter) {
