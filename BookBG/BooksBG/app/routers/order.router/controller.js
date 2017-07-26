@@ -4,12 +4,16 @@ class OrdersCotroller {
     }
 
     returnAll(req, res) {
-        this.data.orders.getAll()
+        this.data.orders.getAll({ _isDone: false })
             .then((orders) => {
                 if (typeof orders === 'undefined' || orders === null) {
                     throw Error('No orders');
                 }
-                res.render('orders/allOrders.pug');
+                res.render('orders/allOrders.pug', { orders: orders });
+            })
+            .catch((err) => {
+                req.flash('error', err.message);
+                res.redirect(req.get('referer'));
             });
     }
     createOrder(req, res) {
@@ -85,6 +89,9 @@ class OrdersCotroller {
     }
     success(req, res) {
         res.render('orders/success.pug');
+    }
+    completeOrder(req, res) {
+
     }
 }
 

@@ -14,14 +14,15 @@ class BooksConroller {
         }
 
         this.data.books.create(book)
-            .then(object => {
-                let resultObject = object.ops[0];
+            .then((object) => {
+                const resultObject = object.ops[0];
                 return resultObject;
             })
-            .then(book => {
-                this.data.genres.findOrCreateBy({ name: book.genre, content: book });
-                this.data.authors.findOrCreateBy({ name: book.author, content: book });
-            }).then(() => {
+            .then((resultBook) => {
+                this.data.genres.findOrCreateBy({ name: resultBook.genre, content: resultBook });
+                this.data.authors.findOrCreateBy({ name: resultBook.author, content: resultBook });
+            })
+            .then(() => {
                 return res.redirect('/');
             })
             .catch((err) => {
@@ -32,7 +33,7 @@ class BooksConroller {
     }
 
     getById(req, res) {
-        let id = req.params.id;
+        const id = req.params.id;
         if (!id) {
             throw Error('No such book');
         }
@@ -46,9 +47,9 @@ class BooksConroller {
     }
 
     search(req, res) {
-        let input = req.originalUrl;
-        let index = input.indexOf('=');
-        let searchWord = input.substring(index + 1);
+        const input = req.originalUrl;
+        const index = input.indexOf('=');
+        const searchWord = input.substring(index + 1);
 
         console.log(searchWord);
         // this.data.books.getAll({ _name: new RegExp(searchWord, 'i') })

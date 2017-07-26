@@ -246,6 +246,47 @@ h4 span {
     font-weight: normal;
 }
 
+.stretch {
+    width: 100%;
+    height: 100%;
+    overflow-x: scroll;
+}
+
+.order-remove {
+    left: 0px;
+    display: block;
+    position: relative;
+    height: 16px;
+    width: 16px;
+    border: 1px solid white;
+    text-align: center;
+    line-height: 14px;
+    font-weight: bold;
+    background-color: red;
+    color: white;
+    border-radius: 3px;
+    cursor: pointer;
+    margin: 2px;
+}
+
+.books-container-small {
+    padding-left: 5px;
+    padding-right: 5px;
+    width: 200px;
+    height: 100%;
+    margin: 10px;
+    border: 1px solid blanchedalmond;
+    border-radius: 5px;
+}
+
+.books-characteristics {
+    margin-top: 8px;
+    padding-left: 5px;
+    margin-left: 20px;
+    font-weight: 600;
+    border-left: 1px solid blanchedalmond;
+}
+
 .flex-content {
     border: 2px solid #E5E5E5;
     border-radius: 5px;

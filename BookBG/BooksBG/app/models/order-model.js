@@ -7,6 +7,7 @@ class Order {
         const booksPrice = books
             .map((x) => parseInt(x._price, 10));
         this._totalPrice = booksPrice.reduce((a, b) => a + b, 0);
+        this.isDone = false;
     }
 
     get books() {
@@ -46,6 +47,14 @@ class Order {
             throw Error('Invalid phone Number');
         }
         this._phoneNumber = x;
+    }
+
+    get isDone() {
+        return this._isDone;
+    }
+
+    set isDone(x) {
+        this._isDone = x;
     }
 }
 

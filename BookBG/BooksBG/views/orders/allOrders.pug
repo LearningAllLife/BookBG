@@ -1,0 +1,36 @@
+extends ../_shared/layout
+block head
+ script(src='/public/scripts/allOrders.js')
+block body
+  .col-md-offset-2.col-md-8
+    ul.no-padding.overflow-scroll
+        each order in orders
+            li
+                div.flex-content.position-relative.stretch
+                    a.order-remove(title='remove' data-id=''+order._id) X
+                    .order-characteristics
+                        h4
+                        span.bold First Name: 
+                            =order._user._firstname
+                        h4
+                        span.bold Last Name: 
+                            =order._user._lastname
+                        h4
+                        span.bold Username: 
+                            =order._user._username
+                        h4
+                        span.bold Adress: 
+                            =order._adress
+                        h4
+                        span.bold PhoneNumber: 
+                            =order._phoneNumber
+                    .books-characteristics
+                        | Books :        
+                    each book in order._books
+                        .books-container-small
+                            h4
+                            span.bold Title: 
+                                =book._title
+                            h4
+                            span.bold ID: 
+                                =book._id 

@@ -7,27 +7,19 @@ class BaseData {
         this.collectionName = this._getCollectionName();
         this.collection = this.db.collection(this.collectionName);
     }
-
     findOrCreateBy(props) {
-        return this.getAll({ _name: props.name })
+        return this.getAll(props)
             .then(([model]) => {
                 if (!model) {
-                    let name = props.name;
-                    let content = props.content;
-                    let books = [];
-                    books.push(content);
-
-                    return this.create({ name, books });
+                    model = {};
+                    return this.collection.insert(model)
+                        .then(() => {
+                            return model;
+                        });
                 }
-
-                let oldModel = model;
-
-                this.update({ _name: oldModel._name }, { $push: { _books: props.content } });
-
                 return model;
             });
     }
-
     getById(id) {
         return this.collection.findOne({ _id: new ObjectID(id) })
             .then((model) => {

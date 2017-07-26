@@ -21,6 +21,19 @@ const attachTo = (app, data) => {
         })
         .get('/success', (req, res) => {
             return controller.success(req, res);
+        })
+        .put('/complete', (req, res) => {
+            const id = req.body.id;
+            return data.orders.getById(id)
+                .then((order) => {
+                    const updateModel = order;
+                    updateModel._isDone = true;
+                    return data.orders.update({ _id: order._id }, updateModel);
+                })
+                .then(() => {
+                    res.status(200);
+                    res.end();
+                });
         });
     app.use('/orders', isAuthenticated, router);
 };
