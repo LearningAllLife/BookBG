@@ -8,6 +8,7 @@ $(function() {
         function(data) {
             $('#genres-dropdown').html(data);
         });
+
     $(document).on('click', '#search-btn', function(e) {
         $.ajax({
             method: 'POST',
@@ -25,6 +26,20 @@ $(function() {
         $.ajax({
             method: 'POST',
             url: '/books/ordered',
+            data: { input: html },
+        }).done(function(data) {
+            $content = $('#content');
+            $content.html(data);
+        });
+    });
+
+    $(document).on('click', '#genreItem', function(e) {
+
+        let html = $(this).text();
+
+        $.ajax({
+            method: 'GET',
+            url: '/books/byGenre',
             data: { input: html },
         }).done(function(data) {
             $content = $('#content');

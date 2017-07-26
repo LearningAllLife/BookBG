@@ -45,13 +45,6 @@ class BooksConroller {
                 res.render('books/info.pug', { book: book, user: req.user });
             });
     }
-    compare(a, b) {
-        if (a.last_nom < b.last_nom)
-            return -1;
-        if (a.last_nom > b.last_nom)
-            return 1;
-        return 0;
-    }
 
     getAllOrdered(req, res) {
         let typeOfOrdering = req.body.input;

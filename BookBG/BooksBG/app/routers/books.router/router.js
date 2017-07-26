@@ -22,7 +22,19 @@ const attachTo = (app, data) => {
         .post('/ordered', (req, res) => {
             return controller.getAllOrdered(req, res);
         })
-        .get('/allResults', (req, res) => {
+
+    .get('/byGenre', (req, res) => {
+        let body = req.url;
+        let index = body.indexOf('=');
+        let genre = body.substring(index + 1);
+
+        return controller.getAllByFilter(req, res, { _genre: genre })
+            .then((books) => {
+                res.render('books/partialViews/booksContent.pug', { context: books, indeces: [1, 2, 3, 4, 5] });
+            })
+    })
+
+    .get('/allResults', (req, res) => {
             //todo implement logic for paging
             return controller.getAllByFilter(req, res)
                 .then((books) => {
