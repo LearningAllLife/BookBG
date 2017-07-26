@@ -12,43 +12,26 @@ const attachTo = (app, data) => {
         .post('/add', isAdmin, (req, res) => {
             return controller.create(req, res);
         })
-        .get('/allPartial', (req, res) => {
-            //todo implement logic for paging
-            return controller.getAllByFilter(req, res)
-                .then((books) => {
-                    res.render('books/partialViews/booksContent.pug', { context: books, indeces: [1, 2, 3, 4, 5] });
-                });
+        .get('/allPartial/:page', (req, res) => {
+            return controller.getAllByFilter(req, res);
         })
         .post('/ordered', (req, res) => {
             return controller.getAllOrdered(req, res);
         })
-
-    .get('/byGenre', (req, res) => {
-        let body = req.url;
-        let index = body.indexOf('=');
-        let genre = body.substring(index + 1);
-
-        return controller.getAllByFilter(req, res, { _genre: genre })
-            .then((books) => {
-                res.render('books/partialViews/booksContent.pug', { context: books, indeces: [1, 2, 3, 4, 5] });
-            })
-    })
-
-    .get('/allResults', (req, res) => {
-            //todo implement logic for paging
-            return controller.getAllByFilter(req, res)
-                .then((books) => {
-                    res.render('books/partialViews/booksContent.pug', { context: books, indeces: [1, 2, 3, 4, 5] });
-                });
+        .get('/byGenre', (req, res) => {
+            const body = req.url;
+            const index = body.indexOf('=');
+            const genre = body.substring(index + 1);
+            return controller.getAllByFilter(req, res, { _genre: genre });
+        })
+        .get('/allResults', (req, res) => {
+            return controller.getAllByFilter(req, res);
         })
         .get('/allPartialByGenre', (req, res) => {
             const query = req.query;
-            return controller.getAllByFilter(req, res, query)
-                .then((books) => {
-                    res.render('books/partialViews/booksContent.pug', { context: books, indeces: [1, 2, 3, 4, 5] });
-                });
+            return controller.getAllByFilter(req, res, query);
         })
-        .post('/search', (req, res) => {
+        .get('/search', (req, res) => {
             return controller.search(req, res);
         })
         .get('/:id', (req, res) => {

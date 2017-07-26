@@ -1,5 +1,5 @@
 $(function() {
-    $.get('/books/allPartial?p=1',
+    $.get('/books/allPartial/1',
         function(data) {
             $content = $('#content');
             $content.html(data);
@@ -33,7 +33,7 @@ $(function() {
         });
     });
 
-    $(document).on('click', '#genreItem', function(e) {
+    $(document).on('click', '.genreItem', function(e) {
 
         let html = $(this).text();
 
@@ -45,5 +45,17 @@ $(function() {
             $content = $('#content');
             $content.html(data);
         });
+    });
+    $(document).on('click', '.btn-page', function(e) {
+        let page = $(this).text();
+        $.ajax({
+            method: 'GET',
+            url: '/books/allPartial/' + page,
+        }).done(function(data) {
+            $content = $('#content');
+            $content.html(data);
+        });
+
+        return false;
     });
 });

@@ -1,7 +1,9 @@
 // const $ = require('../../../node_modules/jquery/dist/jquery.min.js');
 // const toastr = require('../../../node_modules/toastr/build/toastr.min.js');
+const PAGESIZE = 5;
 
 class BooksConroller {
+
     constructor(data) {
         this.data = data;
     }
@@ -173,11 +175,28 @@ class BooksConroller {
                     }
                 }
             }
-        })
+        });
     }
 
     getAllByFilter(req, res, filter) {
-        return this.data.books.getAll(filter);
+        const page = req.params.page || 1;
+        const skip = (page - 1) * PAGESIZE;
+        const limit = PAGESIZE;
+        let totalCount = 0;
+
+        return this.data.books.count(filter)
+            .then((count) => {
+                totalCount = count;
+                return this.data.books.getAll(filter, {}, skip, limit);
+            })
+            .then((books) => {
+                const pagesNumber = (totalCount / PAGESIZE | 0) + 1;
+                const indeces = [];
+                for (let a = 1; a <= pagesNumber; a += 1) {
+                    indeces.push(a);
+                }
+                res.render('books/partialViews/booksContent.pug', { context: books, indeces: indeces });
+            });
     }
 }
 

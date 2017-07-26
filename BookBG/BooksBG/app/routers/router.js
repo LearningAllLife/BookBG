@@ -17,13 +17,7 @@ const attachTo = (app, data) => {
         next();
     });
     app.get('/', (req, res) => {
-        const a = req.query;
-        //todo change logic for paging
-        if (typeof a.p === 'undefined') {
-            res.redirect('http://localhost:3000?p=1');
-        } else {
-            return res.render('home', req.user);
-        }
+        return res.render('home', req.user);
     });
     fs.readdirSync(__dirname)
         .filter((file) => file.includes('.router'))

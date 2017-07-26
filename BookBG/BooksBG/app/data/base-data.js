@@ -32,13 +32,21 @@ class BaseData {
             });
     }
 
-    getAll(filter) {
+    getAll(filter, options, skip, limit) {
         if (typeof filter === 'undefined') {
             filter = {};
         }
-        const options = {};
+        if (typeof options === 'undefined') {
+            options = {};
+        }
+        if (typeof skip === 'undefined') {
+            skip = 0;
+        }
+        if (typeof limit === 'undefined') {
+            limit = 0;
+        }
         const result = this.collection
-            .find(filter, options)
+            .find(filter, options, skip, limit)
             .toArray();
 
         return result;
@@ -59,6 +67,16 @@ class BaseData {
     update(model, updateModel) {
         return this.collection
             .updateOne(model, updateModel)
+            .then((res) => {
+                return res;
+            });
+    }
+    count(filter) {
+        if (typeof filter === 'undefined') {
+            filter = {};
+        }
+        return this.collection
+            .count(filter)
             .then((res) => {
                 return res;
             });
