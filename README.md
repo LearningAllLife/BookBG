@@ -16,5 +16,5 @@ TASKS: <br />
 11.Test all error messages. <br />
 12. 1 api route with authentication( see already implemented authentication) . <br />
 13.Remake allorders css.  <br />
-14.Fix adding book must not add same books.
+14.Fix adding book must not add same books. <br />
 15.Fix Search by genre.
