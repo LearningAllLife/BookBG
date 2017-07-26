@@ -19,8 +19,8 @@ const attachTo = (app, data) => {
     app.get('/', (req, res) => {
         const a = req.query;
         //todo change logic for paging
-        if (a.p === 'undefined') {
-            res.redirect('/?p=1');
+        if (typeof a.p === 'undefined') {
+            res.redirect('http://localhost:3000?p=1');
         } else {
             return res.render('home', req.user);
         }

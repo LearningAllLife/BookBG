@@ -1,5 +1,5 @@
 $(function() {
-    $.get('/books/allPartial',
+    $.get('/books/allPartial?p=1',
         function(data) {
             $content = $('#content');
             $content.html(data);
@@ -8,4 +8,6 @@ $(function() {
         function(data) {
             $('#genres-dropdown').html(data);
         });
+    //on klick of pageing show new page documet.on click...
+
 });

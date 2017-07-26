@@ -26,8 +26,7 @@ const init = (data, db) => {
         res.locals.messages = exprMesssages(req, res);
         next();
     });
-    // confing end
-    //atach routers
+
     require('./routers')
         .attachTo(app, data);
 
