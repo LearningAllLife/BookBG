@@ -45,6 +45,47 @@ class BooksConroller {
                 res.render('books/info.pug', { book: book, user: req.user });
             });
     }
+    compare(a, b) {
+        if (a.last_nom < b.last_nom)
+            return -1;
+        if (a.last_nom > b.last_nom)
+            return 1;
+        return 0;
+    }
+
+    getAllOrdered(req, res) {
+        let typeOfOrdering = req.body.input;
+
+        this.data.books.getAll()
+            .then(result => {
+                let books = result;
+
+                if (typeOfOrdering === 'Default') {
+                    return books;
+                }
+                if (typeOfOrdering === 'Author ascending') {
+                    return books.sort((a, b) => this._compare(a, b, 'author'));
+                }
+                if (typeOfOrdering === 'Author descending') {
+                    return books.sort((a, b) => this._compare(a, b, 'author')).reverse();
+                }
+                if (typeOfOrdering === 'Price ascending') {
+                    return books.sort((a, b) => this._compare(a, b, 'price'));
+                }
+                if (typeOfOrdering === 'Price descending') {
+                    return books.sort((a, b) => this._compare(a, b, 'price')).reverse();
+                }
+                if (typeOfOrdering === 'Title ascending') {
+                    return books.sort((a, b) => this._compare(a, b, 'title'));
+                }
+                if (typeOfOrdering === 'Title descending') {
+                    return books.sort((a, b) => this._compare(a, b, 'title')).reverse();
+                }
+            })
+            .then((books) => {
+                return res.render('books/partialViews/booksContent.pug', { context: books, indeces: [1, 2, 3, 4, 5] });
+            })
+    }
 
     search(req, res) {
         const input = req.body;
@@ -54,7 +95,7 @@ class BooksConroller {
                 let books = result;
                 let set = {};
 
-                this.collectBooks(books, set);
+                this._collectBooks(books, set);
 
                 return set;
             })
@@ -63,7 +104,7 @@ class BooksConroller {
                     .then(result => {
                         let authors = result;
                         authors.forEach((author) => {
-                            this.collectBooks(author._books, set);
+                            this._collectBooks(author._books, set);
                         })
 
                         return set;
@@ -83,7 +124,25 @@ class BooksConroller {
             })
     }
 
-    collectBooks(books, set) {
+    _compare(item1, item2, type) {
+        if (type === 'author') {
+            if (item1._author < item2._author)
+                return -1
+            if (item1._author > item2._author)
+                return 1
+            return 0
+        } else if (type === 'title') {
+            if (item1._title < item2._title)
+                return -1
+            if (item1._title > item2._title)
+                return 1
+            return 0
+        } else if (type === 'price') {
+            return item1._price - item2._price;
+        }
+    }
+
+    _collectBooks(books, set) {
         books.forEach((book) => {
             let title = book._title;
 

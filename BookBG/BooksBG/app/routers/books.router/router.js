@@ -19,6 +19,9 @@ const attachTo = (app, data) => {
                     res.render('books/partialViews/booksContent.pug', { context: books, indeces: [1, 2, 3, 4, 5] });
                 });
         })
+        .post('/ordered', (req, res) => {
+            return controller.getAllOrdered(req, res);
+        })
         .get('/allResults', (req, res) => {
             //todo implement logic for paging
             return controller.getAllByFilter(req, res)
@@ -35,9 +38,6 @@ const attachTo = (app, data) => {
         })
         .post('/search', (req, res) => {
             return controller.search(req, res);
-            // .then((books) => {
-            //     res.render('books/partialViews/booksContent.pug', { context: books, indeces: [1, 2, 3, 4, 5] });
-            // });
         })
         .get('/:id', (req, res) => {
             return controller.getById(req, res)
