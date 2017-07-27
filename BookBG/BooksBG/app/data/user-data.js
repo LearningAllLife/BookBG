@@ -1,5 +1,6 @@
 const BaseData = require('./base-data');
 const User = require('../models/user-model');
+const crypto = require('crypto');
 
 class UsersData extends BaseData {
     constructor(db) {
@@ -15,12 +16,22 @@ class UsersData extends BaseData {
                 if (!user) {
                     throw new Error('Invalid user');
                 }
-                if (user._password !== password) {
+
+                let pass = this._encrypt(password);
+
+                if (user._password !== pass) {
                     throw new Error('Invalid password');
                 }
 
                 return true;
             });
+    }
+
+    _encrypt(password) {
+        var hash = crypto.createHash('sha256')
+            .update(password)
+            .digest('hex');
+        return hash;
     }
 }
 
