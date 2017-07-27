@@ -5,8 +5,8 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
 const exprMesssages = require('express-messages');
-const session = require('express-session');
 const { initAuth } = require('./auth');
+const validator = require('validator');
 
 const init = (data, db) => {
 
@@ -28,7 +28,7 @@ const init = (data, db) => {
     });
 
     require('./routers')
-        .attachTo(app, data);
+        .attachTo(app, data, validator);
 
     return Promise.resolve(app);
 };

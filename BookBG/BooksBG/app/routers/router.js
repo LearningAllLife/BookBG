@@ -3,7 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const attachTo = (app, data) => {
+const attachTo = (app, data, validator) => {
     app.get('*', (req, res, next) => {
         if (req.user) {
             if (req.user._role === 'admin') {
@@ -23,7 +23,7 @@ const attachTo = (app, data) => {
         .filter((file) => file.includes('.router'))
         .forEach((file) => {
             const modulePath = path.join(__dirname, file);
-            require(modulePath).attachTo(app, data);
+            require(modulePath).attachTo(app, data, validator);
         });
 };
 

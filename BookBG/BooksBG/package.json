@@ -29,7 +29,9 @@
         "passport-local": "^1.0.0",
         "pug": "^2.0.0-rc.2",
         "serve-favicon": "^2.3.0",
-        "toastr": "^2.1.2"
+        "socket.io": "^2.0.3",
+        "toastr": "^2.1.2",
+        "validator": "^8.0.0"
     },
     "devDependencies": {
         "chai": "^3.5.0",

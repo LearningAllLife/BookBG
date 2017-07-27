@@ -1,4 +1,4 @@
-const init = (data) => {
+const init = (data, validator) => {
     const controller = {
         getAllUsers(req, res) {
             return data.users.getAll({ _isDeleted: false })
@@ -19,7 +19,8 @@ const init = (data) => {
                 });
         },
         createUser(req, res) {
-            const bodyUser = req.body;
+            let bodyUser = req.body;
+            bodyUser = this._escapeHtml(bodyUser);
             data.users.findByUsername(bodyUser.username)
                 .then((dbUser) => {
                     if (dbUser) {
@@ -48,6 +49,13 @@ const init = (data) => {
                     res.status(200);
                     res.end();
                 });
+        },
+        _escapeHtml(model) {
+            Object.keys(model).forEach(function(key) {
+                let val = model[key];
+                model[key] = validator.escape(val);
+            });
+            return model;
         }
     };
 

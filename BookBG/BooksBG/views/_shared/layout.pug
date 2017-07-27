@@ -19,9 +19,12 @@ html(lang='en')
     link(rel='stylesheet', href='/public/styles/custom-theme.css')
     script(src='/libs/jquery/dist/jquery.min.js')
     script(src='/libs/bootstrap/dist/js/bootstrap.min.js')
+    script(src="/libs/socket.io-client/dist/socket.io.js")
     script(src='/public/helpers/utils.js')
     script(src='/public/helpers/constants.js')
     script(src='/public/scripts/common.js')
+    script(src='/public/scripts/socket.js')
+      
     block head
   body
     header.position-fixed
@@ -39,7 +42,18 @@ html(lang='en')
         else
           a#nav-btn-login.btn.btn-info(href='/users/login') Login
           a#nav-btn-register.btn.btn-info(href='/users/register') Register 
-        
+      #messagesContainer.bordered     
+        ul#messages(style='display:none')
+          form#chatForm
+            button#hideMessages
+                |Hide
+            input#message(type='text' autocomplete="off")
+            button(type="submit")
+                | Send
+            button#clearMessages
+                | Clear    
+        button#showMessages
+          |show messages          
     #container
       != messages()
       block body

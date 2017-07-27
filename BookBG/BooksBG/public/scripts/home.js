@@ -58,4 +58,11 @@ $(function() {
 
         return false;
     });
+    $(document).on('click', '#showMessages,#hideMessages', function(e) {
+        $('#showMessages').toggle();
+        $('#messages').toggle();
+    });
+    $(document).on('click', '#clearMessages', function(e) {
+        $('.innerMessage').remove();
+    });
 });

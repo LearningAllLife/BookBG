@@ -5,13 +5,13 @@ const attachTo = (app, data) => {
 
     apiRouter
         .get('/', (req, res) => {
-            return data.genres.getAll()
-                .then((genres) => {
-                    return res.json(genres);
+            return data.users.getAll()
+                .then((users) => {
+                    return res.json(users);
                 });
         });
 
-    app.use('/api/genres', apiRouter);
+    app.use('/api/users', apiRouter);
 };
 
 module.exports = { attachTo };

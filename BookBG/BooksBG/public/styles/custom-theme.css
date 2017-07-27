@@ -246,6 +246,25 @@ h4 span {
     font-weight: normal;
 }
 
+#chatForm {
+    margin: 0;
+    padding: 0;
+}
+
+#messagesContainer {
+    position: fixed;
+    right: 0%;
+    bottom: 1%;
+    border: 1px solid burlywood;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+#messages {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
 .stretch {
     width: 100%;
     height: 100%;

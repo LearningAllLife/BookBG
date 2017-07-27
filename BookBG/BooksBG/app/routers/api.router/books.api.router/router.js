@@ -7,7 +7,7 @@ const attachTo = (app, data) => {
         .get('/', (req, res) => {
             return data.books.getAll()
                 .then((books) => {
-                    return res.send(books);
+                    return res.json(books);
                 });
         });
 

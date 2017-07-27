@@ -7,7 +7,7 @@ const attachTo = (app, data) => {
         .get('/', (req, res) => {
             return data.authors.getAll()
                 .then((authors) => {
-                    return res.send(authors);
+                    return res.json(authors);
                 });
         });
 

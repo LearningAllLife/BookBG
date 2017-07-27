@@ -2,9 +2,9 @@ const { Router } = require('express');
 const passport = require('passport');
 const { isAdmin } = require('../../auth/checkAuth');
 
-const attachTo = (app, data) => {
+const attachTo = (app, data, validator) => {
     const router = new Router();
-    const controller = require('./controller').init(data);
+    const controller = require('./controller').init(data, validator);
 
     router
         .get('/', isAdmin, (req, res) => {
