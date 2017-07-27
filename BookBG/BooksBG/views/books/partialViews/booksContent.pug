@@ -1,8 +1,10 @@
 h1#home-header Search through our library
 each item in context
+  if !item._isDeleted
     div.book-container.book-presentation-container
-        img.small(src=""+item._picture alt="empty")
-        div.book-characteristics
+        a.remove-button(data-id=item._id) X 
+        img.small(src=""+item._picture alt="empty")       
+        div.book-characteristics              
             h4.book-presentation-title 
                 | Title:
                 a.book-title(href="/books/"+item._id)

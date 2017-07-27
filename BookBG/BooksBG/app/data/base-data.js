@@ -1,5 +1,4 @@
 const { ObjectID } = require('mongodb');
-const crypto = require('crypto');
 
 class BaseData {
     constructor(db, ModelClass) {
@@ -61,18 +60,8 @@ class BaseData {
         return Promise.resolve()
             .then(() => {
                 const instance = this.createInstanceOfClass(model);
-
-                instance._password = this._encrypt(instance.password);
-
                 return this.collection.insert(instance);
             });
-    }
-
-    _encrypt(password) {
-        var hash = crypto.createHash('sha256')
-            .update(password)
-            .digest('hex');
-        return hash;
     }
 
     update(model, updateModel) {

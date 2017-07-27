@@ -31,7 +31,7 @@ const attachTo = (app, data) => {
             const query = req.query;
             return controller.getAllByFilter(req, res, query);
         })
-        .get('/search', (req, res) => {
+        .post('/search', (req, res) => {
             return controller.search(req, res);
         })
         .get('/:id', (req, res) => {
@@ -40,7 +40,13 @@ const attachTo = (app, data) => {
                     req.flash('error', err.message);
                     res.redirect(req.get('referer'));
                 });
+        })
+        .put('/delete', (req, res) => {
+            let bookId = req.body.input;
+
+            return controller.deleteBook(req, res, bookId);
         });
+
     app.use('/books', router);
 };
 

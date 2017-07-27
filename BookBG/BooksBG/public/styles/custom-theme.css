@@ -15,6 +15,11 @@ header {
     color: white;
 }
 
+.remove-button {
+    color: red!important;
+    position: absolute;
+}
+
 .cart:hover {
     color: #15FF00;
 }

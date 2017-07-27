@@ -27,6 +27,17 @@ class UsersData extends BaseData {
             });
     }
 
+    create(model) {
+        return Promise.resolve()
+            .then(() => {
+                const instance = this.createInstanceOfClass(model);
+
+                instance._password = this._encrypt(instance.password);
+
+                return this.collection.insert(instance);
+            });
+    }
+
     _encrypt(password) {
         var hash = crypto.createHash('sha256')
             .update(password)

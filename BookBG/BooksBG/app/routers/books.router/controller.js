@@ -178,6 +178,48 @@ class BooksConroller {
         });
     }
 
+    deleteBook(req, res, bookId) {
+        this.data.books.getById(bookId)
+            .then((book) => {
+
+                Promise.all(
+                        [
+                            this.data.genres.getAll({ _name: book._genre }),
+                            this.data.authors.getAll({ _name: book._author }),
+                            this.data.books.update({ _title: book._title }, { $set: { "_isDeleted": true } }),
+                        ])
+                    .then((result) => {
+                        let genreBooks = result[0][0]._name;
+                        let authorBooks = result[1][0].name;
+
+                        for (let i = 0; i < genreBooks.length; i++) {
+                            if (genreBooks._title === book._title &&
+                                genreBooks._author === book._title) {
+                                genreBooks = genreBooks.split(i, 1);
+                                break;
+                            }
+                        }
+
+                        for (let i = 0; i < authorBooks.length; i++) {
+                            if (authorBooks._title === book._title &&
+                                authorBooks._author === book._title) {
+                                authorBooks = authorBooks.split(i, 1);
+                                break;
+                            }
+                        }
+
+                        let genre = result[0][0];
+                        let author = result[1][0];
+
+                        genre._books = genreBooks;
+                        author._books = authorBooks;
+
+                        this.data.genres.update({ _name: book._genre }, genre);
+                        this.data.authors.update({ _name: book._author }, author);
+                    })
+            })
+    }
+
     getAllByFilter(req, res, filter) {
         const page = req.params.page || 1;
         const skip = (page - 1) * PAGESIZE;
