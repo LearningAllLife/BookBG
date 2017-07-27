@@ -34,7 +34,6 @@ $(function() {
     });
 
     $(document).on('click', '.genreItem', function(e) {
-
         let html = $(this).text();
 
         $.ajax({
@@ -62,7 +61,26 @@ $(function() {
         $('#showMessages').toggle();
         $('#messages').toggle();
     });
+
     $(document).on('click', '#clearMessages', function(e) {
         $('.innerMessage').remove();
+    });
+
+    $(document).on('click', '.remove-button', function(e) {
+        if (confirm("Are you sure you want to delete this book?") == true) {
+            var bookId = $(this).attr('data-id');
+            $(this).parent().remove();
+            $.ajax({
+                method: 'PUT',
+                url: '/books/delete',
+                data: { input: bookId }
+            });
+        } else {
+            return false;
+        }
+    });
+
+    $(document).on('click', '.remove-button', function(e) {
+
     });
 });
