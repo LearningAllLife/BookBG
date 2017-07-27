@@ -1,27 +1,36 @@
-.col-md-offset-2.col-md-8
-  ul.no-padding.overflow-scroll
-    each book in books
-      li
-        div.flex-content.position-relative
-          a.btn-remove(title='remove' data-id=''+book._id) X
-          img.extra-small(salt='empty', src=''+book._picture)
-          .book-characteristics
-            h4
-              span.bold Title:
-              a.book-title(href='/books/'+book._id) 
-                =book._title
-            h4
-              span.bold Author:
-              a.book-author(href='/authors/'+book._author)
-                =book._author
-            h4
-              span.bold Price:
-              span.book-price 
-                =book._price
-  .price-container
-    .cd-cart-total
-      h3
-        span.bold Total:
-        span#total-value.book-price-green 
-          =totalValue 
-    a.btn.btn-info#checkout(href='#') Checkout
+.modal-content
+  .modal-header
+    button.close(type="button" data-dismiss="modal") 
+        | &times;
+    h4.modal-title
+      |Checkout
+  .modal-body
+        ul.no-padding.overflow-scroll
+            each book in books
+              li
+                div.flex-content.position-relative
+                  a.btn-remove(title='remove' data-id=''+book._id) X
+                  img.extra-small(salt='empty', src=''+book._picture)
+                  .book-characteristics
+                    h4
+                      span.bold Title:
+                      a.book-title(href='/books/'+book._id) 
+                        =book._title
+                    h4
+                      span.bold Author:
+                      a.book-author(href='/authors/'+book._author)
+                        =book._author
+                    h4
+                      span.bold Price:
+                      span.book-price 
+                        =book._price
+        .price-container
+          .cd-cart-total
+            h3
+              span.bold Total:
+              span#total-value.book-price-green 
+                =totalValue 
+          a.btn.btn-info#checkout(href='#') Checkout
+  .modal-footer
+    button.btn.btn-default(type="button" data-dismiss="modal")
+      |Close

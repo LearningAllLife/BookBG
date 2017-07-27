@@ -57,15 +57,6 @@ $(function() {
 
         return false;
     });
-    $(document).on('click', '#showMessages,#hideMessages', function(e) {
-        $('#showMessages').toggle();
-        $('#messages').toggle();
-    });
-
-    $(document).on('click', '#clearMessages', function(e) {
-        $('.innerMessage').remove();
-    });
-
     $(document).on('click', '.remove-button', function(e) {
         if (confirm("Are you sure you want to delete this book?") == true) {
             var bookId = $(this).attr('data-id');

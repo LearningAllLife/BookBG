@@ -5,8 +5,9 @@ $(document).on('click', '#shoping-card', function(e) {
             url: '/orders/form',
             data: { ids: sessionStorage.getItem('card'), total: sessionStorage.getItem('totalValue') },
         }).done(function(data) {
-            $content = $('#container');
+            $content = $('#shoping-cart-modal-container');
             $content.html(data);
+            $('#shoping-cart-modal').modal('show');
         });
     } else {
         if ($('.tooltip.fade.bottom.in').length > 0) {
@@ -51,8 +52,16 @@ $(document).on('click', '#checkout', function(e) {
         url: '/orders/createOrder',
         data: { ids: sessionStorage.getItem('card'), total: sessionStorage.getItem('totalValue') },
     }).done(function(data) {
-        $content = $('#container');
+        $content = $('#shoping-cart-modal-container');
         $content.html(data);
     });
     return false;
+});
+$(document).on('click', '#showMessages,#hideMessages', function(e) {
+    $('#showMessages').toggle();
+    $('#messages').toggle();
+});
+
+$(document).on('click', '#clearMessages', function(e) {
+    $('.innerMessage').remove();
 });

@@ -1,41 +1,50 @@
-.col-md-offset-1.col-md-10
-  .checkout-container.flex-content
-    .order-info.col-md-8
-      h2 Your order:
-      ul.no-padding.checkout-cart
-        each book in books
-            li
-              .flex-content.position-relative
-                img.extra-small(salt='empty', src=''+book._picture)
-                .book-characteristics
-                  h4
-                    span.bold Title:
-                      =book._title
-                  h4
-                    span.bold Author:
-                      =book._author
-                  h4
-                    span.bold Price:
-                    span.book-price
-                      =book._price
-      div
-        h3
-          span.bold Total:
-          span.book-price-green 
-            =totalValue
-    .order-details.col-md-4
-      h2 Your details:
-      form(action="/orders/checkout" method="POST")
-        .form-group
-          label(for='firstname') First name
-          input#firstname.form-control(type='text' value=''+user._firstname disabled)
-        .form-group
-          label(for='phonenumber') Phone number
-          input#phonenumberphone.form-control(type='text' placeholder='Phone number' name='phoneNumber' required)
-        .form-group
-          label(for='address') Address:
-          textarea#address.form-control(rows='3' name='adress' placeholder='Your address' required)
-        input.hidden(type='text' value=''+user._id name='userId')
-        input.hidden(type='text' value=''+booksIds name='books')
-        div
-          button#confirm-order.btn.btn-success(type='submit') Confirm order
+.modal-content
+    .modal-header
+        button.close(type="button" data-dismiss="modal") 
+          | &times;
+        h4.modal-title
+          |Checkout
+    .modal-body
+        .checkout-container.flex-content
+          .order-info.col-md-8
+            h2 Your order:
+            ul.no-padding.checkout-cart
+              each book in books
+                  li
+                    .flex-content.position-relative
+                      img.extra-small(salt='empty', src=''+book._picture)
+                      .book-characteristics
+                        h4
+                          span.bold Title:
+                            =book._title
+                        h4
+                          span.bold Author:
+                            =book._author
+                        h4
+                          span.bold Price:
+                          span.book-price
+                            =book._price
+            div
+              h3
+                span.bold Total:
+                span.book-price-green 
+                  =totalValue
+          .order-details.col-md-4
+            h2 Your details:
+            form(action="/orders/checkout" method="POST")
+              .form-group
+                label(for='firstname') First name
+                input#firstname.form-control(type='text' value=''+user._firstname disabled)
+              .form-group
+                label(for='phonenumber') Phone number
+                input#phonenumberphone.form-control(type='text' placeholder='Phone number' name='phoneNumber' required)
+              .form-group
+                label(for='address') Address:
+                textarea#address.form-control(rows='3' name='adress' placeholder='Your address' required)
+              input.hidden(type='text' value=''+user._id name='userId')
+              input.hidden(type='text' value=''+booksIds name='books')
+              div
+                button#confirm-order.btn.btn-success(type='submit') Confirm order
+    .modal-footer
+      button.btn.btn-default(type="button" data-dismiss="modal")
+        | Close 
