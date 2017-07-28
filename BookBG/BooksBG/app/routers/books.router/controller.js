@@ -71,6 +71,7 @@ class BooksConroller {
     }
 
     getAllOrdered(req, res) {
+        let user = req.user;
         let typeOfOrdering = req.body.input;
 
         this.data.books.getAll()
@@ -100,11 +101,22 @@ class BooksConroller {
                 }
             })
             .then((books) => {
-                return res.render('books/partialViews/booksContent.pug', { context: books, indeces: [] });
+                if (!user) {
+                    user = {};
+                    user._isAdmin = false;
+                } else {
+                    if (user._role === 'admin') {
+                        user._isAdmin = true;
+                    } else {
+                        user._isAdmin = false;
+                    }
+                }
+                return res.render('books/partialViews/booksContent.pug', { context: books, isAdmin: user._isAdmin, indeces: [] });
             })
     }
 
     search(req, res) {
+        let user = req.user;
         const page = req.params.page || 1;
         const skip = (page - 1) * PAGESIZE;
         const limit = PAGESIZE;
@@ -139,7 +151,19 @@ class BooksConroller {
                     indeces.push(a);
                 }
                 booksToRender = booksToRender.slice(skip, skip + limit);
-                res.render('books/partialViews/booksContent.pug', { context: booksToRender, indeces: indeces, marker: 'search' });
+
+                if (!user) {
+                    user = {};
+                    user._isAdmin = false;
+                } else {
+                    if (user._role === 'admin') {
+                        user._isAdmin = true;
+                    } else {
+                        user._isAdmin = false;
+                    }
+                }
+
+                res.render('books/partialViews/booksContent.pug', { context: booksToRender, isAdmin: user._isAdmin, indeces: indeces, marker: 'search' });
             });
     }
 
@@ -227,6 +251,7 @@ class BooksConroller {
     }
 
     getAllByFilter(req, res, filter) {
+        let user = req.user;
         const route = req.path.slice(1, req.path.indexOf('/', 1));
         const page = req.params.page || 1;
         const skip = (page - 1) * PAGESIZE;
@@ -244,7 +269,13 @@ class BooksConroller {
                 for (let a = 1; a <= pagesNumber; a += 1) {
                     indeces.push(a);
                 }
-                res.render('books/partialViews/booksContent.pug', { context: books, indeces: indeces, marker: route });
+
+                if (!user) {
+                    user = {};
+                    user._isAdmin = false;
+                }
+
+                res.render('books/partialViews/booksContent.pug', { context: books, isAdmin: user._isAdmin, indeces: indeces, marker: route });
             });
     }
 }
