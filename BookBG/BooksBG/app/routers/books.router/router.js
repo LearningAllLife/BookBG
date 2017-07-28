@@ -33,11 +33,7 @@ const attachTo = (app, data) => {
             return controller.search(req, res);
         })
         .get('/:id', (req, res) => {
-            return controller.getById(req, res)
-                .catch((err) => {
-                    req.flash('error', err.message);
-                    res.redirect(req.get('referer'));
-                });
+            return controller.getById(req, res);
         })
         .put('/delete', (req, res) => {
             const bookId = req.body.input;

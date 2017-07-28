@@ -13,10 +13,7 @@ const attachTo = (app, data) => {
             return controller.create(req, res);
         })
         .get('/allForDropDown', (req, res) => {
-            return controller.getAllByFilter(req, res)
-                .then((genres) => {
-                    res.render('genres/partialViews/forDropDown.pug', { data: genres });
-                });
+            return controller.getGenresForDropDown(req, res);
         });
 
     app.use('/genres', router);

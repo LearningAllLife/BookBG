@@ -7,7 +7,6 @@ const attachTo = (app, data) => {
 
     router
         .get('/all', isAdmin, (req, res) => {
-            //get all orders for a admin to use
             return controller.returnAll(res, res);
         })
         .post('/form', (req, res) => {
@@ -23,17 +22,7 @@ const attachTo = (app, data) => {
             return controller.success(req, res);
         })
         .put('/complete', (req, res) => {
-            const id = req.body.id;
-            return data.orders.getById(id)
-                .then((order) => {
-                    const updateModel = order;
-                    updateModel._isDone = true;
-                    return data.orders.update({ _id: order._id }, updateModel);
-                })
-                .then(() => {
-                    res.status(200);
-                    res.end();
-                });
+            return controller.completeOrder(req, res);
         });
     app.use('/orders', isAuthenticated, router);
 };

@@ -25,10 +25,12 @@ class GenresConroller {
                 return res.redirect('/genres/add');
             });
     }
-    getAllByFilter(req, res) {
+    getGenresForDropDown(req, res) {
         const filter = {};
-        const result = this.data.genres.getAll(filter);
-        return result;
+        return this.data.genres.getAll(filter)
+            .then((genres) => {
+                res.render('genres/partialViews/forDropDown.pug', { data: genres });
+            });
     }
 
 }

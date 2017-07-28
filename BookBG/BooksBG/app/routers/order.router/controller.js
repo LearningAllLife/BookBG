@@ -91,7 +91,21 @@ class OrdersCotroller {
         res.render('orders/success.pug');
     }
     completeOrder(req, res) {
-
+        const id = req.body.id;
+        return this.data.orders.getById(id)
+            .then((order) => {
+                const updateModel = order;
+                updateModel._isDone = true;
+                return this.data.orders.update({ _id: order._id }, updateModel);
+            })
+            .then(() => {
+                res.status(200);
+                res.end();
+            })
+            .catch((err) => {
+                req.flash('error', err.message);
+                res.redirect(req.get('referer'));
+            });
     }
 }
 

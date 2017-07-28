@@ -67,6 +67,10 @@ class BooksConroller {
                     throw Error('No such book');
                 }
                 res.render('books/info.pug', { book: book, user: req.user });
+            })
+            .catch((err) => {
+                req.flash('error', err.message);
+                res.redirect(req.get('referer'));
             });
     }
 
