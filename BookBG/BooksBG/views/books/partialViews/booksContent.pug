@@ -21,6 +21,6 @@ div(style="clear: both;")
 .text-center
     each index in indeces
         div.btn-group.btn-page-div.col-centered
-            a.btn.btn-primary.btn-page(href="?page="+index)
+            a.btn.btn-primary.btn-page(href="?page="+index data-route=''+marker)
                 =index
 

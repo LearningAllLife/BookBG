@@ -100,45 +100,47 @@ class BooksConroller {
                 }
             })
             .then((books) => {
-                return res.render('books/partialViews/booksContent.pug', { context: books, indeces: [1, 2, 3, 4, 5] });
+                return res.render('books/partialViews/booksContent.pug', { context: books, indeces: [] });
             })
     }
 
     search(req, res) {
+        const page = req.params.page || 1;
+        const skip = (page - 1) * PAGESIZE;
+        const limit = PAGESIZE;
+        let totalCount = 0;
         const input = req.body;
+        let books = [];
+        let set = {};
+        let booksResult = [];
 
         this.data.books.getAll({ _title: new RegExp(input.input, 'i') })
-            .then(result => {
-                let books = result;
-                let set = {};
-
+            .then((result) => {
+                books = result;
                 this._collectBooks(books, set);
-
-                return set;
+                return this.data.authors.getAll({ _name: new RegExp(input.input, 'i') });
             })
-            .then(set => {
-                this.data.authors.getAll({ _name: new RegExp(input.input, 'i') })
-                    .then(result => {
-                        let authors = result;
-                        authors.forEach((author) => {
-                            this._collectBooks(author._books, set);
-                        })
+            .then((result) => {
+                const authors = result;
+                authors.forEach((author) => {
+                    this._collectBooks(author._books, set);
+                });
+                Object.keys(set).forEach((key) => {
+                    booksResult.push(set[key]);
+                });
 
-                        return set;
-                    })
-                    .then((set) => {
-                        let result = [];
-
-                        Object.keys(set).forEach((key) => {
-                            result.push(set[key]);
-                        })
-
-                        return result;
-                    })
-                    .then((books) => {
-                        res.render('books/partialViews/booksContent.pug', { context: books, indeces: [1, 2, 3, 4, 5] });
-                    })
+                return booksResult;
             })
+            .then((booksToRender) => {
+                totalCount = booksToRender.length;
+                const pagesNumber = (totalCount / PAGESIZE | 0) + 1;
+                const indeces = [];
+                for (let a = 1; a <= pagesNumber; a += 1) {
+                    indeces.push(a);
+                }
+                booksToRender = booksToRender.slice(skip, skip + limit);
+                res.render('books/partialViews/booksContent.pug', { context: booksToRender, indeces: indeces, marker: 'search' });
+            });
     }
 
     _compare(item1, item2, type) {
@@ -189,30 +191,34 @@ class BooksConroller {
                             this.data.books.update({ _title: book._title }, { $set: { "_isDeleted": true } }),
                         ])
                     .then((result) => {
-                        let genreBooks = result[0][0]._name;
-                        let authorBooks = result[1][0].name;
+                        let genreBooks = result[0][0]._books;
+                        let authorBooks = result[1][0]._books;
+                        var b = book;
 
                         for (let i = 0; i < genreBooks.length; i++) {
-                            if (genreBooks._title === book._title &&
-                                genreBooks._author === book._title) {
-                                genreBooks = genreBooks.split(i, 1);
+
+                            let currentBook = genreBooks[i];
+
+                            if (currentBook._title === b._title &&
+                                currentBook._author === b._author) {
+                                genreBooks = genreBooks.splice(i, 1);
                                 break;
                             }
                         }
 
                         for (let i = 0; i < authorBooks.length; i++) {
-                            if (authorBooks._title === book._title &&
-                                authorBooks._author === book._title) {
-                                authorBooks = authorBooks.split(i, 1);
+
+                            let currentBook = authorBooks[i];
+
+                            if (currentBook._title === book._title &&
+                                currentBook._author === book._author) {
+                                authorBooks = authorBooks.splice(i, 1);
                                 break;
                             }
                         }
 
                         let genre = result[0][0];
                         let author = result[1][0];
-
-                        genre._books = genreBooks;
-                        author._books = authorBooks;
 
                         this.data.genres.update({ _name: book._genre }, genre);
                         this.data.authors.update({ _name: book._author }, author);
@@ -221,6 +227,7 @@ class BooksConroller {
     }
 
     getAllByFilter(req, res, filter) {
+        const route = req.path.slice(1, req.path.indexOf('/', 1));
         const page = req.params.page || 1;
         const skip = (page - 1) * PAGESIZE;
         const limit = PAGESIZE;
@@ -232,12 +239,12 @@ class BooksConroller {
                 return this.data.books.getAll(filter, {}, skip, limit);
             })
             .then((books) => {
-                const pagesNumber = (totalCount / PAGESIZE | 0) + 1;
+                const pagesNumber = Math.ceil(totalCount / PAGESIZE);
                 const indeces = [];
                 for (let a = 1; a <= pagesNumber; a += 1) {
                     indeces.push(a);
                 }
-                res.render('books/partialViews/booksContent.pug', { context: books, indeces: indeces });
+                res.render('books/partialViews/booksContent.pug', { context: books, indeces: indeces, marker: route });
             });
     }
 }

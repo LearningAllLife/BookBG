@@ -18,10 +18,8 @@ const attachTo = (app, data) => {
         .post('/ordered', (req, res) => {
             return controller.getAllOrdered(req, res);
         })
-        .get('/byGenre', (req, res) => {
-            const body = req.url;
-            const index = body.indexOf('=');
-            const genre = body.substring(index + 1);
+        .get('/byGenre/:page', (req, res) => {
+            const genre = req.query.input;
             return controller.getAllByFilter(req, res, { _genre: genre });
         })
         .get('/allResults', (req, res) => {
@@ -31,7 +29,7 @@ const attachTo = (app, data) => {
             const query = req.query;
             return controller.getAllByFilter(req, res, query);
         })
-        .post('/search', (req, res) => {
+        .post('/search/:page', (req, res) => {
             return controller.search(req, res);
         })
         .get('/:id', (req, res) => {
@@ -42,7 +40,7 @@ const attachTo = (app, data) => {
                 });
         })
         .put('/delete', (req, res) => {
-            let bookId = req.body.input;
+            const bookId = req.body.input;
 
             return controller.deleteBook(req, res, bookId);
         });
