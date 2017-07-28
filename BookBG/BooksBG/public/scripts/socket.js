@@ -10,4 +10,7 @@
      socket.on('private', function(data) {
          $('#messages').append($('<li class="innerMessage">').text("         Support: " + data.msg));
      });
+     socket.on('chat', function(data) {
+         $('#messages').append($('<li class="innerMessage">').text("         Support: " + data.msg));
+     });
  });

@@ -44,11 +44,11 @@ html(lang='en')
           else
             #messagesContainer
               ul#messages(style='display:none')
-                form#chatForm
+                #chat
                   button#hideMessages
                       |Hide
                   input#message(type='text' autocomplete="off")
-                  button(type="submit")
+                  button#sendMessages
                       | Send
                   button#clearMessages
                       | Clear    

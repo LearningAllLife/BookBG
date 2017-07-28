@@ -41,7 +41,6 @@ $(document).ready(function() {
         });
     }
 
-    // If n < 10, add a leading 0
     function pad(n) {
         return (n < 10 ? '0' + n : n);
     }
