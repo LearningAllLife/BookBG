@@ -189,30 +189,34 @@ class BooksConroller {
                             this.data.books.update({ _title: book._title }, { $set: { "_isDeleted": true } }),
                         ])
                     .then((result) => {
-                        let genreBooks = result[0][0]._name;
-                        let authorBooks = result[1][0].name;
+                        let genreBooks = result[0][0]._books;
+                        let authorBooks = result[1][0]._books;
+                        var b = book;
 
                         for (let i = 0; i < genreBooks.length; i++) {
-                            if (genreBooks._title === book._title &&
-                                genreBooks._author === book._title) {
-                                genreBooks = genreBooks.split(i, 1);
+
+                            let currentBook = genreBooks[i];
+
+                            if (currentBook._title === b._title &&
+                                currentBook._author === b._author) {
+                                genreBooks = genreBooks.splice(i, 1);
                                 break;
                             }
                         }
 
                         for (let i = 0; i < authorBooks.length; i++) {
-                            if (authorBooks._title === book._title &&
-                                authorBooks._author === book._title) {
-                                authorBooks = authorBooks.split(i, 1);
+
+                            let currentBook = authorBooks[i];
+
+                            if (currentBook._title === book._title &&
+                                currentBook._author === book._author) {
+                                authorBooks = authorBooks.splice(i, 1);
                                 break;
                             }
                         }
 
                         let genre = result[0][0];
                         let author = result[1][0];
-
-                        genre._books = genreBooks;
-                        author._books = authorBooks;
 
                         this.data.genres.update({ _name: book._genre }, genre);
                         this.data.authors.update({ _name: book._author }, author);
