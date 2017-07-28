@@ -1,0 +1,26 @@
+extends ../_shared/layout
+block head
+    script(src='/public/scripts/chat.js')
+block body
+    #wrapper
+        h1 Support chat
+        #support-chat
+            .info
+            #status Connecting...
+            #nick
+            #online
+                | There are 
+                span#total 0
+                |  users online.
+            #logs
+            #messages
+                ul
+            #users
+                ul
+            .controls
+            input#chatInput(type='text', name='chatInput', maxlength='255', value='')
+            #talkto
+                | You are talking to: 
+                strong
+                span#selected broadcast              
+                a#broadcast(href='#', title='Talk to everyone') broadcast

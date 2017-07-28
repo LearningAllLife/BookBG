@@ -1,11 +1,13 @@
  $(function() {
      var socket = io();
-     $('#chatForm').submit(function() {
-         socket.emit('chat message', $('#message').val());
+     $('#sendMessages').click(function() {
+         const msg = $('#message').val();
+         socket.emit("chat to support", { msg: msg });
          $('#message').val('');
+         $('#messages').append($('<li class="innerMessage">').text("You: " + msg));
          return false;
      });
-     socket.on('chat message', function(msg) {
-         $('#messages').append($('<li class="innerMessage">').text(msg));
+     socket.on('private', function(data) {
+         $('#messages').append($('<li class="innerMessage">').text("         Support: " + data.msg));
      });
  });

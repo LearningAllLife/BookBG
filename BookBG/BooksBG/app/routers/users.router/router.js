@@ -31,7 +31,11 @@ const attachTo = (app, data, validator) => {
         })
         .put('/remove', isAdmin, (req, res) => {
             return controller.deleteUser(req, res);
+        })
+        .get('/chat', (req, res) => {
+            return controller.chat(req, res);
         });
+
 
     app.use('/users', router);
 };

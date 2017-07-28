@@ -50,6 +50,9 @@ const init = (data, validator) => {
                     res.end();
                 });
         },
+        chat(req, res) {
+            return res.render('./users/chat');
+        },
         _escapeHtml(model) {
             Object.keys(model).forEach(function(key) {
                 let val = model[key];

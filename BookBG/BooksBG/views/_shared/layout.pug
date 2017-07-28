@@ -23,8 +23,11 @@ html(lang='en')
     script(src='/public/helpers/utils.js')
     script(src='/public/helpers/constants.js')
     script(src='/public/scripts/common.js')
-    script(src='/public/scripts/socket.js')
-      
+    if user
+      unless user._isAdmin
+        script(src='/public/scripts/socket.js')
+    else
+        script(src='/public/scripts/socket.js')
     block head
   body
     header.position-fixed
@@ -38,22 +41,35 @@ html(lang='en')
               | Shopping Cart  
           if user._isAdmin
             +adminMenuMixin()
+          else
+            #messagesContainer
+              ul#messages(style='display:none')
+                form#chatForm
+                  button#hideMessages
+                      |Hide
+                  input#message(type='text' autocomplete="off")
+                  button(type="submit")
+                      | Send
+                  button#clearMessages
+                      | Clear    
+              button#showMessages
+                |show messages
           a#nav-btn-logout.btn.btn-info(href='/users/sign-out') Logout
         else
           a#nav-btn-login.btn.btn-info(href='/users/login') Login
-          a#nav-btn-register.btn.btn-info(href='/users/register') Register 
-      #messagesContainer     
-        ul#messages(style='display:none')
-          form#chatForm
-            button#hideMessages
-                |Hide
-            input#message(type='text' autocomplete="off")
-            button(type="submit")
-                | Send
-            button#clearMessages
-                | Clear    
-        button#showMessages
-          |show messages          
+          a#nav-btn-register.btn.btn-info(href='/users/register') Register
+          #messagesContainer
+              ul#messages(style='display:none')
+                #chat
+                  button#hideMessages
+                      |Hide
+                  input#message(type='text' autocomplete="off")
+                  button#sendMessages
+                      | Send
+                  button#clearMessages
+                      | Clear    
+              button#showMessages
+                |show messages
     #container
       != messages()
       div#shoping-cart-modal.modal.fade(role="dialog")
