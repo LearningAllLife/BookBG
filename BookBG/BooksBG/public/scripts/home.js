@@ -1,7 +1,7 @@
 $(function() {
     let search = function(input, searchParam) {
         const page = input || 1;
-        const search = searchParam || $('#search-input').val();
+        const search = searchParam || $('#search-input').val().trim();
         $.ajax({
             method: 'POST',
             url: '/books/search/' + page,
@@ -35,7 +35,12 @@ $(function() {
         });
 
     $(document).on('click', '#search-btn', function(e) {
-        search();
+        const value = $('#search-input').val().trim();
+        if (value) {
+            return search();
+        } else {
+            return false;
+        }
     });
 
     $(document).on('click', '#dropdownI', function(e) {
