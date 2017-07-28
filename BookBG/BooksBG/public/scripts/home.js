@@ -28,6 +28,7 @@ $(function() {
             $content = $('#content');
             $content.html(data);
         });
+
     $.get('/genres/allForDropDown',
         function(data) {
             $('#genres-dropdown').html(data);
@@ -54,6 +55,7 @@ $(function() {
         $('#genresDropdown').data('selection', html);
         genre(1, html);
     });
+
     $(document).on('click', '.btn-page', function(e) {
         const route = $(this).data('route');
         const page = $(this).text();
@@ -72,6 +74,7 @@ $(function() {
         }
         return false;
     });
+
     $(document).on('click', '.remove-button', function(e) {
         if (confirm("Are you sure you want to delete this book?") == true) {
             var bookId = $(this).attr('data-id');
@@ -84,9 +87,5 @@ $(function() {
         } else {
             return false;
         }
-    });
-
-    $(document).on('click', '.remove-button', function(e) {
-
     });
 });
