@@ -30,9 +30,13 @@ class UsersData extends BaseData {
     create(model) {
         return Promise.resolve()
             .then(() => {
-                const instance = this.createInstanceOfClass(model);
-
-                instance._password = this._encrypt(instance.password);
+                let instance;
+                try {
+                    instance = this.createInstanceOfClass(model);
+                    instance._password = this._encrypt(instance.password);
+                } catch (err) {
+                    throw Error(err.message);
+                }
 
                 return this.collection.insert(instance);
             });

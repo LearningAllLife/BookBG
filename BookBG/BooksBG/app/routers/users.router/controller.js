@@ -27,14 +27,14 @@ const init = (data, validator) => {
                         throw new Error('User already exists');
                     }
                     bodyUser.role = 'user';
-                    data.users.create(bodyUser);
-                    return bodyUser;
+                    return data.users.create(bodyUser);
                 })
-                .then((dbUser) => {
+                .then((user) => {
                     return res.redirect('/users/login');
                 })
                 .catch((err) => {
-                    req.flash('error', err);
+                    req.flash('error', err.message);
+                    res.redirect(req.get('referer'));
                 });
         },
         deleteUser(req, res) {

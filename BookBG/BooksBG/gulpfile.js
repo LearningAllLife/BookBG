@@ -45,7 +45,7 @@ gulp.task('test-server:start', () => {
         .then(() => require('./app/db').init(config.connectionString))
         .then((db) => {
             database = db;
-            require('./app/data').init(db);
+            return require('./app/data').init(db);
         })
         .then((data) => require('./app').init(data, database))
         .then((app) => {
