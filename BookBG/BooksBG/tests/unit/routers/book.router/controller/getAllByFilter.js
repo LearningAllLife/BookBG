@@ -10,7 +10,7 @@ describe('books controller', () => {
         let controller = null;
         let req = null;
         let res = null;
-        const items = [1, 2, 3, 4];
+        const items = [1, 2, 3, 4, 5, 6];
 
         beforeEach(() => {
             data = {
@@ -37,16 +37,29 @@ describe('books controller', () => {
             return controller.getAllByFilter(req, res)
                 .then(() => {
                     expect(res.context.context).to.deep.equal(items);
+                    expect(res.viewName).to.equal('books/partialViews/booksContent.pug');
                 })
         })
 
-        it('expect getAllByFilter() to render corret view', () => {
-            req.path = 'testing/1';
+        it('expect getAllByFilter() to work correctly with indeces', () => {
+            data = {
+                books: {
+                    count: () => {
+                        return Promise.resolve(6);
+                    },
+                    getAll: () => {
+                        return Promise.resolve(items);
+                    }
+                },
+            };
+
+            req.path = 'testing/2';
             req.params = {};
-            req.params.page = {};
+            req.params.page = 2;
 
             return controller.getAllByFilter(req, res)
                 .then(() => {
+                    expect(res.context.context).to.deep.equal([6]);
                     expect(res.viewName).to.equal('books/partialViews/booksContent.pug');
                 })
         })
