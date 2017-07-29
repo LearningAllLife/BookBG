@@ -4,7 +4,6 @@ const { Strategy } = require('passport-local');
 const MongoStore = require('connect-mongo')(session);
 // const config = require('../../config/config');
 function initAuth(app, { users }, db, secret) {
-
     passport.use(new Strategy((username, password, done) => {
         users.checkPassword(username, password)
             .then(() => {
@@ -14,7 +13,7 @@ function initAuth(app, { users }, db, secret) {
                 done(null, user);
             })
             .catch((err) => {
-                done(err);
+                done(null, false, { message: err.message });
             });
     }));
 

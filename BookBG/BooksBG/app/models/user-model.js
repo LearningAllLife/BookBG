@@ -7,7 +7,7 @@ const VALIDATOR = {
         }
     },
     IT_IS_VALID_STRING: function(x) {
-        if (x == undefined || x == NaN || typeof x != 'string') {
+        if (x == undefined || x == NaN || typeof x !== 'string') {
             throw Error('invalid string');
         }
     },
@@ -17,7 +17,7 @@ const VALIDATOR = {
         }
     },
     Check_If_IT_Matches_Pattern: function(x) {
-        let pattern = /([A-Za-z])+/g;
+        const pattern = /([A-Za-z])+/g;
 
         if (!pattern.test(x)) {
             throw Error('invalid name!');
@@ -34,12 +34,12 @@ const VALIDATOR = {
         }
     },
     Check_If_Email_Matches_Pattern: function(email) {
-        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if (!re.test(email)) {
-            throw Error("Invalid email!");
+            throw Error('Invalid email!');
         }
-    }
-}
+    },
+};
 
 class User {
     constructor({ firstname, lastname, username, password, email, role }) {
@@ -57,7 +57,6 @@ class User {
     }
 
     set firstname(x) {
-
         VALIDATOR.IT_IS_VALID_STRING(x);
         VALIDATOR.Check_If_It_Is_In_Range(x.length, 2, 16, 'firstname');
         VALIDATOR.Check_If_IT_Matches_Pattern(x);
@@ -71,7 +70,7 @@ class User {
 
     set lastname(x) {
         VALIDATOR.IT_IS_VALID_STRING(x);
-        VALIDATOR.Check_If_It_Is_In_Range(x.length, 3, 20, 'lastname');
+        VALIDATOR.Check_If_It_Is_In_Range(x.length, 2, 16, 'lastname');
         VALIDATOR.Check_If_IT_Matches_Pattern(x);
 
         this._lastname = x;
@@ -83,7 +82,7 @@ class User {
 
     set username(x) {
         VALIDATOR.IT_IS_VALID_STRING(x);
-        VALIDATOR.Check_If_It_Is_In_Range(x.length, 1, 14, 'username');
+        VALIDATOR.Check_If_It_Is_In_Range(x.length, 2, 14, 'username');
         VALIDATOR.Check_If_Username_Matches_Pattern(x);
 
         this._username = x;

@@ -9,9 +9,8 @@ const { initAuth } = require('./auth');
 const validator = require('validator');
 
 const init = (data, db) => {
-
     const app = express();
-    //atach authentication
+
     initAuth(app, data, db, 'Top app');
 
     // confing start 
