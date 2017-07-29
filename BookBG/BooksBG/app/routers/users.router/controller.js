@@ -31,7 +31,7 @@ const init = (data, validator) => {
                     return bodyUser;
                 })
                 .then((dbUser) => {
-                    return res.redirect('/');
+                    return res.redirect('/users/login');
                 })
                 .catch((err) => {
                     req.flash('error', err);
@@ -55,11 +55,11 @@ const init = (data, validator) => {
         },
         _escapeHtml(model) {
             Object.keys(model).forEach(function(key) {
-                let val = model[key];
+                const val = model[key];
                 model[key] = validator.escape(val);
             });
             return model;
-        }
+        },
     };
 
     return controller;

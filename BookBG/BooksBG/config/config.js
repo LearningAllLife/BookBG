@@ -1,24 +1,24 @@
-var path = require('path'),
-    rootPath = path.normalize(__dirname + '/..'),
-    env = 'development';
+/* globals __dirname */
+const path = require('path');
+const rootPath = path.normalize(__dirname + '/..');
 
-var config = {
+const config = {
     development: {
         root: rootPath,
         app: {
-            name: 'booksbg'
+            name: 'booksbg',
         },
-        port: 3000,
-        db: 'mongodb://localhost/booksbg-development'
+        port: 80,
+        db: 'mongodb://localhost/booksbg-development',
     },
 
     test: {
         root: rootPath,
         app: {
-            name: 'booksbg'
+            name: 'booksbg',
         },
         port: process.env.PORT || 3000,
-        db: 'mongodb://localhost/booksbg-test'
+        db: 'mongodb://localhost/booksbg-test',
     },
 };
 

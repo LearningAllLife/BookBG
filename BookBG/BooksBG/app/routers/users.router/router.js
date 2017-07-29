@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const passport = require('passport');
-const { isAdmin } = require('../../auth/checkAuth');
+const { isAdmin, isAuthenticated } = require('../../auth/checkAuth');
 
 const attachTo = (app, data, validator) => {
     const router = new Router();
@@ -21,18 +21,17 @@ const attachTo = (app, data, validator) => {
         })
         .post('/login', passport.authenticate('local', {
             successRedirect: '/',
-            successFlash: true,
             failureRedirect: '/users/login',
             failureFlash: true,
         }))
-        .get('/sign-out', (req, res) => {
+        .get('/sign-out', isAuthenticated, (req, res) => {
             req.logout();
             res.redirect('/');
         })
         .put('/remove', isAdmin, (req, res) => {
             return controller.deleteUser(req, res);
         })
-        .get('/chat', (req, res) => {
+        .get('/chat', isAdmin, (req, res) => {
             return controller.chat(req, res);
         });
 

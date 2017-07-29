@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const async = () => {
     return Promise.resolve();
 };
@@ -10,7 +11,7 @@ async().then(() => require('./app/db').init(config.db))
         database = db;
         return require('./app/data').init(db);
     })
-    .then((data) => require('./app/app').init(data, database))
+    .then((data) => require('./app').init(data, database))
     .then((app) => {
         const server = app.listen(config.port, () => {
             console.log(`Server running on port :${config.port}`);
