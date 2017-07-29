@@ -270,6 +270,7 @@ class BooksConroller {
             .then((books) => {
                 const pagesNumber = Math.ceil(totalCount / PAGESIZE);
                 const indeces = [];
+
                 for (let a = 1; a <= pagesNumber; a += 1) {
                     indeces.push(a);
                 }
