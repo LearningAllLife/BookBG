@@ -207,7 +207,8 @@ class BooksConroller {
         });
     }
 
-    deleteBook(req, res, bookId) {
+    deleteBook(req, res) {
+        const bookId = req.body.input;
         let booksToUse;
         return this.data.books.getById(bookId)
             .then((book) => {

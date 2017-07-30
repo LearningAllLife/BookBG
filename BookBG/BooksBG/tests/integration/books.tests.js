@@ -262,6 +262,38 @@ describe('Integration Tests Books Routes', () => {
                         '_picture': 'https://assets.chitanka.info/thumb/book-cover/0e/3748.max.jpg',
                         '_isDeleted': false,
                     });
+                })
+                .then((db) => {
+                    const newId = new ObjectID('596b6aadc36e57168058ee1c');
+                    return db.collection('genres').insertOne({
+                        '_name': 'Romans',
+                        '_books': [{
+                            '_id': newId,
+                            '_title': 'Gone with the Wind',
+                            '_author': 'Margareth Mitchell',
+                            '_genre': 'Romans',
+                            '_rating': '10',
+                            '_price': '54',
+                            '_picture': 'https://assets.chitanka.info/thumb/book-cover/0e/3748.max.jpg',
+                            '_isDeleted': false,
+                        }],
+                    });
+                })
+                .then((db) => {
+                    const newId = new ObjectID('596b6aadc36e57168058ee1c');
+                    return db.collection('authors').insertOne({
+                        '_name': 'Margareth Mitchell',
+                        '_books': [{
+                            '_id': newId,
+                            '_title': 'Gone with the Wind',
+                            '_author': 'Margareth Mitchell',
+                            '_genre': 'Romans',
+                            '_rating': '10',
+                            '_price': '54',
+                            '_picture': 'https://assets.chitanka.info/thumb/book-cover/0e/3748.max.jpg',
+                            '_isDeleted': false,
+                        }],
+                    });
                 });
         });
         it('Try to add book must redirect to login if not loged as admin', (done) => {
@@ -538,6 +570,29 @@ describe('Integration Tests Books Routes', () => {
                 function(authRequest) {
                     authRequest
                         .post('/books/add')
+                        .send({
+                            'title': 'Gone with the Wind',
+                            'author': 'Margareth Mitchell',
+                            'genre': 'Romans',
+                            'rating': 0,
+                            'price': 10,
+                            'picture': 'test',
+                        })
+                        .expect(302)
+                        .expect('Location', 'undefined')
+                        .end((error, response) => {
+                            if (error) {
+                                console.log(error);
+                            }
+                            done();
+                        });
+                });
+        });
+        it('Delete book should return 200 ', (done) => {
+            createAuthenticatedRequest('/users/login', { username: 'BookUser', password: '123456' },
+                function(authRequest) {
+                    authRequest
+                        .put('/books/add')
                         .send({
                             'title': 'Gone with the Wind',
                             'author': 'Margareth Mitchell',
