@@ -207,22 +207,23 @@ class BooksConroller {
         });
     }
 
-    deleteBook(req, res, bookId) {
-        let bookToUse;
+    deleteBook(req, res) {
+        const bookId = req.body.input;
+        let booksToUse;
         return this.data.books.getById(bookId)
             .then((book) => {
-                bookToUse = book;
+                booksToUse = book;
                 return Promise.all(
                     [
                         this.data.genres.getAll({ _name: book._genre }),
                         this.data.authors.getAll({ _name: book._author }),
-                        this.data.books.update({ _title: book._title }, { $set: { '_isDeleted': true } }),
+                        this.data.books.update({ _id: book._id }, { $set: { '_isDeleted': true } }),
                     ]);
             })
             .then((result) => {
                 let genreBooks = result[0][0]._books;
                 let authorBooks = result[1][0]._books;
-                const b = bookToUse;
+                const b = booksToUse;
 
                 for (let i = 0; i < genreBooks.length; i++) {
                     const currentBook = genreBooks[i];
@@ -240,7 +241,6 @@ class BooksConroller {
 
                     if (currentBook._title === b._title &&
                         currentBook._author === b._author) {
-
                         authorBooks = authorBooks.splice(i, 1);
                         break;
                     }
@@ -249,8 +249,16 @@ class BooksConroller {
                 const genre = result[0][0];
                 const author = result[1][0];
 
-                this.data.genres.update({ _name: bookToUse._genre }, genre);
-                this.data.authors.update({ _name: bookToUse._author }, author);
+                this.data.genres.update({ _name: booksToUse._genre }, genre);
+                this.data.authors.update({ _name: booksToUse._author }, author);
+            })
+            .then(() => {
+                res.status(200);
+                res.end();
+            })
+            .catch((err) => {
+                req.flash('error', err.message);
+                res.redirect('/');
             });
     }
 
