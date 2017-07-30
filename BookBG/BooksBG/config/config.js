@@ -8,7 +8,7 @@ const config = {
         app: {
             name: 'booksbg',
         },
-        port: 80,
+        port: 3000,
         db: 'mongodb://localhost/booksbg-development',
     },
 
