@@ -208,19 +208,21 @@ class BooksConroller {
     }
 
     deleteBook(req, res, bookId) {
+        let booksToUse;
         return this.data.books.getById(bookId)
             .then((book) => {
+                booksToUse = book;
                 return Promise.all(
                     [
                         this.data.genres.getAll({ _name: book._genre }),
                         this.data.authors.getAll({ _name: book._author }),
-                        this.data.books.update({ _title: book._title }, { $set: { '_isDeleted': true } }),
-                    ])
+                        this.data.books.update({ _id: book._id }, { $set: { '_isDeleted': true } }),
+                    ]);
             })
             .then((result) => {
                 let genreBooks = result[0][0]._books;
                 let authorBooks = result[1][0]._books;
-                const b = book;
+                const b = booksToUse;
 
                 for (let i = 0; i < genreBooks.length; i++) {
                     const currentBook = genreBooks[i];
@@ -238,7 +240,6 @@ class BooksConroller {
 
                     if (currentBook._title === b._title &&
                         currentBook._author === b._author) {
-
                         authorBooks = authorBooks.splice(i, 1);
                         break;
                     }
@@ -247,41 +248,48 @@ class BooksConroller {
                 const genre = result[0][0];
                 const author = result[1][0];
 
-                this.data.genres.update({ _name: book._genre }, genre);
-                this.data.authors.update({ _name: book._author }, author);
+                this.data.genres.update({ _name: booksToUse._genre }, genre);
+                this.data.authors.update({ _name: booksToUse._author }, author);
+            })
+            .then(() => {
+                res.status(200);
+                res.end();
+            })
+            .catch((err) => {
+                req.flash('error', err.message);
+                res.redirect('/');
             });
-    });
-}
+    }
 
-getAllByFilter(req, res, filter) {
-    let user = req.user;
-    const route = req.path.slice(1, req.path.indexOf('/', 1));
-    const page = req.params.page || 1;
-    const skip = (page - 1) * PAGESIZE;
-    const limit = PAGESIZE;
-    let totalCount = 0;
+    getAllByFilter(req, res, filter) {
+        let user = req.user;
+        const route = req.path.slice(1, req.path.indexOf('/', 1));
+        const page = req.params.page || 1;
+        const skip = (page - 1) * PAGESIZE;
+        const limit = PAGESIZE;
+        let totalCount = 0;
 
-    return this.data.books.count(filter)
-        .then((count) => {
-            totalCount = count;
-            return this.data.books.getAll(filter, {}, skip, limit);
-        })
-        .then((books) => {
-            const pagesNumber = Math.ceil(totalCount / PAGESIZE);
-            const indeces = [];
+        return this.data.books.count(filter)
+            .then((count) => {
+                totalCount = count;
+                return this.data.books.getAll(filter, {}, skip, limit);
+            })
+            .then((books) => {
+                const pagesNumber = Math.ceil(totalCount / PAGESIZE);
+                const indeces = [];
 
-            for (let a = 1; a <= pagesNumber; a += 1) {
-                indeces.push(a);
-            }
+                for (let a = 1; a <= pagesNumber; a += 1) {
+                    indeces.push(a);
+                }
 
-            if (!user) {
-                user = {};
-                user._isAdmin = false;
-            }
+                if (!user) {
+                    user = {};
+                    user._isAdmin = false;
+                }
 
-            res.render('books/partialViews/booksContent.pug', { context: books, isAdmin: user._isAdmin, indeces: indeces, marker: route });
-        });
-}
+                res.render('books/partialViews/booksContent.pug', { context: books, isAdmin: user._isAdmin, indeces: indeces, marker: route });
+            });
+    }
 }
 
 const init = (data) => {

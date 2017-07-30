@@ -244,205 +244,217 @@ describe('Integration Tests Books Routes', () => {
     //             });
     //     });
     // });
-    // describe('Not registered User and books', () => {
-    //     before(() => {
-    //         return Promise.resolve()
-    //             .then(() => {
-    //                 return MongoClient.connect(connectionString);
-    //             })
-    //             .then((db) => {
-    //                 const newId = new ObjectID('596b6aadc36e57168058ee1c');
-    //                 return db.collection('books').insertOne({
-    //                     '_id': newId,
-    //                     '_title': 'Gone with the Wind',
-    //                     '_author': 'Margareth Mitchell',
-    //                     '_genre': 'Romans',
-    //                     '_rating': '10',
-    //                     '_price': '54',
-    //                     '_picture': 'https://assets.chitanka.info/thumb/book-cover/0e/3748.max.jpg',
-    //                     '_isDeleted': false,
-    //                 });
-    //             });
-    //     });
-    //     it('Books all partial should return book and code 200 ', (done) => {
-    //         request(url)
-    //             .get('/books/allpartial/1')
-    //             .expect(200)
-    //             .expect(function(res) {
-    //                 if (res.text.indexOf('Gone with the Wind') < 0) {
-    //                     throw Error('not right contain');
-    //                 }
-    //             })
-    //             .end((error, response) => {
-    //                 if (error) {
-    //                     console.log(error);
-    //                 }
-    //                 done();
-    //             });
-    //     });
-    //     it('Books ordered by default should return 200 and book', (done) => {
-    //         request(url)
-    //             .post('/books/ordered')
-    //             .send({
-    //                 input: 'Default',
-    //             })
-    //             .expect(200)
-    //             .expect(function(res) {
-    //                 if (res.text.indexOf('Gone with the Wind') < 0) {
-    //                     throw Error('not right contain');
-    //                 }
-    //             })
-    //             .end((error, response) => {
-    //                 if (error) {
-    //                     console.log(error);
-    //                 }
-    //                 done();
-    //             });
-    //     });
-    //     it('Books by wrong genre should return 200 and no books', (done) => {
-    //         request(url)
-    //             .get('/books/byGenre/1?input=romans')
-    //             .expect(200)
-    //             .expect(function(res) {
-    //                 if (res.text.indexOf('Gone with the Wind') >= 0) {
-    //                     throw Error('found book');
-    //                 }
-    //             })
-    //             .end((error, response) => {
-    //                 if (error) {
-    //                     console.log(error);
-    //                 }
-    //                 done();
-    //             });
-    //     });
-    //     it('Books by right genre should return 200 and book', (done) => {
-    //         request(url)
-    //             .get('/books/byGenre/1?input=Romans')
-    //             .expect(200)
-    //             .expect(function(res) {
-    //                 if (res.text.indexOf('Gone with the Wind') < 0) {
-    //                     throw Error('No book');
-    //                 }
-    //             })
-    //             .end((error, response) => {
-    //                 if (error) {
-    //                     console.log(error);
-    //                 }
-    //                 done();
-    //             });
-    //     });
-    //     it('Books by right genre but wrong page should return 200 and no book', (done) => {
-    //         request(url)
-    //             .get('/books/byGenre/2?input=Romans')
-    //             .expect(200)
-    //             .expect(function(res) {
-    //                 if (res.text.indexOf('Gone with the Wind') > 0) {
-    //                     throw Error('found book');
-    //                 }
-    //             })
-    //             .end((error, response) => {
-    //                 if (error) {
-    //                     console.log(error);
-    //                 }
-    //                 done();
-    //             });
-    //     });
-    //     it('All Book should return 200 ok and books', (done) => {
-    //         request(url)
-    //             .get('/books/allResults')
-    //             .expect(200)
-    //             .expect(function(res) {
-    //                 if (res.text.indexOf('Gone with the Wind') < 0) {
-    //                     throw Error('not book');
-    //                 }
-    //             })
-    //             .end((error, response) => {
-    //                 if (error) {
-    //                     console.log(error);
-    //                 }
-    //                 done();
-    //             });
-    //     });
-    //     it('Books search return 200 ok and book if right search and page', (done) => {
-    //         request(url)
-    //             .post('/books/search/1')
-    //             .send({ input: 'Gone with the Wind' })
-    //             .expect(200)
-    //             .expect(function(res) {
-    //                 if (res.text.indexOf('Gone with the Wind') < 0) {
-    //                     throw Error('not right contain');
-    //                 }
-    //             })
-    //             .end((error, response) => {
-    //                 if (error) {
-    //                     console.log(error);
-    //                 }
-    //                 done();
-    //             });
-    //     });
-    //     it('Books search return 200 ok no book if right page wrong search', (done) => {
-    //         request(url)
-    //             .post('/books/search/1')
-    //             .send({ input: 'GonewiththeWindsdfas' })
-    //             .expect(200)
-    //             .expect(function(res) {
-    //                 if (res.text.indexOf('Gone with the Wind') > 0) {
-    //                     throw Error('book found');
-    //                 }
-    //             })
-    //             .end((error, response) => {
-    //                 if (error) {
-    //                     console.log(error);
-    //                 }
-    //                 done();
-    //             });
-    //     });
-    //     it('Books search return 200 ok no book if wrong page right search', (done) => {
-    //         request(url)
-    //             .post('/books/search/2')
-    //             .send({ input: 'Gone with the Wind ' })
-    //             .expect(200)
-    //             .expect(function(res) {
-    //                 if (res.text.indexOf('Gone with the Wind') > 0) {
-    //                     throw Error('book found');
-    //                 }
-    //             })
-    //             .end((error, response) => {
-    //                 if (error) {
-    //                     console.log(error);
-    //                 }
-    //                 done();
-    //             });
-    //     });
-    //     it('Books by id should return book if right id', (done) => {
-    //         request(url)
-    //             .get('/books/596b6aadc36e57168058ee1c')
-    //             .expect(200)
-    //             .expect(function(res) {
-    //                 if (res.text.indexOf('Gone with the Wind') < 0) {
-    //                     throw Error('book not found');
-    //                 }
-    //             })
-    //             .end((error, response) => {
-    //                 if (error) {
-    //                     console.log(error);
-    //                 }
-    //                 done();
-    //             });
-    //     });
-    //     it('Books by id should not return book if wrong id and redirect to home page', (done) => {
-    //         request(url)
-    //             .get('/books/596b6aadc36e57168068ee2c')
-    //             .expect(302)
-    //             .expect('Location', '/')
-    //             .end((error, response) => {
-    //                 if (error) {
-    //                     console.log(error);
-    //                 }
-    //                 done();
-    //             });
-    //     });
-    // });
+    describe('Not registered User and books', () => {
+        before(() => {
+            return Promise.resolve()
+                .then(() => {
+                    return MongoClient.connect(connectionString);
+                })
+                .then((db) => {
+                    const newId = new ObjectID('596b6aadc36e57168058ee1c');
+                    return db.collection('books').insertOne({
+                        '_id': newId,
+                        '_title': 'Gone with the Wind',
+                        '_author': 'Margareth Mitchell',
+                        '_genre': 'Romans',
+                        '_rating': '10',
+                        '_price': '54',
+                        '_picture': 'https://assets.chitanka.info/thumb/book-cover/0e/3748.max.jpg',
+                        '_isDeleted': false,
+                    });
+                });
+        });
+        it('Try to add book must redirect to login if not loged as admin', (done) => {
+            request(url)
+                .get('/books/add')
+                .expect(302)
+                .expect('Location', '/users/login')
+                .end((error, response) => {
+                    if (error) {
+                        console.log(error);
+                    }
+                    done();
+                });
+        });
+        it('Books all partial should return book and code 200 ', (done) => {
+            request(url)
+                .get('/books/allpartial/1')
+                .expect(200)
+                .expect(function(res) {
+                    if (res.text.indexOf('Gone with the Wind') < 0) {
+                        throw Error('not right contain');
+                    }
+                })
+                .end((error, response) => {
+                    if (error) {
+                        console.log(error);
+                    }
+                    done();
+                });
+        });
+        it('Books ordered by default should return 200 and book', (done) => {
+            request(url)
+                .post('/books/ordered')
+                .send({
+                    input: 'Default',
+                })
+                .expect(200)
+                .expect(function(res) {
+                    if (res.text.indexOf('Gone with the Wind') < 0) {
+                        throw Error('not right contain');
+                    }
+                })
+                .end((error, response) => {
+                    if (error) {
+                        console.log(error);
+                    }
+                    done();
+                });
+        });
+        it('Books by wrong genre should return 200 and no books', (done) => {
+            request(url)
+                .get('/books/byGenre/1?input=romans')
+                .expect(200)
+                .expect(function(res) {
+                    if (res.text.indexOf('Gone with the Wind') >= 0) {
+                        throw Error('found book');
+                    }
+                })
+                .end((error, response) => {
+                    if (error) {
+                        console.log(error);
+                    }
+                    done();
+                });
+        });
+        it('Books by right genre should return 200 and book', (done) => {
+            request(url)
+                .get('/books/byGenre/1?input=Romans')
+                .expect(200)
+                .expect(function(res) {
+                    if (res.text.indexOf('Gone with the Wind') < 0) {
+                        throw Error('No book');
+                    }
+                })
+                .end((error, response) => {
+                    if (error) {
+                        console.log(error);
+                    }
+                    done();
+                });
+        });
+        it('Books by right genre but wrong page should return 200 and no book', (done) => {
+            request(url)
+                .get('/books/byGenre/2?input=Romans')
+                .expect(200)
+                .expect(function(res) {
+                    if (res.text.indexOf('Gone with the Wind') > 0) {
+                        throw Error('found book');
+                    }
+                })
+                .end((error, response) => {
+                    if (error) {
+                        console.log(error);
+                    }
+                    done();
+                });
+        });
+        it('All Book should return 200 ok and books', (done) => {
+            request(url)
+                .get('/books/allResults')
+                .expect(200)
+                .expect(function(res) {
+                    if (res.text.indexOf('Gone with the Wind') < 0) {
+                        throw Error('not book');
+                    }
+                })
+                .end((error, response) => {
+                    if (error) {
+                        console.log(error);
+                    }
+                    done();
+                });
+        });
+        it('Books search return 200 ok and book if right search and page', (done) => {
+            request(url)
+                .post('/books/search/1')
+                .send({ input: 'Gone with the Wind' })
+                .expect(200)
+                .expect(function(res) {
+                    if (res.text.indexOf('Gone with the Wind') < 0) {
+                        throw Error('not right contain');
+                    }
+                })
+                .end((error, response) => {
+                    if (error) {
+                        console.log(error);
+                    }
+                    done();
+                });
+        });
+        it('Books search return 200 ok no book if right page wrong search', (done) => {
+            request(url)
+                .post('/books/search/1')
+                .send({ input: 'GonewiththeWindsdfas' })
+                .expect(200)
+                .expect(function(res) {
+                    if (res.text.indexOf('Gone with the Wind') > 0) {
+                        throw Error('book found');
+                    }
+                })
+                .end((error, response) => {
+                    if (error) {
+                        console.log(error);
+                    }
+                    done();
+                });
+        });
+        it('Books search return 200 ok no book if wrong page right search', (done) => {
+            request(url)
+                .post('/books/search/2')
+                .send({ input: 'Gone with the Wind ' })
+                .expect(200)
+                .expect(function(res) {
+                    if (res.text.indexOf('Gone with the Wind') > 0) {
+                        throw Error('book found');
+                    }
+                })
+                .end((error, response) => {
+                    if (error) {
+                        console.log(error);
+                    }
+                    done();
+                });
+        });
+        it('Books by id should return book if right id', (done) => {
+            request(url)
+                .get('/books/596b6aadc36e57168058ee1c')
+                .expect(200)
+                .expect(function(res) {
+                    if (res.text.indexOf('Gone with the Wind') < 0) {
+                        throw Error('book not found');
+                    }
+                })
+                .end((error, response) => {
+                    if (error) {
+                        console.log(error);
+                    }
+                    done();
+                });
+        });
+        it('Books by id should not return book if wrong id and redirect to home page', (done) => {
+            request(url)
+                .get('/books/596b6aadc36e57168068ee2c')
+                .expect(302)
+                .expect('Location', '/')
+                .end((error, response) => {
+                    if (error) {
+                        console.log(error);
+                    }
+                    done();
+                });
+        });
+    });
     describe('Registered User as admin', () => {
         before(() => {
             return Promise.resolve()
@@ -467,7 +479,6 @@ describe('Integration Tests Books Routes', () => {
                     authRequest
                         .get('/books/add')
                         .expect(200)
-                        .expect('Location', '/books/add')
                         .end((error, response) => {
                             if (error) {
                                 console.log(error);
@@ -499,7 +510,7 @@ describe('Integration Tests Books Routes', () => {
                         });
                 });
         });
-        it('Post to Add Book with wrong rating ', (done) => {
+        it('Post to Add Book with wrong rating should return to same page  ', (done) => {
             createAuthenticatedRequest('/users/login', { username: 'BookUser', password: '123456' },
                 function(authRequest) {
                     authRequest
@@ -513,7 +524,30 @@ describe('Integration Tests Books Routes', () => {
                             'picture': 'test',
                         })
                         .expect(302)
-                        .expect('Location', '/')
+                        .expect('Location', 'undefined')
+                        .end((error, response) => {
+                            if (error) {
+                                console.log(error);
+                            }
+                            done();
+                        });
+                });
+        });
+        it('Post to Add Book with existing author and name should return to same page', (done) => {
+            createAuthenticatedRequest('/users/login', { username: 'BookUser', password: '123456' },
+                function(authRequest) {
+                    authRequest
+                        .post('/books/add')
+                        .send({
+                            'title': 'Gone with the Wind',
+                            'author': 'Margareth Mitchell',
+                            'genre': 'Romans',
+                            'rating': 0,
+                            'price': 10,
+                            'picture': 'test',
+                        })
+                        .expect(302)
+                        .expect('Location', 'undefined')
                         .end((error, response) => {
                             if (error) {
                                 console.log(error);
