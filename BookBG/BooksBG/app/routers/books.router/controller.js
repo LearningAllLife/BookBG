@@ -208,47 +208,49 @@ class BooksConroller {
     }
 
     deleteBook(req, res, bookId) {
+        let bookToUse;
         return this.data.books.getById(bookId)
             .then((book) => {
+                bookToUse = book;
                 return Promise.all(
-                        [
-                            this.data.genres.getAll({ _name: book._genre }),
-                            this.data.authors.getAll({ _name: book._author }),
-                            this.data.books.update({ _title: book._title }, { $set: { '_isDeleted': true } }),
-                        ])
-                    .then((result) => {
-                        let genreBooks = result[0][0]._books;
-                        let authorBooks = result[1][0]._books;
-                        const b = book;
+                    [
+                        this.data.genres.getAll({ _name: book._genre }),
+                        this.data.authors.getAll({ _name: book._author }),
+                        this.data.books.update({ _title: book._title }, { $set: { '_isDeleted': true } }),
+                    ]);
+            })
+            .then((result) => {
+                let genreBooks = result[0][0]._books;
+                let authorBooks = result[1][0]._books;
+                const b = bookToUse;
 
-                        for (let i = 0; i < genreBooks.length; i++) {
-                            const currentBook = genreBooks[i];
+                for (let i = 0; i < genreBooks.length; i++) {
+                    const currentBook = genreBooks[i];
 
-                            if (currentBook._title === b._title &&
-                                currentBook._author === b._author) {
-                                genreBooks = genreBooks.splice(i, 1);
-                                break;
-                            }
-                        }
+                    if (currentBook._title === b._title &&
+                        currentBook._author === b._author) {
+                        genreBooks = genreBooks.splice(i, 1);
+                        break;
+                    }
+                }
 
 
-                        for (let i = 0; i < authorBooks.length; i++) {
-                            const currentBook = authorBooks[i];
+                for (let i = 0; i < authorBooks.length; i++) {
+                    const currentBook = authorBooks[i];
 
-                            if (currentBook._title === b._title &&
-                                currentBook._author === b._author) {
+                    if (currentBook._title === b._title &&
+                        currentBook._author === b._author) {
 
-                                authorBooks = authorBooks.splice(i, 1);
-                                break;
-                            }
-                        }
+                        authorBooks = authorBooks.splice(i, 1);
+                        break;
+                    }
+                }
 
-                        const genre = result[0][0];
-                        const author = result[1][0];
+                const genre = result[0][0];
+                const author = result[1][0];
 
-                        this.data.genres.update({ _name: book._genre }, genre);
-                        this.data.authors.update({ _name: book._author }, author);
-                    });
+                this.data.genres.update({ _name: bookToUse._genre }, genre);
+                this.data.authors.update({ _name: bookToUse._author }, author);
             });
     }
 
