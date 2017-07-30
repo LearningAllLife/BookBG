@@ -2,13 +2,10 @@ const session = require('express-session');
 const passport = require('passport');
 const { Strategy } = require('passport-local');
 const MongoStore = require('connect-mongo')(session);
-// const config = require('../../config/config');
+
 function initAuth(app, { users }, db, secret) {
     passport.use(new Strategy((username, password, done) => {
         users.checkPassword(username, password)
-            .then(() => {
-                return users.findByUsername(username);
-            })
             .then((user) => {
                 done(null, user);
             })
@@ -35,8 +32,11 @@ function initAuth(app, { users }, db, secret) {
         users.getById(id)
             .then((user) => {
                 done(null, user);
-            }).catch(done);
+            })
+            .catch(done);
     });
+
+    // for pug to work layout
     app.use((req, res, next) => {
         res.locals = {
             user: req.user,

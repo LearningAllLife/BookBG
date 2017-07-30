@@ -23,7 +23,7 @@ class UsersData extends BaseData {
                     throw new Error('Invalid password');
                 }
 
-                return true;
+                return user;
             });
     }
 
