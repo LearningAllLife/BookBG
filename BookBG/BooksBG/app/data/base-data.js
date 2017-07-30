@@ -21,7 +21,10 @@ class BaseData {
             });
     }
     getById(id) {
-        return this.collection.findOne({ _id: new ObjectID(id) })
+        return Promise.resolve()
+            .then(() => {
+                return this.collection.findOne({ _id: new ObjectID(id) });
+            })
             .then((model) => {
                 if (!model) {
                     return null;
@@ -59,7 +62,12 @@ class BaseData {
     create(model) {
         return Promise.resolve()
             .then(() => {
-                const instance = this.createInstanceOfClass(model);
+                let instance;
+                try {
+                    instance = this.createInstanceOfClass(model);
+                } catch (err) {
+                    throw Error(err.message);
+                }
                 return this.collection.insert(instance);
             });
     }
