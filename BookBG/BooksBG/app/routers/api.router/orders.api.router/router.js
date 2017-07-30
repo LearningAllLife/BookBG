@@ -1,14 +1,14 @@
 const { Router } = require('express');
+const passport = require('passport');
+
 
 const attachTo = (app, data) => {
     const apiRouter = new Router();
+    const controller = require('./controller').init(data);
 
     apiRouter
-        .get('/', (req, res) => {
-            return data.orders.getAll()
-                .then((orders) => {
-                    return res.json(orders);
-                });
+        .get('/', passport.authenticate('token'), (req, res) => {
+            return controller.getAll(req, res);
         });
 
     app.use('/api/orders', apiRouter);

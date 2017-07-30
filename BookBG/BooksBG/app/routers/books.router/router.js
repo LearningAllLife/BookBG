@@ -25,17 +25,13 @@ const attachTo = (app, data) => {
         .get('/allResults', (req, res) => {
             return controller.getAllByFilter(req, res);
         })
-        .get('/allPartialByGenre', (req, res) => {
-            const query = req.query;
-            return controller.getAllByFilter(req, res, query);
-        })
         .post('/search/:page', (req, res) => {
             return controller.search(req, res);
         })
         .get('/:id', (req, res) => {
             return controller.getById(req, res);
         })
-        .put('/delete', (req, res) => {
+        .put('/delete', isAdmin, (req, res) => {
             const bookId = req.body.input;
 
             return controller.deleteBook(req, res, bookId);

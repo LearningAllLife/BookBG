@@ -23,7 +23,7 @@ describe('Integration Tests users Routes', () => {
         it('All Users route to return redirect to login if not loged in', (done) => {
             request(url)
                 .get('/users/')
-                .expect(302, done)
+                .expect(302)
                 .expect('Location', '/users/login')
                 .end((error, response) => {
                     if (error) {

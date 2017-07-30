@@ -9,7 +9,7 @@ class BooksData extends BaseData {
     getAll(filter, options, skip, limit) {
         if (typeof filter === 'undefined') {
             filter = { _isDeleted: false };
-        } else if (typeof filter !== 'undefined') {
+        } else {
             filter._isDeleted = false;
         }
 

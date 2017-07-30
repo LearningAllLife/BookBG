@@ -3,7 +3,6 @@
 const PAGESIZE = 5;
 
 class BooksConroller {
-
     constructor(data) {
         this.data = data;
     }
@@ -15,8 +14,8 @@ class BooksConroller {
             throw new Error('invalid book');
         }
 
-        let len = book.title.length;
-        let sub = book.title.substring(0, len);
+        const len = book.title.length;
+        const sub = book.title.substring(0, len);
 
         this.data.books.getAll({ _title: new RegExp(sub, 'i') })
             .then((books) => {
@@ -27,27 +26,26 @@ class BooksConroller {
                         b._author === book.author) {
                         isFound = true;
                     }
-                })
+                });
 
                 return isFound;
             })
             .then((isFound) => {
                 if (!isFound) {
-                    this.data.books.create(book)
-                        .then((object) => {
-                            const resultObject = object.ops[0];
-                            return resultObject;
-                        })
-                        .then((resultBook) => {
-                            this.data.genres.findOrCreateBy({ name: resultBook.genre, content: resultBook });
-                            this.data.authors.findOrCreateBy({ name: resultBook.author, content: resultBook });
-                        })
-                        .then(() => {
-                            return res.redirect('/');
-                        })
-                } else {
-                    throw Error('Book already exist!');
+                    return this.data.books.create(book);
                 }
+                throw Error('Book already exist!');
+            })
+            .then((object) => {
+                const resultObject = object.ops[0];
+                return resultObject;
+            })
+            .then((resultBook) => {
+                this.data.genres.findOrCreateBy({ name: resultBook.genre, content: resultBook });
+                this.data.authors.findOrCreateBy({ name: resultBook.author, content: resultBook });
+            })
+            .then(() => {
+                return res.redirect('/');
             })
             .catch((err) => {
                 // connect-flash
@@ -66,43 +64,37 @@ class BooksConroller {
                 if (!book) {
                     throw Error('No such book');
                 }
-                res.render('books/info.pug', { book: book, user: req.user });
+                return res.render('books/info.pug', { book: book, user: req.user });
             })
             .catch((err) => {
                 req.flash('error', err.message);
-                res.redirect(req.get('referer'));
+                res.redirect('/');
             });
     }
 
     getAllOrdered(req, res) {
         let user = req.user;
-        let typeOfOrdering = req.body.input;
+        const typeOfOrdering = req.body.input;
 
         this.data.books.getAll()
-            .then(result => {
-                let books = result;
-
+            .then((result) => {
+                const books = result;
                 if (typeOfOrdering === 'Default') {
                     return books;
-                }
-                if (typeOfOrdering === 'Author ascending') {
+                } else if (typeOfOrdering === 'Author ascending') {
                     return books.sort((a, b) => this._compare(a, b, 'author'));
-                }
-                if (typeOfOrdering === 'Author descending') {
+                } else if (typeOfOrdering === 'Author descending') {
                     return books.sort((a, b) => this._compare(a, b, 'author')).reverse();
-                }
-                if (typeOfOrdering === 'Price ascending') {
+                } else if (typeOfOrdering === 'Price ascending') {
                     return books.sort((a, b) => this._compare(a, b, 'price'));
-                }
-                if (typeOfOrdering === 'Price descending') {
+                } else if (typeOfOrdering === 'Price descending') {
                     return books.sort((a, b) => this._compare(a, b, 'price')).reverse();
-                }
-                if (typeOfOrdering === 'Title ascending') {
+                } else if (typeOfOrdering === 'Title ascending') {
                     return books.sort((a, b) => this._compare(a, b, 'title'));
-                }
-                if (typeOfOrdering === 'Title descending') {
+                } else if (typeOfOrdering === 'Title descending') {
                     return books.sort((a, b) => this._compare(a, b, 'title')).reverse();
                 }
+                throw Error('wrong order');
             })
             .then((books) => {
                 if (!user) {
@@ -117,6 +109,9 @@ class BooksConroller {
                 }
                 return res.render('books/partialViews/booksContent.pug', { context: books, isAdmin: user._isAdmin, indeces: [] });
             })
+            .catch((err) => {
+                return res.send(err.message);
+            });
     }
 
     search(req, res) {
@@ -127,8 +122,8 @@ class BooksConroller {
         let totalCount = 0;
         const input = req.body;
         let books = [];
-        let set = {};
-        let booksResult = [];
+        const set = {};
+        const booksResult = [];
 
         this.data.books.getAll({ _title: new RegExp(input.input, 'i') })
             .then((result) => {
@@ -173,17 +168,21 @@ class BooksConroller {
 
     _compare(item1, item2, type) {
         if (type === 'author') {
-            if (item1._author < item2._author)
-                return -1
-            if (item1._author > item2._author)
-                return 1
-            return 0
+            if (item1._author < item2._author) {
+                return -1;
+            }
+            if (item1._author > item2._author) {
+                return 1;
+            }
+            return 0;
         } else if (type === 'title') {
-            if (item1._title < item2._title)
-                return -1
-            if (item1._title > item2._title)
-                return 1
-            return 0
+            if (item1._title < item2._title) {
+                return -1;
+            }
+            if (item1._title > item2._title) {
+                return 1;
+            }
+            return 0;
         } else if (type === 'price') {
             return item1._price - item2._price;
         }
@@ -191,13 +190,13 @@ class BooksConroller {
 
     _collectBooks(books, set) {
         books.forEach((book) => {
-            let title = book._title;
+            const title = book._title;
 
             if (set[title] === undefined) {
                 set[title] = book;
             } else {
-                let author = book._author;
-                let bookToCheck = set[title];
+                const author = book._author;
+                const bookToCheck = set[title];
 
                 if (set[author] === undefined) {
                     if (bookToCheck._author !== author) {
@@ -215,16 +214,15 @@ class BooksConroller {
                         [
                             this.data.genres.getAll({ _name: book._genre }),
                             this.data.authors.getAll({ _name: book._author }),
-                            this.data.books.update({ _title: book._title }, { $set: { "_isDeleted": true } })
+                            this.data.books.update({ _title: book._title }, { $set: { '_isDeleted': true } }),
                         ])
                     .then((result) => {
                         let genreBooks = result[0][0]._books;
                         let authorBooks = result[1][0]._books;
-                        var b = book;
+                        const b = book;
 
                         for (let i = 0; i < genreBooks.length; i++) {
-
-                            let currentBook = genreBooks[i];
+                            const currentBook = genreBooks[i];
 
                             if (currentBook._title === b._title &&
                                 currentBook._author === b._author) {
@@ -235,8 +233,7 @@ class BooksConroller {
 
 
                         for (let i = 0; i < authorBooks.length; i++) {
-
-                            let currentBook = authorBooks[i];
+                            const currentBook = authorBooks[i];
 
                             if (currentBook._title === b._title &&
                                 currentBook._author === b._author) {
@@ -246,13 +243,13 @@ class BooksConroller {
                             }
                         }
 
-                        let genre = result[0][0];
-                        let author = result[1][0];
+                        const genre = result[0][0];
+                        const author = result[1][0];
 
                         this.data.genres.update({ _name: book._genre }, genre);
                         this.data.authors.update({ _name: book._author }, author);
-                    })
-            })
+                    });
+            });
     }
 
     getAllByFilter(req, res, filter) {
