@@ -56,7 +56,7 @@ gulp.task('test-server:start', () => {
 });
 
 gulp.task('tests:integration', ['test-server:start'], () => {
-    return gulp.src('./tests/integration/authors.tests.js')
+    return gulp.src('./tests/integration/api.tests/orders.tests.js')
         .pipe(mocha({
             timeout: 20000,
         }))
