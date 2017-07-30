@@ -32,9 +32,7 @@ const attachTo = (app, data) => {
             return controller.getById(req, res);
         })
         .put('/delete', isAdmin, (req, res) => {
-            const bookId = req.body.input;
-
-            return controller.deleteBook(req, res, bookId);
+            return controller.deleteBook(req, res);
         });
 
     app.use('/books', router);

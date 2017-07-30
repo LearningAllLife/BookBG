@@ -7,7 +7,7 @@ const attachTo = (app, data) => {
 
     router
         .get('/add', isAdmin, (req, res) => {
-            return res.render('genres/addGenreForm');
+            return controller.getAddForm(req, res);
         })
         .post('/add', isAdmin, (req, res) => {
             return controller.create(req, res);

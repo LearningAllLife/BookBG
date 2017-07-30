@@ -1,5 +1,4 @@
 const request = require('supertest');
-const { init } = require('../../app');
 const url = 'http://localhost:3002';
 const connectionString = 'mongodb://localhost/books-db-test';
 const { MongoClient } = require('mongodb');

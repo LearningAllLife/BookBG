@@ -21,7 +21,7 @@ gulp.task('pre-test', () => {
 
 gulp.task('tests:unit', ['pre-test'], () => {
     return gulp.src([
-            './tests/unit/**/*.js'
+            './tests/unit/**/*.js',
         ])
         .pipe(mocha({
 
@@ -56,7 +56,7 @@ gulp.task('test-server:start', () => {
 });
 
 gulp.task('tests:integration', ['test-server:start'], () => {
-    return gulp.src('./tests/integration/books.tests.js')
+    return gulp.src('./tests/integration/authors.tests.js')
         .pipe(mocha({
             timeout: 20000,
         }))
