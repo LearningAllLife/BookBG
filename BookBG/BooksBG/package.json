@@ -29,6 +29,7 @@
         "morgan": "^1.6.1",
         "passport": "^0.3.2",
         "passport-local": "^1.0.0",
+        "passport-token": "^0.2.0",
         "pug": "^2.0.0-rc.2",
         "selenium-webdriver": "^3.5.0",
         "serve-favicon": "^2.3.0",

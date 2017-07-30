@@ -2,13 +2,11 @@ const { Router } = require('express');
 
 const attachTo = (app, data) => {
     const apiRouter = new Router();
+    const controller = require('./controller').init(data);
 
     apiRouter
         .get('/', (req, res) => {
-            return data.authors.getAll()
-                .then((authors) => {
-                    return res.json(authors);
-                });
+            return controller.getAll(req, res);
         });
 
     app.use('/api/authors', apiRouter);

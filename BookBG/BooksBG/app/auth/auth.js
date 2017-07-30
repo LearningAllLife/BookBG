@@ -2,6 +2,9 @@ const session = require('express-session');
 const passport = require('passport');
 const { Strategy } = require('passport-local');
 const MongoStore = require('connect-mongo')(session);
+const TokenStrategy = require('passport-token').Strategy;
+const jwt = require('jsonwebtoken');
+const { ObjectID } = require('mongodb');
 
 function initAuth(app, { users }, db, secret) {
     passport.use(new Strategy((username, password, done) => {
@@ -13,6 +16,30 @@ function initAuth(app, { users }, db, secret) {
                 done(null, false, { message: err.message });
             });
     }));
+    passport.use(new TokenStrategy(
+        function(username, token, done) {
+            Promise.resolve(users.findByUsername(username))
+                .then((user) => {
+                    if (!user) {
+                        return done(null, false);
+                    }
+                    try {
+                        const decoded = jwt.verify(token, 'server secret');
+                        const date = new Date();
+                        const dateAsNumber = date.getTime();
+                        const id = new ObjectID(decoded.id);
+                        if (!id.equals(user._id) || decoded.exp * 1000 < dateAsNumber) {
+                            throw Error('Wrong Username or Token');
+                        }
+                        return done(null, user);
+                    } catch (err) {
+                        return done(null, false, { message: err.message });
+                    }
+                })
+                .catch((err) => {
+                    return done(null, false, { message: err.message });
+                });
+        }));
 
     app.use(session({
         cookie: { maxAge: 3600000 },
