@@ -95,8 +95,6 @@ describe('books controller delete()', () => {
                 update(filter) {}
             }
         };
-
-
         controller = init(data);
         controller1 = init(data2);
         req = require('../../../../unit/reqres').getRequestMock();
@@ -106,18 +104,12 @@ describe('books controller delete()', () => {
     it('expect not to change author if there is no such found', () => {
         controller1.deleteBook(req, res, 1)
             .then(() => {
-
-            })
-            .then(() => {
                 expect(authorsArray[0]._books.length).to.equal(1);
             })
     })
 
     it('expect not to change genre if ther is no such found', () => {
         controller1.deleteBook(req, res, 1)
-            .then(() => {
-
-            })
             .then(() => {
                 expect(genresArray[0]._books.length).to.equal(1);
             })
@@ -126,18 +118,12 @@ describe('books controller delete()', () => {
     it('expect to delete current book from authors collection', () => {
         controller.deleteBook(req, res, 1)
             .then(() => {
-
-            })
-            .then(() => {
                 expect(genresArray[0]._books.length).to.equal(0);
             })
     })
 
     it('expect to delete current book from authors collection', () => {
         controller.deleteBook(req, res, 1)
-            .then(() => {
-
-            })
             .then(() => {
                 expect(authorsArray[0]._books.length).to.equal(0);
             })
@@ -158,9 +144,6 @@ describe('books controller delete()', () => {
 
         controller.deleteBook(req, res, 1)
             .then(() => {
-
-            })
-            .then(() => {
                 genresArray[0]._books = [];
                 expect(spy2.callCount).to.equal(1);
 
@@ -172,9 +155,6 @@ describe('books controller delete()', () => {
         spy3 = sinon.spy(data.authors, "update");
 
         controller.deleteBook(req, res, 1)
-            .then(() => {
-
-            })
             .then(() => {
                 expect(spy3.callCount).to.equal(1);
                 expect(spy3.calledWith({ _name: "testauthor1" }, authorsArray[0])).to.be.true;

@@ -210,7 +210,7 @@ class BooksConroller {
     deleteBook(req, res, bookId) {
         return this.data.books.getById(bookId)
             .then((book) => {
-                Promise.all(
+                return Promise.all(
                         [
                             this.data.genres.getAll({ _name: book._genre }),
                             this.data.authors.getAll({ _name: book._author }),
