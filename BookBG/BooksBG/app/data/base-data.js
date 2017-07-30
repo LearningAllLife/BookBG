@@ -73,7 +73,9 @@ class BaseData {
     }
     count(filter) {
         if (typeof filter === 'undefined') {
-            filter = {};
+            filter = { _isDeleted: false };
+        } else if (typeof filter !== 'undefined') {
+            filter._isDeleted = false;
         }
         return this.collection
             .count(filter)
