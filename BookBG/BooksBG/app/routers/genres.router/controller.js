@@ -1,3 +1,6 @@
+/* eslint linebreak-style: ["error", "windows"]*/
+// const $ = require('../../../node_modules/jquery/dist/jquery.min.js');
+// const toastr = require('../../../node_modules/toastr/build/toastr.min.js');
 class GenresConroller {
     constructor(data) {
         this.data = data;
@@ -5,7 +8,7 @@ class GenresConroller {
 
     create(req, res) {
         const genre = req.body;
-        Promise.resolve()
+        return Promise.resolve()
             .then(() => {
                 if (typeof genre === 'undefined' || !genre.genre) {
                     throw new Error('Invalid genre');
@@ -35,7 +38,9 @@ class GenresConroller {
         const filter = {};
         return this.data.genres.getAll(filter)
             .then((genres) => {
-                res.render('genres/partialViews/forDropDown.pug', { data: genres });
+                res.render('genres/partialViews/forDropDown.pug', {
+                    data: genres,
+                });
             });
     }
 }

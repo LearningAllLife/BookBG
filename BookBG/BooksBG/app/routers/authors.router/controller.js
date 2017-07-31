@@ -1,3 +1,6 @@
+/* eslint linebreak-style: ["error", "windows"]*/
+// const $ = require('../../../node_modules/jquery/dist/jquery.min.js');
+// const toastr = require('../../../node_modules/toastr/build/toastr.min.js');
 class AuthorsController {
     constructor(data) {
         this.data = data;
@@ -5,7 +8,7 @@ class AuthorsController {
 
     create(req, res) {
         const authorBody = req.body;
-        Promise.resolve()
+        return Promise.resolve()
             .then(() => {
                 if (typeof authorBody === 'undefined' || !authorBody.name) {
                     throw new Error('Invalid author');
@@ -32,7 +35,7 @@ class AuthorsController {
     }
     getByName(req, res) {
         const name = req.params.name;
-        Promise.resolve()
+        return Promise.resolve()
             .then(() => {
                 if (!name) {
                     throw Error('No such author');
