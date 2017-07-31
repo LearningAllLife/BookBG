@@ -4,7 +4,7 @@ const sinon = require('sinon');
 
 const BaseData = require('../../../app/data/base-data');
 
-describe('Base data create()', () => {
+describe('Base data update()', () => {
     let db = null;
     let ModelClass = null;
     let data = null;
@@ -23,9 +23,12 @@ describe('Base data create()', () => {
         };
 
         const toArray = () => {
-            return foundItems;
+            return Promise.resolve(foundItems);
         };
 
+        const updateOne = (filter, value) => {
+            return Promise.resolve(filter, value);
+        };
         const find = (props) => {
             return {
                 toArray,
@@ -33,15 +36,15 @@ describe('Base data create()', () => {
         };
 
         const stub = sinon.stub(db, 'collection')
-            .returns({ find, insert });
+            .returns({ find, insert, updateOne });
 
         data = new BaseData(db, ModelClass);
     });
 
-    it('expect to insert into the collection the right model', () => {
-        data.create(1)
+    it('expect to update correctly', () => {
+        data.update(1, 2)
             .then((result) => {
-                expect(result).to.deep.equal(foundItems);
+                expect(result).to.deep.equal(1);
             });
     });
 });
