@@ -1,3 +1,4 @@
+/* eslint linebreak-style: ["error", "windows"]*/
 class Book {
     constructor({ title, author, genre, rating, price, picture }) {
         this.title = title;
@@ -67,7 +68,6 @@ class Book {
     set isDeleted(x) {
         this._isDeleted = x;
     }
-
 }
 
 module.exports = Book;

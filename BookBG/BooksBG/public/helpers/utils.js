@@ -1,26 +1,28 @@
+/* eslint linebreak-style: ["error", "windows"]*/
+/* eslint-disable new-cap,no-undef,prefer-const,max-len,no-trailing-spaces*/
 function encryptToBase64(string) {
-    var toUtf8 = CryptoJS.enc.Utf8.parse(string);
-    var base64 = CryptoJS.enc.Base64.stringify(toUtf8);
+    const toUtf8 = CryptoJS.enc.Utf8.parse(string);
+    const base64 = CryptoJS.enc.Base64.stringify(toUtf8);
 
     return base64;
 }
 
 function encryptToSha1(string) {
-    var toSha1 = CryptoJS.SHA1(string).toString();
+    const toSha1 = CryptoJS.SHA1(string).toString();
 
     return toSha1;
 }
 
 function createBooksOnPage(array, pageNumber, booksOnPageCount) {
-    var newArray = array.slice((pageNumber - 1) * booksOnPageCount, (pageNumber - 1) * booksOnPageCount + booksOnPageCount);
+    const newArray = array.slice((pageNumber - 1) * booksOnPageCount, (pageNumber - 1) * booksOnPageCount + booksOnPageCount);
     return newArray;
 }
 
 function createPageIndeces(array, booksOnPageCount) {
-    var totalBooks = array.length;
-    var buttonsCount = Math.ceil(totalBooks / booksOnPageCount);
-    var array = [];
-    for (var i = 1; i <= buttonsCount; i++) {
+    const totalBooks = array.length;
+    const buttonsCount = Math.ceil(totalBooks / booksOnPageCount);
+    array = [];
+    for (let i = 1; i <= buttonsCount; i++) {
         array.push(i);
     }
 
@@ -46,9 +48,9 @@ function createPageIndeces(array, booksOnPageCount) {
 // }
 
 function setupOrderByLinks() {
-    let orderByLinks = $('#orderby > ul.dropdown-menu > li > a');
+    const orderByLinks = $('#orderby > ul.dropdown-menu > li > a');
     orderByLinks.each((i, link) => {
-        var url = window.location
+        const url = window.location
             .toString()
             .substr(0, window.location.toString().length - 1) + i;
 
@@ -68,11 +70,11 @@ function resetOrderByTypeOnChange() {
 
 function getShortUrl(longUrl, func) {
     $.getJSON(
-        "https://api-ssl.bitly.com/v3/shorten?callback=?", {
-            "format": "json",
-            "apiKey": CONSTANTS.BITLY_AUTHORIZATION.API_KEY,
-            "login": CONSTANTS.BITLY_AUTHORIZATION.LOGIN,
-            "longUrl": longUrl
+        'https://api-ssl.bitly.com/v3/shorten?callback=?', {
+            'format': 'json',
+            'apiKey': CONSTANTS.BITLY_AUTHORIZATION.API_KEY,
+            'login': CONSTANTS.BITLY_AUTHORIZATION.LOGIN,
+            'longUrl': longUrl,
         },
         function(response) {
             func(response.data.url);
@@ -81,12 +83,11 @@ function getShortUrl(longUrl, func) {
 }
 
 function isUserLoggedIn() {
-    var username = localStorage.getItem(CONSTANTS.USER_NAME);
+    let username = localStorage.getItem(CONSTANTS.USER_NAME);
     if (!username) {
         return false;
-    } else {
-        return true;
     }
+    return true;
 }
 
 function showFilters() {
@@ -97,7 +98,7 @@ function hideFilters() {
     $('#filters').addClass('hidden');
 }
 
-var UTILS = {
+const UTILS = {
     encryptToBase64,
     encryptToSha1,
     createBooksOnPage,
@@ -109,5 +110,5 @@ var UTILS = {
     fixPaginationForOrderBy,
     isUserLoggedIn,
     showFilters,
-    hideFilters
+    hideFilters,
 };
