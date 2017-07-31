@@ -10,7 +10,13 @@ const attachTo = (app, data) => {
             return controller.authenticate(req, res);
         })
         .get('/', passport.authenticate('token'), (req, res) => {
+            if (req.user._role !== 'admin') {
+                return res.json('You must be admin');
+            }
             return controller.getAll(req, res);
+        })
+        .put('/makeAdmin', passport.authenticate('token'), (req, res) => {
+            return controller.makeAdmin(req, res);
         });
     app.use('/api/users', apiRouter);
 };

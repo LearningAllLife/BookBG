@@ -31,6 +31,15 @@ describe('Integration Tests Genres Routes', () => {
                 });
             });
     });
+    after(() => {
+        return Promise.resolve()
+            .then(() => {
+                return MongoClient.connect(connectionString);
+            })
+            .then((db) => {
+                return db.dropDatabase();
+            });
+    });
     describe('Not registered User', () => {
         it('Get althor by name should return 200 and author info', (done) => {
             request(url)

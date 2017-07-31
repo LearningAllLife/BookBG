@@ -13,8 +13,8 @@ const attachTo = (app, data, validator) => {
                 req.user._isAdmin = false;
             }
         }
-        console.log('----user-----');
-        console.log(req.user);
+        // console.log('----user-----');
+        // console.log(req.user);
         next();
     });
     app.get('/', (req, res) => {

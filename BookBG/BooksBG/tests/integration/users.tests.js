@@ -18,6 +18,15 @@ function createAuthenticatedRequest(server, loginDetails, callback) {
 
 
 describe('Integration Tests users Routes', () => {
+    after(() => {
+        return Promise.resolve()
+            .then(() => {
+                return MongoClient.connect(connectionString);
+            })
+            .then((db) => {
+                return db.dropDatabase();
+            });
+    });
     describe('Not registered User', () => {
         it('All Users route to return redirect to login if not loged in', (done) => {
             request(url)

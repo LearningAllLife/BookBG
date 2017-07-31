@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const becomeAdmin = 'Poweroverwhelming';
 
 class UsersControllerAPI {
     constructor(data) {
@@ -20,6 +21,35 @@ class UsersControllerAPI {
         return this.data.users.getAll()
             .then((users) => {
                 res.json({ users });
+            });
+    }
+    makeAdmin(req, res) {
+        Promise.resolve()
+            .then(() => {
+                const username = req.body.username;
+                const secretmessage = req.body.secretmessage;
+                if (!username || !secretmessage) {
+                    throw Error('You must provide secretmessage and username');
+                }
+                if (secretmessage !== becomeAdmin) {
+                    throw Error('Wrong secret message');
+                }
+                return this.data.users.findByUsername(username);
+            })
+            .then((user) => {
+                if (!user) {
+                    throw Error('No such user');
+                }
+                const updateModel = user;
+                updateModel._role = 'admin';
+                return this.data.users.update({ _id: user._id }, updateModel);
+            })
+            .then(() => {
+                return res.json({ message: 'success' });
+            })
+            .catch((err) => {
+                res.status(400);
+                return res.json({ message: err.message });
             });
     }
 }

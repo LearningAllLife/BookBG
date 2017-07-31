@@ -17,6 +17,15 @@ function createAuthenticatedRequest(server, loginDetails, callback) {
         });
 }
 describe('Integration Tests Books Routes', () => {
+    after(() => {
+        return Promise.resolve()
+            .then(() => {
+                return MongoClient.connect(connectionString);
+            })
+            .then((db) => {
+                return db.dropDatabase();
+            });
+    });
     describe('Not registered User and no books', () => {
         it('Books all partial should return right containt and code 200 ', (done) => {
             request(url)
@@ -495,7 +504,7 @@ describe('Integration Tests Books Routes', () => {
                     return MongoClient.connect(connectionString);
                 })
                 .then((db) => {
-                    db.collection('users').insertOne({
+                    return db.collection('users').insertOne({
                         '_firstname': 'Book123',
                         '_lastname': 'Book123',
                         '_username': 'BookUser',
@@ -617,7 +626,7 @@ describe('Integration Tests Books Routes', () => {
                     return MongoClient.connect(connectionString);
                 })
                 .then((db) => {
-                    db.collection('users').insertOne({
+                    return db.collection('users').insertOne({
                         '_firstname': 'Book123',
                         '_lastname': 'Book123',
                         '_username': 'BookUserJustUser',
