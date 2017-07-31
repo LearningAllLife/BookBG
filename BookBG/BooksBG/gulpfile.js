@@ -60,7 +60,7 @@ gulp.task('tests:integration', ['pre-test', 'test-server:start'], () => {
         .pipe(mocha({
             timeout: 20000,
         }))
-        // .pipe(istanbul.writeReports())
+        .pipe(istanbul.writeReports({}))
         .once('end', () => {
             gulp.start('test-server:stop');
         });
