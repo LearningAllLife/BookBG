@@ -12,6 +12,7 @@ const config = {
 gulp.task('pre-test', () => {
     return gulp.src([
             './app/**/*.js',
+            '!./app/socket/**/*.js',
             './server.js',
         ])
         .pipe(istanbul({
