@@ -18,7 +18,7 @@ class OrdersCotroller {
     }
     createOrder(req, res) {
         const ids = req.body.ids.split('|');
-        let books = [];
+        const books = [];
         for (const id of ids) {
             books.push(this.data.books.getById(id));
         }
@@ -42,35 +42,44 @@ class OrdersCotroller {
         if (typeof order === 'undefined') {
             throw new Error('Invalid order');
         }
+
         let books = [];
         for (const id of ids) {
             books.push(this.data.books.getById(id));
         }
-        Promise.all(books)
+
+        return Promise.all(books)
             .then((booksResult) => {
                 books = booksResult;
+                if (books.length === 0) {
+                    throw Error('No books in order');
+                }
                 return this.data.users.getById(order.userId);
             })
             .then((user) => {
+                if (!user) {
+                    throw Error('No user in order');
+                }
                 return this.data.orders.create({
-                        books: books,
-                        adress: order.adress,
-                        user: user,
-                        phoneNumber: order.phoneNumber,
-                    })
-                    .then(() =>
-                        res.redirect('/orders/success')
-                    )
-                    .catch((err) => {
-                        // connect-flash
-                        req.flash('error', err.message);
-                        res.redirect(req.get('referer'));
-                    });
+                    books: books,
+                    adress: order.adress,
+                    user: user,
+                    phoneNumber: order.phoneNumber,
+                });
+            })
+            .then(() =>
+                res.redirect('/orders/success')
+            )
+            .catch((err) => {
+                // connect-flash
+                req.flash('error', err.message);
+                res.redirect(req.get('referer'));
             });
     }
+
     registerOrder(req, res) {
         const ids = req.body.ids.split('|');
-        let books = [];
+        const books = [];
         for (const id of ids) {
             books.push(this.data.books.getById(id));
         }

@@ -5,12 +5,14 @@ class GenresConroller {
 
     create(req, res) {
         const genre = req.body;
+        Promise.resolve()
+            .then(() => {
+                if (typeof genre === 'undefined' || !genre.genre) {
+                    throw new Error('Invalid genre');
+                }
 
-        if (typeof genre === 'undefined') {
-            throw new Error('Invalid genre');
-        }
-
-        this.data.genres.getAll({ _name: genre.genre })
+                return this.data.genres.getAll({ _name: genre.genre });
+            })
             .then((genres) => {
                 if (genres.length === 0) {
                     return this.data.genres.create({ name: genre.genre });
@@ -25,6 +27,10 @@ class GenresConroller {
                 return res.redirect('/genres/add');
             });
     }
+    getAddForm(req, res) {
+        return res.render('genres/addGenreForm');
+    }
+
     getGenresForDropDown(req, res) {
         const filter = {};
         return this.data.genres.getAll(filter)
@@ -32,7 +38,6 @@ class GenresConroller {
                 res.render('genres/partialViews/forDropDown.pug', { data: genres });
             });
     }
-
 }
 
 const init = (data) => {
