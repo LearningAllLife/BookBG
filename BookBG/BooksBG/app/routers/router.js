@@ -1,3 +1,4 @@
+/* eslint linebreak-style: ["error", "windows"]*/
 /* globals __dirname */
 /* eslint-disable no-console */
 

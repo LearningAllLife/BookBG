@@ -1,3 +1,4 @@
+/* eslint linebreak-style: ["error", "windows"]*/
 const BaseData = require('./base-data');
 const Book = require('../models/book-model');
 

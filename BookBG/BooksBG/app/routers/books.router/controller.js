@@ -10,15 +10,21 @@ class BooksConroller {
 
     create(req, res) {
         const book = req.body;
+        let sub = null;
+        let len = null;
 
-        if (typeof book === 'undefined') {
-            throw new Error('invalid book');
-        }
-
-        const len = book.title.length;
-        const sub = book.title.substring(0, len);
-
-        this.data.books.getAll({ _title: new RegExp(sub, 'i') })
+        return Promise.resolve()
+            .then(() => {
+                if (typeof book === 'undefined') {
+                    throw new Error('invalid book');
+                } else {
+                    len = book.title.length;
+                    sub = book.title.substring(0, len);
+                }
+            })
+            .then(() => {
+                return this.data.books.getAll({ _title: new RegExp(sub, 'i') });
+            })
             .then((books) => {
                 let isFound = false;
 
@@ -42,8 +48,14 @@ class BooksConroller {
                 return resultObject;
             })
             .then((resultBook) => {
-                this.data.genres.findOrCreateBy({ name: resultBook.genre, content: resultBook });
-                this.data.authors.findOrCreateBy({ name: resultBook.author, content: resultBook });
+                this.data.genres.findOrCreateBy({
+                    name: resultBook.genre,
+                    content: resultBook,
+                });
+                this.data.authors.findOrCreateBy({
+                    name: resultBook.author,
+                    content: resultBook,
+                });
             })
             .then(() => {
                 return res.redirect('/');
@@ -57,15 +69,21 @@ class BooksConroller {
 
     getById(req, res) {
         const id = req.params.id;
-        if (!id) {
-            throw Error('No such book');
-        }
-        return this.data.books.getById(id)
+        return Promise.resolve()
+            .then(() => {
+                if (!id) {
+                    throw Error('No such book');
+                }
+                return this.data.books.getById(id);
+            })
             .then((book) => {
                 if (!book) {
                     throw Error('No such book');
                 }
-                return res.render('books/info.pug', { book: book, user: req.user });
+                return res.render('books/info.pug', {
+                    book: book,
+                    user: req.user,
+                });
             })
             .catch((err) => {
                 req.flash('error', err.message);
@@ -85,15 +103,18 @@ class BooksConroller {
                 } else if (typeOfOrdering === 'Author ascending') {
                     return books.sort((a, b) => this._compare(a, b, 'author'));
                 } else if (typeOfOrdering === 'Author descending') {
-                    return books.sort((a, b) => this._compare(a, b, 'author')).reverse();
+                    return books.sort((a, b) =>
+                        this._compare(a, b, 'author')).reverse();
                 } else if (typeOfOrdering === 'Price ascending') {
                     return books.sort((a, b) => this._compare(a, b, 'price'));
                 } else if (typeOfOrdering === 'Price descending') {
-                    return books.sort((a, b) => this._compare(a, b, 'price')).reverse();
+                    return books.sort((a, b) =>
+                        this._compare(a, b, 'price')).reverse();
                 } else if (typeOfOrdering === 'Title ascending') {
                     return books.sort((a, b) => this._compare(a, b, 'title'));
                 } else if (typeOfOrdering === 'Title descending') {
-                    return books.sort((a, b) => this._compare(a, b, 'title')).reverse();
+                    return books.sort((a, b) =>
+                        this._compare(a, b, 'title')).reverse();
                 }
                 throw Error('wrong order');
             })
@@ -108,7 +129,11 @@ class BooksConroller {
                         user._isAdmin = false;
                     }
                 }
-                return res.render('books/partialViews/booksContent.pug', { context: books, isAdmin: user._isAdmin, indeces: [] });
+                return res.render('books/partialViews/booksContent.pug', {
+                    context: books,
+                    isAdmin: user._isAdmin,
+                    indeces: [],
+                });
             })
             .catch((err) => {
                 return res.send(err.message);
@@ -227,7 +252,9 @@ class BooksConroller {
                     [
                         this.data.genres.getAll({ _name: book._genre }),
                         this.data.authors.getAll({ _name: book._author }),
-                        this.data.books.update({ _id: book._id }, { $set: { '_isDeleted': true } }),
+                        this.data.books.update({ _id: book._id }, {
+                            $set: { '_isDeleted': true },
+                        }),
                     ]);
             })
             .then((result) => {
