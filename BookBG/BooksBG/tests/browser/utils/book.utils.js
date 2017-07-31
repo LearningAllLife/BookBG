@@ -2,7 +2,7 @@ let driver = null;
 
 const ui = require('./ui');
 
-const async = require('../../utils/async');
+const async = require('../../../utils/async');
 
 
 const createItem = (text) => {

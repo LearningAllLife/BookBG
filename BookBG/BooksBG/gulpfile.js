@@ -64,7 +64,7 @@ gulp.task('test-server:start', () => {
 gulp.task('tests:integration', ['pre-test', 'test-server:start'], () => {
     return gulp.src(['./tests/integration/**/*.js', './tests/unit/**/*.js'])
         .pipe(mocha({
-            timeout: 20000,
+            timeout: 10000,
         }))
         .pipe(istanbul.writeReports({}))
         .once('end', () => {
@@ -78,7 +78,7 @@ gulp.task('tests:integration', ['pre-test', 'test-server:start'], () => {
 gulp.task('tests:browser', ['test-server:start'], () => {
     return gulp.src('./tests/browser/**/*.js')
         .pipe(mocha({
-            timeout: 20000,
+            timeout: 10000,
         }))
         .once('end', () => {
             gulp.start('test-server:stop');

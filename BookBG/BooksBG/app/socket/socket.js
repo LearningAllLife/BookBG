@@ -8,7 +8,7 @@ const init = (server) => {
 
         io.sockets.on('connection', function(client) {
             users.push(client.id);
-            console.log('+ User ' + client.id + ' connected (' + client.handshake.address.address + '). Total users: ' + users.length);
+            // console.log('+ User ' + client.id + ' connected (' + client.handshake.address.address + '). Total users: ' + users.length);
 
             client.emit('nick', { nick: client.id });
             io.sockets.emit('users', { users: users });
@@ -36,7 +36,7 @@ const init = (server) => {
                 }
 
                 io.sockets.emit('users', { users: users });
-                console.log('- User ' + client.id + ' disconnected (' + client.handshake.address.address + '). Total users: ' + users.length);
+                // console.log('- User ' + client.id + ' disconnected (' + client.handshake.address.address + '). Total users: ' + users.length);
             });
         });
     });
