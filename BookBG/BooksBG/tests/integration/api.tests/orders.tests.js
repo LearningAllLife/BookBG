@@ -1,3 +1,6 @@
+/* eslint linebreak-style: ["error", "windows"]*/
+/* eslint-disable no-console,max-len*/
+/* eslint-disable eol-last*/
 const request = require('supertest');
 const url = 'http://localhost:3002';
 const connectionString = 'mongodb://localhost/books-db-test';

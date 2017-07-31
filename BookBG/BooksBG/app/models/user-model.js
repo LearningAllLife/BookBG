@@ -1,5 +1,5 @@
 /* eslint linebreak-style: ["error", "windows"]*/
-/* eslint-disable no-console,max-len*/
+/* eslint-disable no-console,max-len,use-isnan,no-undefined,new-cap,eol-last*/
 const { CONSTANTS } = require('../../public/helpers/constants');
 
 const VALIDATOR = {
@@ -9,7 +9,7 @@ const VALIDATOR = {
         }
     },
     IT_IS_VALID_STRING: function(x) {
-        if (x == undefined || x == NaN || typeof x !== 'string') {
+        if (x === undefined || x === NaN || typeof x !== 'string') {
             throw Error('invalid string');
         }
     },

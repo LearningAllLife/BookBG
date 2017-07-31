@@ -1,6 +1,7 @@
 /* eslint linebreak-style: ["error", "windows"]*/
-/* eslint-disable no-console,max-len,eol-last*/
-class Author {
+/* eslint-disable no-console,max-len*/
+/* eslint-disable eol-last*/
+class TestClass {
     constructor({ name, books }) {
         this.name = name;
         if (typeof books === 'undefined') {
@@ -27,4 +28,4 @@ class Author {
     }
 }
 
-module.exports = Author;
+module.exports = TestClass;

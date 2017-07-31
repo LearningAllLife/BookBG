@@ -1,5 +1,5 @@
 /* eslint linebreak-style: ["error", "windows"]*/
-/* eslint-disable no-console,max-len*/
+/* eslint-disable no-console,max-len,eol-last*/
 class Genre {
     constructor({ name, books }) {
         this.name = name;
@@ -25,8 +25,6 @@ class Genre {
     set books(x) {
         this._books = x;
     }
-
-
 }
 
 module.exports = Genre;

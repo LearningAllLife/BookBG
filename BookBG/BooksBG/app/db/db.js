@@ -1,3 +1,5 @@
+/* eslint linebreak-style: ["error", "windows"]*/
+/* eslint-disable no-console,max-len,eol-last*/
 const { MongoClient } = require('mongodb');
 
 const init = (connectionString) => {

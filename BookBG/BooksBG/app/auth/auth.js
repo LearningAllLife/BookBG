@@ -1,3 +1,5 @@
+/* eslint linebreak-style: ["error", "windows"]*/
+/* eslint-disable no-console,max-len,eol-last*/
 const session = require('express-session');
 const passport = require('passport');
 const { Strategy } = require('passport-local');

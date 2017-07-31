@@ -1,3 +1,5 @@
+/* eslint linebreak-style: ["error", "windows"]*/
+/* eslint-disable no-console,max-len,eol-last*/
 // SystemJS.config({
 //     'transpiler': 'plugin-babel',
 //     'map': {

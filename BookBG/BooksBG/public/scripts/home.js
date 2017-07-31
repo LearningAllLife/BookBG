@@ -1,6 +1,6 @@
 /* eslint linebreak-style: ["error", "windows"]*/
 /* global $*/
-/* eslint no-alert: "error"*/
+/* eslint-disable new-cap,no-undef,no-alert,eol-last*/
 $(function() {
     const search = function(input, searchParam) {
         const page = input || 1;

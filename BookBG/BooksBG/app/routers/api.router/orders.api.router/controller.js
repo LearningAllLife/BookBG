@@ -1,3 +1,5 @@
+/* eslint linebreak-style: ["error", "windows"]*/
+/* eslint-disable no-console,max-len,eol-last*/
 class OrdersControllerAPI {
     constructor(data) {
         this.data = data;

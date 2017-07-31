@@ -1,4 +1,5 @@
 /* eslint linebreak-style: ["error", "windows"]*/
+/* eslint-disable eol-last*/
 const BaseData = require('./base-data');
 const Book = require('../models/book-model');
 

@@ -1,5 +1,5 @@
 /* eslint linebreak-style: ["error", "windows"]*/
-/* eslint-disable no-console,max-len*/
+/* eslint-disable no-console,max-len,eol-last*/
 const { ObjectID } = require('mongodb');
 
 class BaseData {

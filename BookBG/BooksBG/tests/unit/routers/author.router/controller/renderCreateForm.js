@@ -1,4 +1,5 @@
 /* eslint linebreak-style: ["error", "windows"]*/
+/* eslint-disable eol-last,no-unused-vars,max-len*/
 const { expect } = require('chai');
 const sinon = require('sinon');
 const { init } =

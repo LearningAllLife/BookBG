@@ -1,4 +1,5 @@
 /* eslint linebreak-style: ["error", "windows"]*/
+/* eslint-disable eol-last*/
 const { Router } = require('express');
 const { isAdmin } = require('../../auth/checkAuth');
 

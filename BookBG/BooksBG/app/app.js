@@ -1,4 +1,5 @@
 /* eslint linebreak-style: ["error", "windows"]*/
+/* eslint-disable eol-last*/
 /* globals __dirname */
 const path = require('path');
 const express = require('express');
