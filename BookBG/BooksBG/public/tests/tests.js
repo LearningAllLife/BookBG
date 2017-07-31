@@ -1,4 +1,5 @@
 /* eslint linebreak-style: ["error", "windows"]*/
+/* eslint-disable eol-last*/
 /* eslint-disable no-unused-expressions,max-len,no-tabs,arrow-parens,no-unused-vars */
 /* eslint-disable new-cap,no-undef,prefer-const,quotes,space-before-function-paren,no-shadow*/
 import { usersData } from 'usersData';

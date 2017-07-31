@@ -1,4 +1,5 @@
 /* eslint linebreak-style: ["error", "windows"]*/
+/* eslint-disable eol-last*/
 /* eslint-disable no-unused-expressions,max-len,no-unused-vars */
 const { expect } = require('chai');
 const { setupDriver } = require('./utils/setup-driver');

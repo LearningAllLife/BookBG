@@ -1,6 +1,9 @@
 /* eslint linebreak-style: ["error", "windows"]*/
 /* eslint-disable no-console,max-len,space-before-function-paren,no-undef,no-invalid-this,one-var,no-var,wrap-iife*/
 /* eslint-disable new-cap,quotes,block-spacing,brace-style,invalid-jsdoc,valid-jsdoc,consistent-return*/
+/* eslint-disable padded-blocks,complexity,no-shadow,guard-for-in,curly,no-unused-vars,no-extra-boolean-cast*/
+/* eslint-disable no-unused-expressions,eqeqeq,spaced-comment,no-undefined,comma-dangle,no-eval,no-else-return*/
+/* eslint-disable no-empty,prefer-spread,prefer-rest-params,block-scoped-var,default-case,eol-last*/
 /**
  * Sinon.JS 1.17.6, 2016/09/19
  *
@@ -259,7 +262,7 @@
                     // == null also matches undefined
                     if (obj1 === obj2 ||
                         isNaN(obj1) || isNaN(obj2) ||
-                        obj1 == null || obj2 == null ||
+                        obj1 === null || obj2 === null ||
                         type1 !== "object" || type2 !== "object") {
 
                         return identical(obj1, obj2);
@@ -459,7 +462,7 @@
                 identical: identical,
                 deepEqual: deepEqualCyclic,
                 match: match,
-                keys: keys
+                keys: keys,
             };
         });
         ((typeof define === "function" && define.amd && function(m) {
@@ -471,7 +474,7 @@
             var formatio = {
                 excludeConstructors: ["Object", /^.$/],
                 quoteStrings: true,
-                limitChildrenCount: 0
+                limitChildrenCount: 0,
             };
 
             var hasOwn = Object.prototype.hasOwnProperty;
@@ -483,7 +486,7 @@
             if (typeof document !== "undefined") {
                 specialObjects.push({
                     object: document,
-                    value: "[object HTMLDocument]"
+                    value: "[object HTMLDocument]",
                 });
             }
             if (typeof window !== "undefined") {
@@ -577,9 +580,9 @@
                     pieces.push(ascii(this, array[i], processed));
                 }
 
-                if (l < array.length)
+                if (l < array.length) {
                     pieces.push("[... " + (array.length - l) + " more elements]");
-
+                }
                 return "[" + pieces.join(", ") + "]";
             };
 
@@ -671,18 +674,30 @@
 
                 ascii: function(object, processed, indent) {
                     return ascii(this, object, processed, indent);
-                }
+                },
             };
 
             return Formatio.prototype;
         });
-        ! function(e) { if ("object" == typeof exports && "undefined" != typeof module) module.exports = e();
+        ! function(e) {
+            if ("object" == typeof exports && "undefined" != typeof module) module.exports = e();
             else if ("function" == typeof define && define.amd) define([], e);
-            else { var f; "undefined" != typeof window ? f = window : "undefined" != typeof global ? f = global : "undefined" != typeof self && (f = self), f.lolex = e() } }(function() {
+            else { var f; "undefined" != typeof window ? f = window : "undefined" != typeof global ? f = global : "undefined" != typeof self && (f = self), f.lolex = e() }
+        }(function() {
             var define, module, exports;
             return (function e(t, n, r) {
-                function s(o, u) { if (!n[o]) { if (!t[o]) { var a = typeof require == "function" && require; if (!u && a) return a(o, !0); if (i) return i(o, !0); var f = new Error("Cannot find module '" + o + "'"); throw f.code = "MODULE_NOT_FOUND", f } var l = n[o] = { exports: {} };
-                        t[o][0].call(l.exports, function(e) { var n = t[o][1][e]; return s(n ? n : e) }, l, l.exports, e, t, n, r) } return n[o].exports } var i = typeof require == "function" && require; for (var o = 0; o < r.length; o++) s(r[o]); return s })({
+                function s(o, u) {
+                    if (!n[o]) {
+                        if (!t[o]) { var a = typeof require == "function" && require; if (!u && a) return a(o, !0); if (i) return i(o, !0); var f = new Error("Cannot find module '" + o + "'"); throw f.code = "MODULE_NOT_FOUND", f }
+                        var l = n[o] = { exports: {} };
+                        t[o][0].call(l.exports, function(e) { var n = t[o][1][e]; return s(n ? n : e) }, l, l.exports, e, t, n, r)
+                    }
+                    return n[o].exports;
+                }
+                var i = typeof require == "function" && require;
+                for (var o = 0; o < r.length; o++) s(r[o]);
+                return s;
+            })({
                 1: [function(require, module, exports) {
                     (function(global) {
                         /*global global, window*/
@@ -1210,7 +1225,7 @@
 
                     }).call(this, typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
                 }, {}]
-            }, {}, [1])(1)
+            }, {}, [1])(1);
         });
     })();
     var define;

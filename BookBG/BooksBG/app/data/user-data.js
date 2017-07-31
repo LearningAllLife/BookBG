@@ -1,5 +1,5 @@
 /* eslint linebreak-style: ["error", "windows"]*/
-/* eslint-disable no-console,max-len*/
+/* eslint-disable no-console,max-len,eol-last*/
 const BaseData = require('./base-data');
 const User = require('../models/user-model');
 const crypto = require('crypto');

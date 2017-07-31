@@ -1,5 +1,6 @@
 /* eslint linebreak-style: ["error", "windows"]*/
 /* eslint-disable no-console,max-len*/
+/* eslint-disable eol-last*/
 class TestClass {
     constructor({ name, books }) {
         this.name = name;
