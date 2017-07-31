@@ -4,7 +4,7 @@ const connectionString = 'mongodb://localhost/books-db-test';
 const { MongoClient } = require('mongodb');
 const { ObjectID } = require('mongodb');
 
-describe('Integration Tests Books API Routes', () => {
+describe('Integration Tests Genres API Routes', () => {
     after(() => {
         return Promise.resolve()
             .then(() => {
@@ -14,9 +14,9 @@ describe('Integration Tests Books API Routes', () => {
                 return db.dropDatabase();
             });
     });
-    describe('Not registered User and books', () => {
+    describe('Not registered User and genres', () => {
         before(() => {
-            const newId = new ObjectID('556b6aadc35e57168058ee1c');
+            const newId = new ObjectID('556b6aadc29e67257158ee1c');
             return Promise.resolve()
                 .then(() => {
                     return MongoClient.connect(connectionString);
@@ -24,8 +24,8 @@ describe('Integration Tests Books API Routes', () => {
                 .then((db) => {
                     db.collection('books').insertOne({
                         '_id': newId,
-                        '_title': 'Gone with the Wind3',
-                        '_author': 'Margareth Mitchell2',
+                        '_title': 'Gone with the Wind12',
+                        '_author': 'Margareth Mitchell12',
                         '_genre': 'Action',
                         '_rating': '10',
                         '_price': '54',
@@ -39,8 +39,8 @@ describe('Integration Tests Books API Routes', () => {
                         '_name': 'Action',
                         '_books': [{
                             '_id': newId,
-                            '_title': 'Gone with the Wind3',
-                            '_author': 'Margareth Mitchell2',
+                            '_title': 'Gone with the Wind12',
+                            '_author': 'Margareth Mitchell12',
                             '_genre': 'Action',
                             '_rating': '10',
                             '_price': '54',
@@ -52,11 +52,11 @@ describe('Integration Tests Books API Routes', () => {
                 })
                 .then((db) => {
                     return db.collection('authors').insertOne({
-                        '_name': 'Margareth Mitchell2',
+                        '_name': 'Margareth Mitchell12',
                         '_books': [{
                             '_id': newId,
-                            '_title': 'Gone with the Wind3',
-                            '_author': 'Margareth Mitchell2',
+                            '_title': 'Gone with the Wind12',
+                            '_author': 'Margareth Mitchell12',
                             '_genre': 'Action',
                             '_rating': '10',
                             '_price': '54',
@@ -66,15 +66,15 @@ describe('Integration Tests Books API Routes', () => {
                     });
                 });
         });
-        it('Get all books should return book as json', (done) => {
+        it('Get all genres should return genres as json', (done) => {
             request(url)
-                .get('/api/books/')
+                .get('/api/genres/')
                 .expect(200)
                 .expect('Content-Type', 'application/json; charset=utf-8')
                 .expect(function(res) {
-                    if (res.body[0]._title !== 'Gone with the Wind3' ||
-                        res.body[0]._genre !== 'Action' ||
-                        res.body[0]._author !== 'Margareth Mitchell2') {
+                    if (res.body[0]._name !== 'Action' ||
+                        res.body[0]._books[0]._title !== 'Gone with the Wind12' ||
+                        res.body[0]._books[0]._author !== 'Margareth Mitchell12') {
                         throw Error('not right contain');
                     }
                 })

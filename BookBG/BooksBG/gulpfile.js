@@ -55,11 +55,12 @@ gulp.task('test-server:start', () => {
         });
 });
 
-gulp.task('tests:integration', ['test-server:start'], () => {
-    return gulp.src('./tests/integration/api.tests/orders.tests.js')
+gulp.task('tests:integration', ['pre-test', 'test-server:start'], () => {
+    return gulp.src('./tests/integration/**/*.js')
         .pipe(mocha({
             timeout: 20000,
         }))
+        // .pipe(istanbul.writeReports())
         .once('end', () => {
             gulp.start('test-server:stop');
         });

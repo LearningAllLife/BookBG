@@ -17,6 +17,15 @@ function createAuthenticatedRequest(server, loginDetails, callback) {
         });
 }
 describe('Integration Tests Orders Routes', () => {
+    after(() => {
+        return Promise.resolve()
+            .then(() => {
+                return MongoClient.connect(connectionString);
+            })
+            .then((db) => {
+                return db.dropDatabase();
+            });
+    });
     describe('Not registered User', () => {
         it('Get all gets 302 and redirect to login ', (done) => {
             request(url)

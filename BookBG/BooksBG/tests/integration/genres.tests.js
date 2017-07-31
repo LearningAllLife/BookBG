@@ -31,6 +31,15 @@ describe('Integration Tests Genres Routes', () => {
                 });
             });
     });
+    after(() => {
+        return Promise.resolve()
+            .then(() => {
+                return MongoClient.connect(connectionString);
+            })
+            .then((db) => {
+                return db.dropDatabase();
+            });
+    });
     describe('Not registered User', () => {
         it('Get allForDropDowns should return 200 and specific text', (done) => {
             request(url)
@@ -88,7 +97,7 @@ describe('Integration Tests Genres Routes', () => {
                     return MongoClient.connect(connectionString);
                 })
                 .then((db) => {
-                    const newId = new ObjectID('597c89853307952c20f2a9d3');
+                    const newId = new ObjectID('597c89853317857c20f2a9d4');
                     return db.collection('users').insertOne({
                         '_id': newId,
                         '_firstname': 'Genres123',
