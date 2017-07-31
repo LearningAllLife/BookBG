@@ -1,10 +1,13 @@
+/* eslint linebreak-style: ["error", "windows"]*/
+// const $ = require('../../../node_modules/jquery/dist/jquery.min.js');
+// const toastr = require('../../../node_modules/toastr/build/toastr.min.js');
 class OrdersCotroller {
     constructor(data) {
         this.data = data;
     }
 
     returnAll(req, res) {
-        this.data.orders.getAll({ _isDone: false })
+        return this.data.orders.getAll({ _isDone: false })
             .then((orders) => {
                 if (typeof orders === 'undefined' || orders === null) {
                     throw Error('No orders');
@@ -22,12 +25,17 @@ class OrdersCotroller {
         for (const id of ids) {
             books.push(this.data.books.getById(id));
         }
-        Promise.all(books)
+        return Promise.all(books)
             .then((booksResult) => {
                 const booksPrice = booksResult
                     .map((x) => parseInt(x._price, 10));
                 const totalValue = booksPrice.reduce((a, b) => a + b, 0);
-                const result = { books: booksResult, totalValue: totalValue, user: req.user, booksIds: ids };
+                const result = {
+                    books: booksResult,
+                    totalValue: totalValue,
+                    user: req.user,
+                    booksIds: ids,
+                };
                 return res.render('orders/partial/checkOut.pug', result);
             })
             .catch((err) => {
@@ -37,18 +45,25 @@ class OrdersCotroller {
     }
     create(req, res) {
         //  books, adress, user, phoneNumber 
-        const order = req.body;
-        const ids = order.books.split(',');
-        if (typeof order === 'undefined') {
-            throw new Error('Invalid order');
-        }
-
         let books = [];
-        for (const id of ids) {
-            books.push(this.data.books.getById(id));
-        }
+        const order = req.body;
 
-        return Promise.all(books)
+        return Promise.resolve()
+            .then(() => {
+                if (typeof order === 'undefined') {
+                    throw new Error('Invalid order');
+                }
+
+                const ids = order.books.split(',');
+
+                for (const id of ids) {
+                    const currentEl = this.data.books.getById(id);
+                    if (!currentEl) {
+                        books.push(currentEl);
+                    }
+                }
+                return Promise.all(books);
+            })
             .then((booksResult) => {
                 books = booksResult;
                 if (books.length === 0) {
@@ -83,7 +98,7 @@ class OrdersCotroller {
         for (const id of ids) {
             books.push(this.data.books.getById(id));
         }
-        Promise.all(books)
+        return Promise.all(books)
             .then((booksResult) => {
                 const booksPrice = booksResult
                     .map((x) => parseInt(x._price, 10));

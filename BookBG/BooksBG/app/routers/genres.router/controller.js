@@ -8,7 +8,7 @@ class GenresConroller {
 
     create(req, res) {
         const genre = req.body;
-        Promise.resolve()
+        return Promise.resolve()
             .then(() => {
                 if (typeof genre === 'undefined' || !genre.genre) {
                     throw new Error('Invalid genre');
@@ -38,7 +38,9 @@ class GenresConroller {
         const filter = {};
         return this.data.genres.getAll(filter)
             .then((genres) => {
-                res.render('genres/partialViews/forDropDown.pug', { data: genres });
+                res.render('genres/partialViews/forDropDown.pug', {
+                    data: genres,
+                });
             });
     }
 }

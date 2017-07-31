@@ -14,20 +14,15 @@ const init = (data, validator) => {
         loadLogin(req, res) {
             res.render('./users/loginForm');
         },
-        searchUser(userName, req, res) {
-            return data.users.getAll(userName)
-                .then((user) => {
-                    console.log(user);
-                });
-        },
         createUser(req, res) {
             let bodyUser = req.body;
             bodyUser = this._escapeHtml(bodyUser);
-            data.users.findByUsername(bodyUser.username)
+            return data.users.findByUsername(bodyUser.username)
                 .then((dbUser) => {
                     if (dbUser) {
                         throw new Error('User already exists');
                     }
+
                     bodyUser.role = 'user';
                     return data.users.create(bodyUser);
                 })
