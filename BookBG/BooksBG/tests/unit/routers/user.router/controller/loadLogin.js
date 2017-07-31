@@ -1,5 +1,5 @@
 /* eslint linebreak-style: ["error", "windows"]*/
-/* eslint-disable eol-last*/
+/* eslint-disable eol-last,max-len,no-unused-vars*/
 const { expect } = require('chai');
 const sinon = require('sinon');
 const { init } = require('../../../../../app/routers/users.router/controller');
