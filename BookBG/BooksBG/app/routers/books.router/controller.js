@@ -1,3 +1,4 @@
+/* eslint linebreak-style: ["error", "windows"]*/
 // const $ = require('../../../node_modules/jquery/dist/jquery.min.js');
 // const toastr = require('../../../node_modules/toastr/build/toastr.min.js');
 const PAGESIZE = 5;
@@ -76,7 +77,7 @@ class BooksConroller {
         let user = req.user;
         const typeOfOrdering = req.body.input;
 
-        this.data.books.getAll()
+        return this.data.books.getAll()
             .then((result) => {
                 const books = result;
                 if (typeOfOrdering === 'Default') {
@@ -125,11 +126,13 @@ class BooksConroller {
         const set = {};
         const booksResult = [];
 
-        this.data.books.getAll({ _title: new RegExp(input.input, 'i') })
+        return this.data.books.getAll({ _title: new RegExp(input.input, 'i') })
             .then((result) => {
                 books = result;
                 this._collectBooks(books, set);
-                return this.data.authors.getAll({ _name: new RegExp(input.input, 'i') });
+                return this.data.authors.getAll({
+                    _name: new RegExp(input.input, 'i'),
+                });
             })
             .then((result) => {
                 const authors = result;
@@ -162,7 +165,12 @@ class BooksConroller {
                     }
                 }
 
-                res.render('books/partialViews/booksContent.pug', { context: booksToRender, isAdmin: user._isAdmin, indeces: indeces, marker: 'search' });
+                res.render('books/partialViews/booksContent.pug', {
+                    context: booksToRender,
+                    isAdmin: user._isAdmin,
+                    indeces: indeces,
+                    marker: 'search',
+                });
             });
     }
 
@@ -186,19 +194,21 @@ class BooksConroller {
         } else if (type === 'price') {
             return item1._price - item2._price;
         }
+
+        return 0;
     }
 
     _collectBooks(books, set) {
         books.forEach((book) => {
             const title = book._title;
 
-            if (set[title] === undefined) {
+            if (typeof set[title] === 'undefined') {
                 set[title] = book;
             } else {
                 const author = book._author;
                 const bookToCheck = set[title];
 
-                if (set[author] === undefined) {
+                if (typeof set[author] === 'undefined') {
                     if (bookToCheck._author !== author) {
                         set[author] = book;
                     }
@@ -234,7 +244,6 @@ class BooksConroller {
                         break;
                     }
                 }
-
 
                 for (let i = 0; i < authorBooks.length; i++) {
                     const currentBook = authorBooks[i];
@@ -288,7 +297,12 @@ class BooksConroller {
                     user._isAdmin = false;
                 }
 
-                res.render('books/partialViews/booksContent.pug', { context: books, isAdmin: user._isAdmin, indeces: indeces, marker: route });
+                res.render('books/partialViews/booksContent.pug', {
+                    context: books,
+                    isAdmin: user._isAdmin,
+                    indeces: indeces,
+                    marker: route,
+                });
             });
     }
 }
