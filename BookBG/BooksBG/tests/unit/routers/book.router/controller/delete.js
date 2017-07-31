@@ -1,3 +1,4 @@
+/* eslint linebreak-style: ["error", "windows"]*/
 const { expect } = require('chai');
 const sinon = require('sinon');
 
@@ -14,43 +15,43 @@ describe('books controller delete()', () => {
     let spy2 = null;
     let spy3 = null;
 
-    let booksArray = [{
+    const booksArray = [{
         isUpdated: false,
         _id: 1,
         _title: 'book1',
         _genre: 'testgenre1',
-        _author: 'testauthor1'
+        _author: 'testauthor1',
     }, {
         isUpdated: false,
         _id: 2,
         _title: 'book2',
         _genre: 'testgenre2',
-        _author: 'testauthor2'
+        _author: 'testauthor2',
     }, {
         isUpdated: false,
         _id: 3,
         _title: 'book3',
         _genre: 'testgenre3',
-        _author: 'testauthor3'
+        _author: 'testauthor3',
     }];
 
-    let genresArray = [{
+    const genresArray = [{
         _name: 'testgenre1',
-        _books: [booksArray[0]]
+        _books: [booksArray[0]],
     }, {
         _name: 'testgenre2',
-        _books: [booksArray[1]]
+        _books: [booksArray[1]],
     }];
 
-    let authorsArray = [{
+    const authorsArray = [{
         _name: 'testauthor1',
-        _books: [booksArray[0]]
+        _books: [booksArray[0]],
     }, {
         _name: 'testauthor2',
-        _books: [booksArray[1]]
+        _books: [booksArray[1]],
     }, {
         _name: 'testauthor3',
-        _books: []
+        _books: [],
     }];
 
     beforeEach(() => {
@@ -59,20 +60,20 @@ describe('books controller delete()', () => {
                 getById(bookId) {
                     return Promise.resolve(booksArray[0]);
                 },
-                update(book, object) {}
+                update(book, object) {},
             },
             genres: {
                 getAll(filter) {
                     return Promise.resolve([genresArray[0]]);
                 },
-                update(filter, newModel) {}
+                update(filter, newModel) {},
             },
             authors: {
                 getAll(filter) {
                     return Promise.resolve([authorsArray[0]]);
                 },
-                update(filter) {}
-            }
+                update(filter) {},
+            },
         };
 
         data2 = {
@@ -80,84 +81,90 @@ describe('books controller delete()', () => {
                 getById(bookId) {
                     return Promise.resolve(booksArray[2]);
                 },
-                update(book, object) {}
+                update(book, object) {},
             },
             genres: {
                 getAll(filter) {
                     return Promise.resolve([genresArray[1]]);
                 },
-                update(filter, newModel) {}
+                update(filter, newModel) {},
             },
             authors: {
                 getAll(filter) {
                     return Promise.resolve([authorsArray[1]]);
                 },
-                update(filter) {}
-            }
+                update(filter) {},
+            },
         };
         controller = init(data);
         controller1 = init(data2);
         req = require('../../../../unit/reqres').getRequestMock();
         res = require('../../../../unit/reqres').getResponseMock();
-    })
+
+        req.body = { input: 1 };
+        req.flash = () => {
+            return Promise.resolve('error');
+        };
+    });
 
     it('expect not to change author if there is no such found', () => {
         controller1.deleteBook(req, res, 1)
             .then(() => {
                 expect(authorsArray[0]._books.length).to.equal(1);
-            })
-    })
+            });
+    });
 
     it('expect not to change genre if ther is no such found', () => {
         controller1.deleteBook(req, res, 1)
             .then(() => {
                 expect(genresArray[0]._books.length).to.equal(1);
-            })
-    })
+            });
+    });
 
     it('expect to delete current book from authors collection', () => {
         controller.deleteBook(req, res, 1)
             .then(() => {
                 expect(genresArray[0]._books.length).to.equal(0);
-            })
-    })
+            });
+    });
 
     it('expect to delete current book from authors collection', () => {
         controller.deleteBook(req, res, 1)
             .then(() => {
                 expect(authorsArray[0]._books.length).to.equal(0);
-            })
-    })
+            });
+    });
 
     it('expect to mark current book as deleted in collection', () => {
-        spy1 = sinon.spy(data.books, "update");
+        spy1 = sinon.spy(data.books, 'update');
 
         controller.deleteBook(req, res, 1)
             .then(() => {
                 expect(spy1.callCount).to.equal(1);
-                expect(spy1.calledWith({ _title: "book1" }));
-            })
-    })
+                expect(spy1.calledWith({ _title: 'book1' }));
+            });
+    });
 
     it('expect to call update on genres collection', () => {
-        spy2 = sinon.spy(data.genres, "update");
+        spy2 = sinon.spy(data.genres, 'update');
 
         controller.deleteBook(req, res, 1)
             .then(() => {
                 genresArray[0]._books = [];
                 expect(spy2.callCount).to.equal(1);
-
-                expect(spy2.calledWith({ _name: "testgenre1" }, genresArray[0])).to.be.true;
-            })
-    })
+                expect(spy2.calledWith({ _name: 'testgenre1' },
+                    genresArray[0]));
+            });
+    });
 
     it('expect to call update on athors collection', () => {
-        spy3 = sinon.spy(data.authors, "update");
+        spy3 = sinon.spy(data.authors, 'update');
 
         controller.deleteBook(req, res, 1)
             .then(() => {
                 expect(spy3.callCount).to.equal(1);
-                expect(spy3.calledWith({ _name: "testauthor1" }, authorsArray[0])).to.be.true;
-            })
-    })
+                expect(spy3.calledWith({ _name: 'testauthor1' },
+                    authorsArray[0]));
+            });
+    });
 });
