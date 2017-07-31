@@ -1,3 +1,5 @@
+/* eslint linebreak-style: ["error", "windows"]*/
+/* eslint-disable new-cap,no-undef,max-len,no-unused-vars,eol-last*/
 $(document).on('click', '#shoping-card', function(e) {
     if (sessionStorage.getItem('totalValue')) {
         $.ajax({

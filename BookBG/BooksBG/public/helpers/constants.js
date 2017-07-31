@@ -1,3 +1,5 @@
+/* eslint linebreak-style: ["error", "windows"]*/
+/* eslint-disable no-console,max-len,eol-last*/
 const ADMIN = 'admin';
 const USER = 'user';
 
@@ -10,7 +12,7 @@ const PAGE_SIZE_BIG = 8;
 const PAGE_SIZE_SMALL = 4;
 const BITLY_AUTHORIZATION = {
     LOGIN: 'o_2a2sif2071',
-    API_KEY: 'R_dd5f34358ad045f2aea412536f38b2e5'
+    API_KEY: 'R_dd5f34358ad045f2aea412536f38b2e5',
 };
 const USERNAME_MIN_LENGTH = 3;
 const PASSWORD_MIN_LENGTH = 3;
@@ -24,7 +26,7 @@ const ORDERBY = {
     TITLE_ASC: 3,
     TITLE_DESC: 4,
     PRICE_ASC: 5,
-    PRICE_DESC: 6
+    PRICE_DESC: 6,
 };
 
 module.exports = {
@@ -42,6 +44,6 @@ module.exports = {
         USERNAME_MIN_LENGTH,
         USERNAME_MAX_LENGTH,
         PASSWORD_MIN_LENGTH,
-        PASSWORD_MAX_LENGTH
+        PASSWORD_MAX_LENGTH,
     },
-}
+};

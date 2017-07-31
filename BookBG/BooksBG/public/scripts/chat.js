@@ -1,17 +1,19 @@
+/* eslint linebreak-style: ["error", "windows"]*/
+/* eslint-disable new-cap,no-undef,no-var,one-var,max-len,no-unused-vars,eol-last,no-trailing-spaces,no-invalid-this*/
 $(document).ready(function() {
     var socket = io();
 
-    var supportChat = $("#support-chat"),
-        messagesWr = supportChat.find("#messages"),
-        messages = supportChat.find("#messages ul"),
-        chatInput = supportChat.find("#chatInput"),
-        status = supportChat.find("#status"),
-        nick = supportChat.find("#nick");
-    users = supportChat.find("#users ul"),
-        online = supportChat.find("#online"),
-        total = supportChat.find("#total"),
-        selected = supportChat.find("#selected"),
-        broadcast = supportChat.find("#broadcast"),
+    var supportChat = $('#support-chat'),
+        messagesWr = supportChat.find('#messages'),
+        messages = supportChat.find('#messages ul'),
+        chatInput = supportChat.find('#chatInput'),
+        status = supportChat.find('#status'),
+        nick = supportChat.find('#nick'),
+        users = supportChat.find('#users ul'),
+        online = supportChat.find('#online'),
+        total = supportChat.find('#total'),
+        selected = supportChat.find('#selected'),
+        broadcast = supportChat.find('#broadcast'),
         userId = '';
 
     init();
@@ -21,13 +23,11 @@ $(document).ready(function() {
 
         chatInput.keydown(function(e) {
             if (e.keyCode === 13) { // Enter
-
                 if (chatInput.val()) {
-
-                    if (selected.text() == "broadcast") {
-                        socket.emit("chat", { msg: chatInput.val() });
+                    if (selected.text() === 'broadcast') {
+                        socket.emit('chat', { msg: chatInput.val() });
                     } else {
-                        socket.emit("private", { msg: chatInput.val(), to: selected.text() });
+                        socket.emit('private', { msg: chatInput.val(), to: selected.text() });
                     }
 
                     chatInput.val('');
@@ -47,12 +47,16 @@ $(document).ready(function() {
 
     function writeMessage(message) {
         var currentDate = new Date(),
-            time = pad(currentDate.getHours()) + ":" + pad(currentDate.getMinutes()) + ":" + pad(currentDate.getSeconds());
+            time = pad(currentDate.getHours()) + ':' +
+            pad(currentDate.getMinutes()) + ':' +
+            pad(currentDate.getSeconds());
 
         if (!message.isPrivate) {
-            messages.append('<li>[' + time + '] <strong>' + message.from + '</strong>: ' + message.msg + '</li>');
+            messages.append('<li>[' + time + '] <strong>' +
+                message.from + '</strong>: ' + message.msg + '</li>');
         } else {
-            messages.append('<li class="private">[' + time + '] <em><strong>' + message.from + '</strong>: ' + message.msg + '</em></li>');
+            messages.append('<li class="private">[' + time + '] <em><strong>' +
+                message.from + '</strong>: ' + message.msg + '</em></li>');
         }
 
         messagesWr.prop('scrollTop', messagesWr.prop('scrollHeight'));
@@ -63,26 +67,28 @@ $(document).ready(function() {
      */
 
     socket.on('connect', function() {
-        status.html("Connected.");
+        status.html('Connected.');
     });
 
     socket.on('disconnect', function() {
-        status.html("Disconnected.");
+        status.html('Disconnected.');
     });
 
     socket.on('nick', function(data) {
         userId = data.nick;
 
-        nick.html("You are: " + userId);
+        nick.html('You are: ' + userId);
     });
 
     socket.on('users', function(data) {
         users.html('');
         data.users.forEach(function(nickname) {
-            users.append('<li><a class="userNick" href="#" title="' + (nickname == userId ? "That's you!" : "Send a private message to this user") + '">' + nickname + '</a></li>');
+            users.append('<li><a class="userNick" href="#" title="' +
+                (nickname === userId ? 'That\'s you!' : 'Send a private message to this user') + '">' +
+                nickname + '</a></li>');
         });
 
-        $('.userNick').on("click", function() {
+        $('.userNick').on('click', function() {
             if ($(this).text() !== userId) {
                 selected.html($(this).text());
             }

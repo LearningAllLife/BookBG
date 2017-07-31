@@ -1,5 +1,5 @@
 /* eslint linebreak-style: ["error", "windows"]*/
-/* eslint-disable new-cap,no-undef,prefer-const,max-len,no-trailing-spaces*/
+/* eslint-disable new-cap,no-undef,prefer-const,max-len,no-trailing-spaces,eol-last*/
 function encryptToBase64(string) {
     const toUtf8 = CryptoJS.enc.Utf8.parse(string);
     const base64 = CryptoJS.enc.Base64.stringify(toUtf8);

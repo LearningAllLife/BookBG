@@ -1,3 +1,6 @@
+/* eslint linebreak-style: ["error", "windows"]*/
+/* eslint-disable no-unused-expressions,max-len,eol-last */
+/* eslint-disable no-console,max-len*/
 // /* eslint-disable no-unused-expressions */
 // const { expect } = require('chai');
 // const { setupDriver } = require('../utils/setup-driver');

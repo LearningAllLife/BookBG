@@ -1,3 +1,4 @@
+/* eslint linebreak-style: ["error", "windows"]*/
 const webdriver = require('selenium-webdriver');
 
 const setupDriver = (browser) => {

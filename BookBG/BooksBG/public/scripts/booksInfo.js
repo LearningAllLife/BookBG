@@ -1,3 +1,5 @@
+ /* eslint linebreak-style: ["error", "windows"]*/
+ /* eslint-disable new-cap,no-undef,eol-last*/
  $(document).on('click', '#btn-add-to-cart', function(e) {
      const id = $('#book-id').text();
      const value = $('#bookPrice').text();

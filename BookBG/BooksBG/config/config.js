@@ -1,4 +1,6 @@
 /* globals __dirname */
+/* eslint linebreak-style: ["error", "windows"]*/
+/* eslint-disable no-console,max-len,eol-last,no-undef,no-process-env*/
 const path = require('path');
 const rootPath = path.normalize(__dirname + '/..');
 

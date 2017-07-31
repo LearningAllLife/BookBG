@@ -1,3 +1,4 @@
+/* eslint linebreak-style: ["error", "windows"]*/
 let driver = null;
 
 const ui = require('./ui');

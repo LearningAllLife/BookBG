@@ -1,4 +1,5 @@
 /* eslint linebreak-style: ["error", "windows"]*/
+/* eslint-disable no-console,max-len,eol-last*/
 const UsersData = require('./user-data');
 const BooksData = require('./book-data');
 const GenresData = require('./genre-data');

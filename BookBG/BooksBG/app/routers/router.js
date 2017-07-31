@@ -1,6 +1,6 @@
 /* eslint linebreak-style: ["error", "windows"]*/
 /* globals __dirname */
-/* eslint-disable no-console */
+/* eslint-disable no-console,eol-last */
 
 const fs = require('fs');
 const path = require('path');

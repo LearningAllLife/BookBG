@@ -69,7 +69,6 @@ class Book {
     set isDeleted(x) {
         this._isDeleted = x;
     }
-
 }
 
 module.exports = Book;

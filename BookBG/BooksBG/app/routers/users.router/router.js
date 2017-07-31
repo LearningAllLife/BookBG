@@ -1,5 +1,5 @@
 /* eslint linebreak-style: ["error", "windows"]*/
-/* eslint-disable no-console,max-len*/
+/* eslint-disable no-console,max-len,eol-last*/
 const { Router } = require('express');
 const passport = require('passport');
 const { isAdmin, isAuthenticated } = require('../../auth/checkAuth');
