@@ -1,3 +1,4 @@
+/* eslint linebreak-style: ["error", "windows"]*/
 /* eslint-disable no-console */
 const async = () => {
     return Promise.resolve();

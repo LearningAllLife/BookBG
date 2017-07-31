@@ -1,3 +1,4 @@
+/* eslint linebreak-style: ["error", "windows"]*/
 /* globals __dirname */
 const path = require('path');
 const express = require('express');
