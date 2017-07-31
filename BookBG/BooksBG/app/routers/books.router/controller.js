@@ -338,6 +338,4 @@ const init = (data) => {
     return new BooksConroller(data);
 };
 
-module.exports = {
-    init,
-};
+module.exports = { init };

@@ -1,7 +1,7 @@
 /* eslint linebreak-style: ["error", "windows"]*/
 const { expect } = require('chai');
 const sinon = require('sinon');
-const { init } = require('../../../../../app/routers/books.router/router');
+const { init } = require('../../../../../app/routers/books.router/controller');
 
 describe('books controller create()', () => {
     let data = null;
