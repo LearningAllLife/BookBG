@@ -44,7 +44,6 @@ class OrdersCotroller {
             });
     }
     create(req, res) {
-        //  books, adress, user, phoneNumber 
         let books = [];
         const order = req.body;
 
@@ -58,7 +57,7 @@ class OrdersCotroller {
 
                 for (const id of ids) {
                     const currentEl = this.data.books.getById(id);
-                    if (!currentEl) {
+                    if (currentEl) {
                         books.push(currentEl);
                     }
                 }

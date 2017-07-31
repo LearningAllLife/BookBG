@@ -87,10 +87,17 @@ $(function() {
             const bookId = $(e.target).attr('data-id');
             $(e.target).parent().remove();
             $.ajax({
-                method: 'PUT',
-                url: '/books/delete',
-                data: { input: bookId },
-            });
+                    method: 'PUT',
+                    url: '/books/delete',
+                    data: { input: bookId },
+                })
+                .done(function() {
+                    $.get('/books/allPartial/1',
+                        function(data) {
+                            const $content = $('#content');
+                            $content.html(data);
+                        });
+                });
         }
         return false;
     });

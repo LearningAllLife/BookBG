@@ -13,8 +13,8 @@ const waitSeconds = (seconds) => {
 const waitFor = (selector) => {
     try {
         return driver.findElement(
-            webdriver.By.css(selector)
-        )
+                webdriver.By.css(selector)
+            )
             .catch((err) => {
                 return waitFor(selector);
             });
@@ -27,8 +27,8 @@ const waitFor = (selector) => {
 const waitForMany = (selector) => {
     try {
         return driver.findElements(
-            webdriver.By.css(selector)
-        )
+                webdriver.By.css(selector)
+            )
             .catch((err) => {
                 return waitForMany(selector);
             });
@@ -76,5 +76,10 @@ module.exports = {
     setDriver(_driver) {
         driver = _driver;
     },
-    waitFor, getText, getTexts, getSelected, setValue, click,
+    waitFor,
+    getText,
+    getTexts,
+    getSelected,
+    setValue,
+    click,
 };
