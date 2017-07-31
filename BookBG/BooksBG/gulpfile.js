@@ -74,7 +74,7 @@ gulp.task('tests:integration', ['pre-test', 'test-server:start'], () => {
 
 
 gulp.task('tests:browser', ['test-server:start'], () => {
-    return gulp.src('./test/browser/items/create-item.js')
+    return gulp.src('./tests/browser/**/*.js')
         .pipe(mocha({
             timeout: 20000,
         }))
