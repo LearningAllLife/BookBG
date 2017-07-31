@@ -1,3 +1,5 @@
+/* eslint linebreak-style: ["error", "windows"]*/
+/* eslint-disable no-console,max-len*/
 class Book {
     constructor({ title, author, genre, rating, price, picture }) {
         this.title = title;

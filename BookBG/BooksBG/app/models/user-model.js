@@ -1,3 +1,5 @@
+/* eslint linebreak-style: ["error", "windows"]*/
+/* eslint-disable no-console,max-len*/
 const { CONSTANTS } = require('../../public/helpers/constants');
 
 const VALIDATOR = {

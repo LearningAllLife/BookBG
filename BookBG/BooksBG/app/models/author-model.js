@@ -1,3 +1,5 @@
+/* eslint linebreak-style: ["error", "windows"]*/
+/* eslint-disable no-console,max-len*/
 class Author {
     constructor({ name, books }) {
         this.name = name;

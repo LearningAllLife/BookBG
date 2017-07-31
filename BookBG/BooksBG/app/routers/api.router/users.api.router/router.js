@@ -1,3 +1,6 @@
+/* eslint linebreak-style: ["error", "windows"]*/
+// const $ = require('../../../node_modules/jquery/dist/jquery.min.js');
+// const toastr = require('../../../node_modules/toastr/build/toastr.min.js');
 const { Router } = require('express');
 const passport = require('passport');
 
@@ -6,7 +9,9 @@ const attachTo = (app, data) => {
     const controller = require('./controller').init(data);
 
     apiRouter
-        .post('/auth', passport.authenticate('local', { session: false }), (req, res) => {
+        .post('/auth', passport.authenticate('local', {
+            session: false,
+        }), (req, res) => {
             return controller.authenticate(req, res);
         })
         .get('/', passport.authenticate('token'), (req, res) => {

@@ -1,3 +1,5 @@
+/* eslint linebreak-style: ["error", "windows"]*/
+/* eslint-disable no-console,max-len*/
 class Order {
     constructor({ books, adress, user, phoneNumber }) {
         this.books = books;

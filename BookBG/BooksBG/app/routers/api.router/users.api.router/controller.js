@@ -1,3 +1,6 @@
+/* eslint linebreak-style: ["error", "windows"]*/
+// const $ = require('../../../node_modules/jquery/dist/jquery.min.js');
+// const toastr = require('../../../node_modules/toastr/build/toastr.min.js');
 const jwt = require('jsonwebtoken');
 const becomeAdmin = 'Poweroverwhelming';
 
@@ -24,7 +27,7 @@ class UsersControllerAPI {
             });
     }
     makeAdmin(req, res) {
-        Promise.resolve()
+        return Promise.resolve()
             .then(() => {
                 const username = req.body.username;
                 const secretmessage = req.body.secretmessage;

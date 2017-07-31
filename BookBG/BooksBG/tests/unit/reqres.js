@@ -36,6 +36,12 @@ const getResponseMock = () => {
 
             return this;
         },
+        json(messageObject) {
+            this.jsonMessage = messageObject.message;
+            this.success = messageObject.success;
+            this.token = messageObject.token;
+            return this;
+        },
     };
 };
 

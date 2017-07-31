@@ -1,6 +1,6 @@
 /* eslint linebreak-style: ["error", "windows"]*/
 /* eslint-disable no-console,max-len*/
-class Genre {
+class TestClass {
     constructor({ name, books }) {
         this.name = name;
         if (typeof books === 'undefined') {
@@ -25,8 +25,6 @@ class Genre {
     set books(x) {
         this._books = x;
     }
-
-
 }
 
-module.exports = Genre;
+module.exports = TestClass;

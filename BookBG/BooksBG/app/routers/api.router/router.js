@@ -1,3 +1,7 @@
+/* eslint linebreak-style: ["error", "windows"]*/
+// const $ = require('../../../node_modules/jquery/dist/jquery.min.js');
+// const toastr = require('../../../node_modules/toastr/build/toastr.min.js');
+/* globals __dirname */
 const fs = require('fs');
 const path = require('path');
 
@@ -8,6 +12,6 @@ const attachTo = (app, data) => {
             const modulePath = path.join(__dirname, file);
             require(modulePath).attachTo(app, data);
         });
-}
+};
 
 module.exports = { attachTo };
