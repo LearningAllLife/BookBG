@@ -26,7 +26,11 @@ gulp.task('tests:unit', ['pre-test'], () => {
         .pipe(mocha({
 
         }))
-        .pipe(istanbul.writeReports());
+        .pipe(istanbul.writeReports())
+        .on('end', () => {
+            /* eslint-disable no-undef */
+            process.exit(0);
+        });
 });
 
 const { MongoClient } = require('mongodb');
@@ -56,13 +60,15 @@ gulp.task('test-server:start', () => {
 });
 
 gulp.task('tests:integration', ['pre-test', 'test-server:start'], () => {
-    return gulp.src('./tests/integration/**/*.js')
+    return gulp.src(['./tests/integration/**/*.js', './tests/unit/**/*.js'])
         .pipe(mocha({
             timeout: 20000,
         }))
         .pipe(istanbul.writeReports({}))
         .once('end', () => {
             gulp.start('test-server:stop');
+            /* eslint-disable no-undef */
+            process.exit(0);
         });
 });
 
