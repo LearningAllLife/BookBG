@@ -50,6 +50,6 @@
         "istanbul": "3.4.1",
         "mocha": "3.4.1",
         "nyc": "^10.0.0",
-        "supertest": "^2.0.0"
+        "supertest": "^3.0.0"
     }
 }

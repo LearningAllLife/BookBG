@@ -1,3 +1,5 @@
+/* eslint linebreak-style: ["error", "windows"]*/
+/* eslint-disable no-console,max-len*/
 const { ObjectID } = require('mongodb');
 
 class BaseData {
@@ -48,11 +50,10 @@ class BaseData {
         if (typeof limit === 'undefined') {
             limit = 0;
         }
-        const result = this.collection
+
+        return this.collection
             .find(filter, options, skip, limit)
             .toArray();
-
-        return result;
     }
 
     createInstanceOfClass(model) {

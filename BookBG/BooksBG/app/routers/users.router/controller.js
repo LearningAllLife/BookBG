@@ -1,3 +1,5 @@
+/* eslint linebreak-style: ["error", "windows"]*/
+/* eslint-disable no-console,max-len*/
 const init = (data, validator) => {
     const controller = {
         getAllUsers(req, res) {
