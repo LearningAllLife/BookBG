@@ -45,9 +45,10 @@ class Order {
 
     set phoneNumber(x) {
         const pN = parseInt(x, 10);
-        if (typeof pN === 'undefined') {
+        if (typeof x === 'undefined') {
             throw Error('Invalid phone Number');
         }
+
         this._phoneNumber = x;
     }
 
