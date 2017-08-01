@@ -6,21 +6,21 @@ block body
   .col-md-offset-4.col-md-4.bordered.rounded
     form(action="/books/add" method="POST" autocomplete="off")
       .form-group
-        label(for='title') Title:
+        label(for='title') Title:*
         input#title.form-control(name="title" type='text' placeholder="Enter Title" required )
       .form-group
-        label(for='author') Author
+        label(for='author') Author*
         input#author.form-control(name="author" type='text' placeholder="Enter Author" required)
       .form-group
-        label(for='genre') Genre
+        label(for='genre') Genre*
         input#genre.form-control(name="genre" type='text' placeholder="Enter Genre" required)
       .form-group
-        label(for='rating') Rating:
+        label(for='rating') Rating:*
         input#rating.form-control(name="rating" type='text' placeholder="Enter Rating between 1-10" required)
       .form-group
-        label(for='price') Price:
+        label(for='price') Price:*
         input#price.form-control(name="price" type='text' placeholder="Enter Price" required)
       .form-group
         label(for='picture') PictureURL:
-        input#pic.form-control(name="picture" type='text' placeholder="Enter Picture Url" required)
+        input#pic.form-control(name="picture" type='text' placeholder="Enter Picture Url")
       button.btn.btn-default(type='submit') Submit

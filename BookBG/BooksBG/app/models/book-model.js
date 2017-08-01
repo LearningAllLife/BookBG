@@ -1,5 +1,5 @@
 /* eslint linebreak-style: ["error", "windows"]*/
-/* eslint-disable no-console,max-len,eol-last*/
+/* eslint-disable no-console,max-len,eol-last,no-undefined*/
 class Book {
     constructor({ title, author, genre, rating, price, picture }) {
         this.title = title;
@@ -59,6 +59,18 @@ class Book {
     }
 
     set picture(x) {
+        if (x !== '') {
+            if (x.length < 8) {
+                throw Error(`invalid picture range`);
+            }
+
+            const pattern = /^(http|https|ftp):\/\/.*$/g;
+
+            if (!pattern.test(x)) {
+                throw Error('invalid picture image format');
+            }
+        }
+
         this._picture = x;
     }
 

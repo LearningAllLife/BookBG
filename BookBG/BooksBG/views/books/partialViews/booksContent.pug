@@ -2,8 +2,8 @@ h1#home-header Search through our library
 each item in context
     div.book-container.book-presentation-container
         if isAdmin
-            a.remove-button(data-id=item._id) X 
-        img.small(src=""+item._picture alt="empty")       
+            a.remove-button(data-id=item._id) X
+        img.small(src=""+item._picture, onerror="src='http://demo.makitweb.com/broken_image/images/noimage.png'")       
         div.book-characteristics              
             h4.book-presentation-title 
                 | Title:
