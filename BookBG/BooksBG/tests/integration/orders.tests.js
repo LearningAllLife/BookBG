@@ -163,7 +163,7 @@ describe('Integration Tests Orders Routes', () => {
                     return db;
                 })
                 .then((db) => {
-                    const newId = new ObjectID('596b6aadc36e57178057ee1c');
+                    const newId = new ObjectID('596b1aadc36e53178052ee1c');
                     db.collection('genres').insertOne({
                         '_name': 'Romans',
                         '_books': [{
@@ -180,7 +180,7 @@ describe('Integration Tests Orders Routes', () => {
                     return db;
                 })
                 .then((db) => {
-                    const newId = new ObjectID('596b6aadc36e57178057ee1c');
+                    const newId = new ObjectID('596b6aadc36e57775057ee1c');
                     db.collection('authors').insertOne({
                         '_name': 'Margareth',
                         '_books': [{
