@@ -1,11 +1,10 @@
 /* eslint linebreak-style: ["error", "windows"]*/
-/* eslint-disable eol-last,no-unused-vars*/
 const { expect } = require('chai');
 const sinon = require('sinon');
 
-const BaseData = require('../../../app/data/base-data');
+const BaseData = require('../../../../app/data/base-data');
 
-describe('Base data create()', () => {
+describe('Base data count()', () => {
     let db = null;
     let ModelClass = null;
     let data = null;
@@ -20,7 +19,7 @@ describe('Base data create()', () => {
         };
 
         const insert = (model) => {
-            return Promise.resolve(model);
+            return model;
         };
 
         const toArray = () => {
@@ -33,16 +32,20 @@ describe('Base data create()', () => {
             };
         };
 
+        const count = (props) => {
+            return Promise.resolve(3);
+        };
+
         const stub = sinon.stub(db, 'collection')
-            .returns({ find, insert });
+            .returns({ find, insert, count });
 
         data = new BaseData(db, ModelClass);
     });
 
     it('expect to insert into the collection the right model', () => {
-        data.create(1)
+        data.count({ _isDeleted: false })
             .then((result) => {
-                expect(result).to.deep.equal(foundItems);
+                expect(result).to.equal(3);
             });
     });
 });

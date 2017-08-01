@@ -63,12 +63,12 @@ describe('order controller create()', () => {
             data = {
                 books: {
                     getById: () => {
-                        return Promise.resolve(null);
+                        return null;
                     },
                 },
             };
 
-            req.body = { books: '' };
+            req.body = { books: '1,2' };
             controller = init(data);
             const spy = sinon.spy(req, 'flash');
 

@@ -1,10 +1,11 @@
 /* eslint linebreak-style: ["error", "windows"]*/
+/* eslint-disable eol-last,no-unused-vars*/
 const { expect } = require('chai');
 const sinon = require('sinon');
 
-const BaseData = require('../../../app/data/base-data');
+const UserData = require('../../../../app/data/user-data');
 
-describe('Base data update()', () => {
+describe('User data create()', () => {
     let db = null;
     let ModelClass = null;
     let data = null;
@@ -23,12 +24,9 @@ describe('Base data update()', () => {
         };
 
         const toArray = () => {
-            return Promise.resolve(foundItems);
+            return foundItems;
         };
 
-        const updateOne = (filter, value) => {
-            return Promise.resolve(filter, value);
-        };
         const find = (props) => {
             return {
                 toArray,
@@ -36,15 +34,15 @@ describe('Base data update()', () => {
         };
 
         const stub = sinon.stub(db, 'collection')
-            .returns({ find, insert, updateOne });
+            .returns({ find, insert });
 
-        data = new BaseData(db, ModelClass);
+        data = new UserData(db);
     });
 
-    it('expect to update correctly', () => {
-        data.update(1, 2)
+    it('expect to throw if invalid', () => {
+        data.create(1)
             .then((result) => {
-                expect(result).to.deep.equal(1);
+                expect(result).to.deep.equal({ number: 1 });
             });
     });
 });

@@ -69,6 +69,7 @@ class BaseData {
                 } catch (err) {
                     throw Error(err.message);
                 }
+                console.log(instance);
                 return this.collection.insert(instance);
             });
     }

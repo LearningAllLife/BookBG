@@ -2,8 +2,7 @@
 /* eslint-disable eol-last*/
 const { expect } = require('chai');
 const sinon = require('sinon');
-
-const BaseData = require('../../../app/data/base-data');
+const BookData = require('../../../../app/data/book-data');
 
 describe('Basedata.getAll()', () => {
     describe('with no filter, options,skip or limit with items', () => {
@@ -35,7 +34,7 @@ describe('Basedata.getAll()', () => {
                     return { find };
                 });
 
-            data = new BaseData(db, ModelClass);
+            data = new BookData(db, ModelClass);
         });
 
         it('expect to return all items', () => {
