@@ -1,4 +1,5 @@
 /* eslint linebreak-style: ["error", "windows"]*/
+/* eslint-disable no-console,max-len,eol-last*/
 const { expect } = require('chai');
 const sinon = require('sinon');
 
@@ -8,8 +9,8 @@ describe('Base data update()', () => {
     let db = null;
     let ModelClass = null;
     let data = null;
-    const spy = null;
     const foundItems = [1, 2, 3];
+    let stub = null;
 
     beforeEach(() => {
         ModelClass = { name: 'testclass' };
@@ -35,7 +36,7 @@ describe('Base data update()', () => {
             };
         };
 
-        const stub = sinon.stub(db, 'collection')
+        stub = sinon.stub(db, 'collection')
             .returns({ find, insert, updateOne });
 
         data = new BaseData(db, ModelClass);

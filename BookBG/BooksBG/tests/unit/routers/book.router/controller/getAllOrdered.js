@@ -238,7 +238,7 @@ describe('books controller getAllOrdered()', () => {
         data = {
             books: {
                 getAll: () => {
-                    return Promise.resolve(booksArray);
+                    return Promise.resolve(desArray);
                 },
             },
         };

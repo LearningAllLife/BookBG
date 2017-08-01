@@ -49,7 +49,7 @@ class Order {
             throw Error('Invalid phone Number');
         }
 
-        this._phoneNumber = x;
+        this._phoneNumber = pN;
     }
 
     get isDone() {

@@ -17,7 +17,7 @@ describe('Order model tests', () => {
         expect(instance.books).to.deep.equal([1, 2, 3]);
         expect(instance.adress).to.equal('testAdress');
         expect(instance.user).to.equal('testUser');
-        expect(instance.phoneNumber).to.equal('123456');
+        expect(instance.phoneNumber).to.equal(123456);
     });
 
     // it('expect to throw error when phoneNumber is undefined', () => {

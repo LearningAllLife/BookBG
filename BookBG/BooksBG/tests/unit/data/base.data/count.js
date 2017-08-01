@@ -1,4 +1,5 @@
 /* eslint linebreak-style: ["error", "windows"]*/
+/* eslint-disable no-console,max-len,eol-last*/
 const { expect } = require('chai');
 const sinon = require('sinon');
 
@@ -8,7 +9,6 @@ describe('Base data count()', () => {
     let db = null;
     let ModelClass = null;
     let data = null;
-    const spy = null;
     const foundItems = [1, 2, 3];
 
     beforeEach(() => {

@@ -34,7 +34,7 @@ $(document).on('click', '.btn-remove', function(e) {
     totalPrice -= value;
     $('#total-value').text(totalPrice);
     targer.parent().remove();
-    const sessionValue = $('.btn-remove').toArray().map(x => x.dataset.id).join('|');
+    const sessionValue = $('.btn-remove').toArray().map((x) => x.dataset.id).join('|');
     if (totalPrice === 0) {
         sessionStorage.removeItem('card');
         sessionStorage.removeItem('totalValue');

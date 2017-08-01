@@ -3,7 +3,8 @@
 /* eslint-disable new-cap,quotes,block-spacing,brace-style,invalid-jsdoc,valid-jsdoc,consistent-return*/
 /* eslint-disable padded-blocks,complexity,no-shadow,guard-for-in,curly,no-unused-vars,no-extra-boolean-cast*/
 /* eslint-disable no-unused-expressions,eqeqeq,spaced-comment,no-undefined,comma-dangle,no-eval,no-else-return*/
-/* eslint-disable no-empty,prefer-spread,prefer-rest-params,block-scoped-var,default-case,eol-last*/
+/* eslint-disable no-empty,prefer-spread,prefer-rest-params,block-scoped-var,default-case,eol-last,semi
+,no-eq-null,no-sequences*/
 /**
  * Sinon.JS 1.17.6, 2016/09/19
  *
